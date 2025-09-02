@@ -37,7 +37,7 @@ class _ProductsPageState extends State<ProductsPage> {
       body: GridView.builder(
         padding: const EdgeInsets.all(8),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 columns
+          crossAxisCount: 2,
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
           childAspectRatio: 0.65,
@@ -86,13 +86,19 @@ class _ProductsPageState extends State<ProductsPage> {
                         Text(
                           "RM ${product.price.toStringAsFixed(2)}",
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
                           ),
                         ),
                         const SizedBox(height: 2),
-                        Text("Sales: ${product.sales}"),
+                        Text(
+													"Sales: ${product.sales}",
+													style: const TextStyle(
+														fontSize: 12,
+														color: Colors.grey,
+													),
+												),
                       ],
                     ),
                   ),

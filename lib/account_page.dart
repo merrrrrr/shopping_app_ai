@@ -5,6 +5,13 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Account Page'),
+      ),
+      body: Center(
+        child: Text('Welcome to the Account Page!'),
+      ),
+    );
   }
 }
