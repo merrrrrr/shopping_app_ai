@@ -1,274 +1,462 @@
 import '../models/product.dart';
 
+// Audio, Charging, Car accessories, others
+
 final List<Product> products = [
   Product(
-    id: "p1",
-    name: "Baseus Power Bank PD Fast Charging Built In Dual-Cable Digital Display For Phone 20000mAh/22.5W/20W",
+    id: "ch1",
+    name: "Baseus Qpow2 Dual-Cable Digital Display Fast Charge PowerBank 22.5W",
+    price: 75.90,
+    sales: 500,
+    description: "Name: Baseus Qpow2 Dual-Cable Digital Display Fast Charge PowerBank 22.5W\n"
+			"Color: Nebula Purple\n"
+			"Weight: About 370g\n"
+			"Battery: Polymer lithium battery\n"
+			"Capacity: 10000mAh / 20000mAh\n"
+			"Rated Capacity: 12000mAh(5V/2.4A)\n"
+			"Energy Conversion: >=75%\n"
+			"Type-C Input: 5V/3A, 9V/2A, 12V/1.5A\n"
+			"Type-C Output: 5V/2.4A, 9V/2.22A, 12V1.5A\n"
+			"Type-C Cable Output: 5V/2.4A; 9V/2A; 12V/1.5A; 10V/2.25A(SCP)\n"
+			"IP Cable Output: 5V/2.4A; 9V/2.22A\n"
+			"USB Output: 5V/2.4A\n"
+			"Total Output: 5V/2.4A",
+    images: [
+			"assets/products/ch1/image1.webp",
+			"assets/products/ch1/image2.webp",
+			"assets/products/ch1/image3.webp",
+			"assets/products/ch1/image4.webp",
+			"assets/products/ch1/image5.webp"
+		],
+    category: "Charging",
+		brand: "Baseus",
+  ),
+
+  Product(
+    id: "ch2",
+    name: "Baseus Lipow 20000mAh Powerbank 15W Fast Charging Power Bank",
+    price: 50.90,
+    sales: 127,
+    description: "Model No: PPBY-2W15NG\n"
+			"Battery Type: Polymer Lithium-lon Battery\n"
+			"Battery Energy: 20000mAh 3.7V/74Wh\n"
+			"Capacity Cell: 10000mAh*2pcs\n"
+			"Type-C Input: 5V=3A\n"
+			"Type-C Output: 5V=3A\n"
+			"Micro Input: 5V=2A\n"
+			"Type-C Output: 5V-3A\n"
+			"USB1&2 Output: 5V=2.4A\n"
+			"Total Output: 5V=3A\n"
+			"Product Weight: 400g",
+    images: [
+			"assets/products/ch2/image1.webp",
+			"assets/products/ch2/image2.webp",
+			"assets/products/ch2/image3.webp",
+			"assets/products/ch2/image4.webp"
+		],
+    category: "Charging",
+		brand: "Baseus",
+  ),
+
+  Product(
+    id: "ch3",
+    name: "Baseus Magnetic PowerBank Mini Wireless Fast Charge With Auto-Wake (10000mAh)",
+    price: 75.90,
+    sales: 94,
+    description: "Output Interface: USB-Type C\n"
+			"Input Interface: USB Type C\n"
+			"Battery Type: Lithium Battery\n"
+			"Shell Material: Silicon\n"
+			"Features: wireless charge\n"
+			"Origin: Mainland China\n"
+			"Type: Portable Power Bank\n"
+			"Certification: RoHS,CE,FCC\n"
+			"Support Quick Charge Technology: Two-way Quick Charge\n"
+			"Max Input: 20W\n"
+			"Rated Capacity: 5800mah (5V / 2.4A)\n"
+			"Energy conversion rate: >75%\n"
+			"Type-c Input: 5V/3A; 9V/2A\n"
+			"Type-c Output: 5V/2.4A; 9V/2.22A; 12V/1.5A\n"
+			"Wireless Charge output: 5W/7.5W/10W/15W\n"
+			"Total Output: 5V/2.4A",
+    images: [
+			"assets/products/ch3/image1.webp",
+			"assets/products/ch3/image2.webp",
+			"assets/products/ch3/image3.webp",
+			"assets/products/ch3/image4.webp"
+		],
+    category: "Charging",
+		brand: "Baseus",
+  ),
+
+  Product(
+    id: "ch4",
+    name: "Xiaomi 33w Magnetic Powerbank 10000mAh (Integrated Cable)",
     price: 129.90,
-    sales: 520,
-    description: "A high-capacity power bank with fast charging support and a digital display for power levels.",
-    images: ["assets/products/powerbank1_1.jpg", "assets/products/powerbank1_2.jpg"],
-    category: "Powerbanks",
+    sales: 122,
+    description: "",
+    images: [
+			"assets/products/ch4/image1.webp",
+			"assets/products/ch4/image2.webp",
+			"assets/products/ch4/image3.webp",
+			"assets/products/ch4/image4.webp"
+		],
+    category: "Charging",
+		brand: "Xiaomi",
+  ),
+
+  Product(
+    id: "ch5",
+    name: "Xiaomi Power Bank 20000 (Integrated Cable) up to 22.5W two-way fast charging",
+    price: 84.90,
+    sales: 588,
+    description: "Brand: Xiaomi\n"
+			"Powerbank Capacity Size: 10001 - 20000mAh\n"
+			"Powerbank Features: Built-in Cable\n"
+			"Input Interface: Type-C\n"
+			"Output Interface: Type-C, Lightning, USB-A\n"
+			"Battery Type: Lithium Polymer Battery\n"
+			"Warranty Type: Manufacturer Warranty\n"
+			"Warranty Duration: 6 Months\n"
+			"Mobile Cable Type: Type C,\n",
+    images: [
+			"assets/products/ch5/image1.webp",
+			"assets/products/ch5/image2.webp",
+			"assets/products/ch5/image3.webp",
+			"assets/products/ch5/image4.webp",
+			"assets/products/ch5/image5.webp",
+			"assets/products/ch5/image6.webp",
+			"assets/products/ch5/image7.webp"
+		],
+    category: "Charging",
+		brand: "Xiaomi",
+  ),
+
+  Product(
+    id: "ch6",
+    name: "Xiaomi 33W Power Bank 10000mAh Integrated Cable",
+    price: 89.90,
+    sales: 1755,
+    description: "Brand: Xiaomi\n"
+		"Powerbank Capacity Size: 5000 - 10000mAh\n"
+		"Number of Ports: 3\n"
+		"Powerbank Features: Built-in Cable, Multiple Device Charging\n"
+		"Input Type: Type C\n"
+		"Warranty Type: Manufacturer Warranty\n"
+		"Warranty Duration: 6 Months\n"
+		"Mobile Cable Type: Type C\n",
+    images: [
+			"assets/products/ch6/image1.webp",
+			"assets/products/ch6/image2.webp",
+			"assets/products/ch6/image3.webp",
+		],
+    category: "Charging",
+		brand: "Xiaomi",
+  ),
+	
+  Product(
+    id: "ch7",
+    name: "Baseus 3 In 1 USB Charging Cable",
+    price: 11.90,
+    sales: 796,
+    description: "Item Name: Baseus 3 in 1 USB Cable\n"
+		"Cable Material: Aluminum Alloy+Nylon Braided Wire\n"
+		"Cable Length: 1.2m\n"
+		"Line Output Current A: 3 Ports 3.5A (Max)\n"
+		"Line Output Current B: Single Port 2A Max\n"
+		"Cable Suitable: For 8 Pins/USB Type C / Micro USB Interface Mobile Phones",
+    images: [
+			"assets/products/ch7/image1.webp",
+			"assets/products/ch7/image2.webp",
+			"assets/products/ch7/image3.webp",
+			"assets/products/ch7/image4.webp",
+			"assets/products/ch7/image5.webp",
+		],
+    category: "Charging",
+		brand: "Baseus",
+  ),
+	
+  Product(
+    id: "ch8",
+    name: "Baseus Type C to Lightning 20W PD Fast Charging Cable",
+    price: 8.90,
+    sales: 1795,
+    description: "Material: Soft TPE\n"
+		"Color: Nebula Purple\n"
+		"Length: 1.2m\n"
+		"Power: 20W/27W\n"
+		"Transmission Rate: 480Mbps\n"
+		"Input: Type-C\n"
+		"Output: Lightning",
+    images: [
+			"assets/products/ch8/image1.webp",
+			"assets/products/ch8/image2.webp",
+			"assets/products/ch8/image3.webp",
+			"assets/products/ch8/image4.webp",
+		],
+    category: "Charging",
+		brand: "Baseus",
+  ),
+	
+  Product(
+    id: "ch9",
+    name: "Baseus USB to Type C 100W Fast Charging Cable",
+    price: 11.90,
+    sales: 627,
+    description: "Material: Soft TPE\n"
+		"Color: Nebula Purple\n"
+		"Length: 1.2m\n"
+		"Power: 100W\n"
+		"Transmission Rate: 480Mbps\n"
+		"Input: USB\n"
+		"Output: Type-C",
+    images: [
+			"assets/products/ch9/image1.webp",
+			"assets/products/ch9/image2.webp",
+			"assets/products/ch9/image3.webp",
+			"assets/products/ch9/image4.webp",
+		],
+    category: "Charging",
+		brand: "Baseus",
+  ),
+	
+  // Audio Products
+  Product(
+    id: "au1",
+    name: "Baseus Bass 30 Max Wireless Headphone",
+    price: 89.90,
+    sales: 342,
+    description: "Premium wireless headphones with deep bass and 30-hour battery life. Features active noise cancellation and comfortable over-ear design.",
+    images: ["assets/products/au1/image1.webp", "assets/products/au1/image2.webp", "assets/products/au1/image3.webp", "assets/products/au1/image4.webp", "assets/products/au1/image5.webp"],
+    category: "Audio",
+    brand: "Baseus",
   ),
   Product(
-    id: "p2",
-    name: "Baseus Encok True Wireless Bluetooth Earbuds with Noise Cancellation and 24h Battery Life",
-    price: 89.00,
-    sales: 320,
-    description: "Compact wireless earbuds with deep bass, clear sound, and active noise cancellation.",
-    images: ["assets/products/earbuds1_1.jpg", "assets/products/earbuds1_2.jpg"],
-    category: "Earbuds",
+    id: "au2",
+    name: "Baseus Bowie WM02 Earbuds",
+    price: 45.90,
+    sales: 156,
+    description: "True wireless earbuds with crystal clear sound and secure fit. IPX4 water resistance and 24-hour total playtime with charging case.",
+    images: ["assets/products/au2/image1.webp", "assets/products/au2/image2.webp", "assets/products/au2/image3.webp", "assets/products/au2/image4.webp"],
+    category: "Audio",
+    brand: "Baseus",
   ),
   Product(
-    id: "p3",
-    name: "Anker PowerLine III USB-C to Lightning Cable 1.8m Durable Fast Charging Cable",
-    price: 59.90,
-    sales: 780,
-    description: "Durable USB-C to Lightning cable designed for fast charging and long-lasting use.",
-    images: ["assets/products/cable1_1.jpg"],
-    category: "Cables",
+    id: "au3",
+    name: "Baseus CZ11 Wired Earphones",
+    price: 19.90,
+    sales: 789,
+    description: "High-quality wired earphones with balanced sound signature. Durable cable design and comfortable in-ear fit for extended listening.",
+    images: ["assets/products/au3/image1.webp", "assets/products/au3/image2.webp", "assets/products/au3/image3.webp", "assets/products/au3/image4.webp", "assets/products/au3/image5.webp"],
+    category: "Audio",
+    brand: "Baseus",
   ),
   Product(
-    id: "p4",
-    name: "UGREEN 65W GaN Fast Charger 3-Port USB-C Adapter Compact Travel Charger",
-    price: 149.00,
-    sales: 410,
-    description: "A compact GaN charger with multiple ports, perfect for travel and fast charging laptops.",
-    images: ["assets/products/adapter1_1.jpg"],
-    category: "Adapters",
+    id: "au4",
+    name: "Baseus Encok H17 Wired Earphones",
+    price: 24.90,
+    sales: 234,
+    description: "Professional wired earphones with enhanced bass response. Tangle-free cable and ergonomic design for all-day comfort.",
+    images: ["assets/products/au4/image1.webp", "assets/products/au4/image2.webp", "assets/products/au4/image3.webp", "assets/products/au4/image4.webp", "assets/products/au4/image5.webp"],
+    category: "Audio",
+    brand: "Baseus",
   ),
   Product(
-    id: "p5",
-    name: "Joyroom Car Phone Holder Gravity Auto Lock Dashboard Air Vent Mount",
-    price: 39.00,
-    sales: 980,
-    description: "Convenient car phone holder with gravity auto-lock mechanism and stable grip.",
-    images: ["assets/products/carholder1_1.jpg"],
-    category: "Car Accessories",
+    id: "au5",
+    name: "Oppo Enco Air4",
+    price: 79.90,
+    sales: 567,
+    description: "Lightweight wireless earbuds with superior sound quality. Fast charging and seamless Bluetooth connectivity for daily use.",
+    images: ["assets/products/au5/image1.webp", "assets/products/au5/image2.webp", "assets/products/au5/image3.webp"],
+    category: "Audio",
+    brand: "Oppo",
   ),
   Product(
-    id: "p6",
-    name: "Xiaomi Redmi Buds 4 Wireless Earbuds with Active Noise Cancellation",
-    price: 169.00,
-    sales: 250,
-    description: "Stylish earbuds with ANC and long battery life, designed for music and calls.",
-    images: ["assets/products/earbuds2_1.jpg"],
-    category: "Earbuds",
+    id: "au6",
+    name: "Oppo Enco Air4 Pro",
+    price: 129.90,
+    sales: 123,
+    description: "Advanced wireless earbuds with pro-level audio performance. Active noise cancellation and premium build quality.",
+    images: ["assets/products/au6/image1.webp", "assets/products/au6/image2.webp", "assets/products/au6/image3.webp"],
+    category: "Audio",
+    brand: "Oppo",
   ),
   Product(
-    id: "p7",
-    name: "Remax Braided USB-C to USB-A Cable 2m Extra Durable Fast Charging Cable",
-    price: 29.00,
-    sales: 1120,
-    description: "Extra durable braided USB-C cable, tangle-free and ideal for daily use.",
-    images: ["assets/products/cable2_1.jpg"],
-    category: "Cables",
+    id: "au7",
+    name: "Oppo Enco Buds3 Pro",
+    price: 149.90,
+    sales: 445,
+    description: "Professional-grade wireless earbuds with studio-quality sound. Advanced ANC technology and long-lasting battery life.",
+    images: ["assets/products/au7/image1.webp", "assets/products/au7/image2.webp", "assets/products/au7/image3.webp"],
+    category: "Audio",
+    brand: "Oppo",
   ),
   Product(
-    id: "p8",
-    name: "Samsung 25W Super Fast Charger USB-C Adapter with Detachable Cable",
-    price: 79.00,
-    sales: 640,
-    description: "Official Samsung 25W fast charger with detachable cable for Galaxy devices.",
-    images: ["assets/products/adapter2_1.jpg"],
-    category: "Adapters",
+    id: "au8",
+    name: "Redmi Buds 6",
+    price: 39.90,
+    sales: 678,
+    description: "Affordable wireless earbuds with impressive sound quality. Comfortable fit and reliable Bluetooth connection for everyday use.",
+    images: ["assets/products/au8/image1.webp", "assets/products/au8/image2.webp", "assets/products/au8/image3.webp", "assets/products/au8/image4.webp"],
+    category: "Audio",
+    brand: "Redmi",
   ),
   Product(
-    id: "p9",
-    name: "Baseus Car Vacuum Cleaner Portable Mini USB Rechargeable",
-    price: 119.00,
-    sales: 150,
-    description: "Handy portable car vacuum cleaner with strong suction and USB charging.",
-    images: ["assets/products/caraccessory2_1.jpg"],
-    category: "Car Accessories",
-  ),
-  Product(
-    id: "p10",
-    name: "Anker PowerCore Slim 10000mAh Portable Charger with Fast Charging",
-    price: 139.00,
-    sales: 580,
-    description: "Slim and compact power bank with 10000mAh capacity and PowerIQ fast charging.",
-    images: ["assets/products/powerbank2_1.jpg"],
-    category: "Powerbanks",
-  ),
-  Product(
-    id: "p11",
-    name: "Sony WF-C500 True Wireless Bluetooth Earbuds with IPX4 Water Resistance",
-    price: 259.00,
-    sales: 210,
-    description: "Comfortable and stylish earbuds with crisp sound and water resistance.",
-    images: ["assets/products/earbuds3_1.jpg"],
-    category: "Earbuds",
-  ),
-  Product(
-    id: "p12",
-    name: "Anker Nylon Braided Lightning Cable 3m Long iPhone Charger",
+    id: "au9",
+    name: "Redmi Buds 6 Pro",
     price: 69.90,
-    sales: 870,
-    description: "Extra-long braided Lightning cable for iPhone with enhanced durability.",
-    images: ["assets/products/cable3_1.jpg"],
-    category: "Cables",
+    sales: 291,
+    description: "Premium wireless earbuds with enhanced bass and clear highs. Water-resistant design and extended battery performance.",
+    images: ["assets/products/au9/image1.webp", "assets/products/au9/image2.webp", "assets/products/au9/image3.webp", "assets/products/au9/image4.webp", "assets/products/au9/image5.webp"],
+    category: "Audio",
+    brand: "Redmi",
   ),
   Product(
-    id: "p13",
-    name: "UGREEN 20W PD Fast Charger USB-C Compact Wall Adapter",
-    price: 49.00,
-    sales: 970,
-    description: "Compact 20W fast charger, perfect for smartphones and tablets.",
-    images: ["assets/products/adapter3_1.jpg"],
-    category: "Adapters",
+    id: "au10",
+    name: "Samsung Galaxy Buds3",
+    price: 199.90,
+    sales: 834,
+    description: "Latest generation wireless earbuds with cutting-edge audio technology. Seamless device integration and premium materials.",
+    images: ["assets/products/au10/image1.webp", "assets/products/au10/image2.webp", "assets/products/au10/image3.webp", "assets/products/au10/image4.webp", "assets/products/au10/image5.webp"],
+    category: "Audio",
+    brand: "Samsung",
   ),
   Product(
-    id: "p14",
-    name: "Baseus Car Phone Holder Suction Cup Mount 360-Degree Rotation",
-    price: 55.00,
-    sales: 330,
-    description: "Flexible and secure car phone holder with 360-degree rotation feature.",
-    images: ["assets/products/carholder2_1.jpg"],
+    id: "au11",
+    name: "Samsung Galaxy Buds3 Pro",
+    price: 299.90,
+    sales: 512,
+    description: "Flagship wireless earbuds with professional audio quality. Advanced noise cancellation and intelligent sound adaptation.",
+    images: ["assets/products/au11/image1.webp", "assets/products/au11/image2.webp", "assets/products/au11/image3.webp"],
+    category: "Audio",
+    brand: "Samsung",
+  ),
+  Product(
+    id: "au12",
+    name: "Xiaomi Buds 5",
+    price: 59.90,
+    sales: 367,
+    description: "High-performance wireless earbuds with balanced sound profile. Fast charging and comfortable ergonomic design.",
+    images: ["assets/products/au12/image1.webp", "assets/products/au12/image2.webp", "assets/products/au12/image3.webp"],
+    category: "Audio",
+    brand: "Xiaomi",
+  ),
+  Product(
+    id: "au13",
+    name: "Xiaomi Buds 5 Pro",
+    price: 99.90,
+    sales: 198,
+    description: "Premium wireless earbuds with pro-level features. Superior sound quality and advanced noise cancellation technology.",
+    images: ["assets/products/au13/image1.webp", "assets/products/au13/image2.webp"],
+    category: "Audio",
+    brand: "Xiaomi",
+  ),
+
+  // Car Accessories
+  Product(
+    id: "ca1",
+    name: "Baseus 24W USB Car Charger",
+    price: 29.90,
+    sales: 456,
+    description: "Fast charging car adapter with dual USB ports. Compact design with intelligent charging protection and universal compatibility.",
+    images: ["assets/products/ca1/image1.webp", "assets/products/ca1/image2.webp", "assets/products/ca1/image3.webp", "assets/products/ca1/image4.webp", "assets/products/ca1/image5.webp"],
     category: "Car Accessories",
+    brand: "Baseus",
   ),
   Product(
-    id: "p15",
-    name: "Xiaomi Power Bank 10000mAh Fast Charging Dual USB Output",
-    price: 89.00,
-    sales: 1020,
-    description: "Reliable Xiaomi power bank with dual USB output for multiple devices.",
-    images: ["assets/products/powerbank3_1.jpg"],
-    category: "Powerbanks",
-  ),
-  Product(
-    id: "p16",
-    name: "Huawei FreeBuds SE True Wireless Earbuds with Crystal Clear Sound",
-    price: 179.00,
-    sales: 460,
-    description: "Affordable wireless earbuds with great sound quality and comfortable fit.",
-    images: ["assets/products/earbuds4_1.jpg"],
-    category: "Earbuds",
-  ),
-  Product(
-    id: "p17",
-    name: "Baseus USB-C to HDMI Adapter 4K Video Output Converter",
-    price: 69.00,
-    sales: 390,
-    description: "USB-C to HDMI adapter supporting 4K video output for laptops and tablets.",
-    images: ["assets/products/adapter4_1.jpg"],
-    category: "Adapters",
-  ),
-  Product(
-    id: "p18",
-    name: "Remax Car Charger Dual USB 3.1A Fast Charging Adapter",
-    price: 39.00,
-    sales: 750,
-    description: "Convenient car charger with dual USB ports and fast charging support.",
-    images: ["assets/products/caraccessory3_1.jpg"],
+    id: "ca2",
+    name: "Baseus C02 Magnetic Phone Holder",
+    price: 35.90,
+    sales: 723,
+    description: "Strong magnetic phone mount with 360-degree rotation. Easy one-hand operation and secure grip for safe driving.",
+    images: ["assets/products/ca2/image1.webp", "assets/products/ca2/image2.webp", "assets/products/ca2/image3.webp", "assets/products/ca2/image4.webp", "assets/products/ca2/image5.webp"],
     category: "Car Accessories",
+    brand: "Baseus",
   ),
   Product(
-    id: "p19",
-    name: "Anker PowerCore Essential 20000mAh Power Bank High-Capacity Charger",
-    price: 179.00,
-    sales: 670,
-    description: "Massive capacity power bank with PowerIQ fast charging technology.",
-    images: ["assets/products/powerbank4_1.jpg"],
-    category: "Powerbanks",
-  ),
-  Product(
-    id: "p20",
-    name: "Apple USB-C to Lightning Cable Original 1m iPhone Fast Charger",
-    price: 99.00,
-    sales: 530,
-    description: "Official Apple USB-C to Lightning cable, compatible with iPhones and iPads.",
-    images: ["assets/products/cable4_1.jpg"],
-    category: "Cables",
-  ),
-  Product(
-    id: "p21",
-    name: "QCY T13 True Wireless Earbuds Bluetooth 5.1 Deep Bass",
-    price: 109.00,
-    sales: 610,
-    description: "Affordable earbuds with deep bass and stable Bluetooth connection.",
-    images: ["assets/products/earbuds5_1.jpg"],
-    category: "Earbuds",
-  ),
-  Product(
-    id: "p22",
-    name: "UGREEN 100W GaN Fast Charger 4-Port USB-C Adapter Laptop Charger",
-    price: 299.00,
-    sales: 180,
-    description: "High-power GaN charger with 4 ports, capable of charging laptops and tablets.",
-    images: ["assets/products/adapter5_1.jpg"],
-    category: "Adapters",
-  ),
-  Product(
-    id: "p23",
-    name: "Joyroom Car Phone Holder Magnetic Air Vent Mount Strong Grip",
-    price: 45.00,
-    sales: 890,
-    description: "Magnetic car phone holder with strong grip and sleek design.",
-    images: ["assets/products/carholder3_1.jpg"],
+    id: "ca3",
+    name: "Baseus Car Air Vent Phone Holder",
+    price: 25.90,
+    sales: 189,
+    description: "Universal air vent phone mount with adjustable clamp. Stable grip and easy installation for hands-free navigation.",
+    images: ["assets/products/ca3/image1.webp", "assets/products/ca3/image2.webp", "assets/products/ca3/image3.webp", "assets/products/ca3/image4.webp"],
     category: "Car Accessories",
+    brand: "Baseus",
   ),
   Product(
-    id: "p24",
-    name: "Samsung Power Bank 10000mAh Wireless Charging PD Fast Charging",
-    price: 199.00,
-    sales: 240,
-    description: "Samsung power bank with wireless charging and fast USB-C PD output.",
-    images: ["assets/products/powerbank5_1.jpg"],
-    category: "Powerbanks",
-  ),
-  Product(
-    id: "p25",
-    name: "Sony MDR-XB55AP Extra Bass Wired Earbuds with Mic",
-    price: 129.00,
-    sales: 430,
-    description: "Wired earbuds with powerful bass and clear sound for music lovers.",
-    images: ["assets/products/earbuds6_1.jpg"],
-    category: "Earbuds",
-  ),
-  Product(
-    id: "p26",
-    name: "Anker PowerLine+ II USB-C to USB-C Cable 2m Fast Charging",
-    price: 79.00,
-    sales: 940,
-    description: "Strong and durable USB-C cable with fast charging support.",
-    images: ["assets/products/cable5_1.jpg"],
-    category: "Cables",
-  ),
-  Product(
-    id: "p27",
-    name: "Baseus 30W GaN Mini Charger Compact USB-C Wall Adapter",
-    price: 89.00,
-    sales: 560,
-    description: "Mini GaN charger with 30W output for fast charging smartphones.",
-    images: ["assets/products/adapter6_1.jpg"],
-    category: "Adapters",
-  ),
-  Product(
-    id: "p28",
-    name: "Baseus Car Phone Holder Wireless Charging Mount 15W Fast Charge",
-    price: 159.00,
-    sales: 300,
-    description: "Car phone holder with built-in wireless charging for added convenience.",
-    images: ["assets/products/carholder4_1.jpg"],
+    id: "ca4",
+    name: "Baseus Wireless Car Inflator",
+    price: 159.90,
+    sales: 634,
+    description: "Portable wireless tire inflator with digital display. Rechargeable battery and preset pressure settings for convenience.",
+    images: ["assets/products/ca4/image1.webp", "assets/products/ca4/image2.webp", "assets/products/ca4/image3.webp", "assets/products/ca4/image4.webp", "assets/products/ca4/image5.webp"],
     category: "Car Accessories",
+    brand: "Baseus",
+  ),
+
+  // Others
+  Product(
+    id: "ot1",
+    name: "Xiaomi Commuter Backpack",
+    price: 49.90,
+    sales: 278,
+    description: "Durable commuter backpack with laptop compartment and water-resistant material. Multiple pockets for organized storage.",
+    images: ["assets/products/ot1/image1.webp", "assets/products/ot1/image2.webp", "assets/products/ot1/image3.webp"],
+    category: "Others",
+    brand: "Xiaomi",
   ),
   Product(
-    id: "p29",
-    name: "Xiaomi Redmi Power Bank 20000mAh Dual USB Output Portable Charger",
-    price: 129.00,
-    sales: 720,
-    description: "Large capacity Xiaomi power bank with dual USB ports.",
-    images: ["assets/products/powerbank6_1.jpg"],
-    category: "Powerbanks",
+    id: "ot2",
+    name: "Xiaomi Electric Precision Screwdriver",
+    price: 79.90,
+    sales: 145,
+    description: "Precision electric screwdriver with multiple bits included. Rechargeable battery and LED light for detailed work.",
+    images: ["assets/products/ot2/image1.webp", "assets/products/ot2/image2.webp", "assets/products/ot2/image3.webp"],
+    category: "Others",
+    brand: "Xiaomi",
   ),
   Product(
-    id: "p30",
-    name: "Baseus CAT7 Ethernet Cable 5m High-Speed Network Cable",
-    price: 49.00,
-    sales: 210,
-    description: "High-speed CAT7 Ethernet cable for stable internet connections.",
-    images: ["assets/products/cable6_1.jpg"],
-    category: "Cables",
+    id: "ot3",
+    name: "Xiaomi Ionic Hair Dryer H300",
+    price: 119.90,
+    sales: 523,
+    description: "Professional ionic hair dryer with multiple heat settings. Reduces frizz and dries hair quickly with negative ion technology.",
+    images: ["assets/products/ot3/image1.webp", "assets/products/ot3/image2.webp"],
+    category: "Others",
+    brand: "Xiaomi",
   ),
+  Product(
+    id: "ot4",
+    name: "Xiaomi Ionic Hair Dryer H500",
+    price: 189.90,
+    sales: 89,
+    description: "Advanced ionic hair dryer with smart temperature control. Professional-grade performance with hair protection technology.",
+    images: ["assets/products/ot4/image1.webp", "assets/products/ot4/image2.webp", "assets/products/ot4/image3.webp"],
+    category: "Others",
+    brand: "Xiaomi",
+  ),
+  Product(
+    id: "ot5",
+    name: "Xiaomi Multi-function Flashlight",
+    price: 39.90,
+    sales: 412,
+    description: "Versatile LED flashlight with multiple brightness modes. Rechargeable battery and durable aluminum construction.",
+    images: ["assets/products/ot5/image1.webp", "assets/products/ot5/image2.webp", "assets/products/ot5/image3.webp"],
+    category: "Others",
+    brand: "Xiaomi",
+  ),
+  Product(
+    id: "ot6",
+    name: "Xiaomi Nose Hair Trimmer",
+    price: 29.90,
+    sales: 167,
+    description: "Precision nose hair trimmer with safe rounded blades. Washable design and quiet operation for comfortable grooming.",
+    images: ["assets/products/ot6/image1.webp", "assets/products/ot6/image2.webp", "assets/products/ot6/image3.webp"],
+    category: "Others",
+    brand: "Xiaomi",
+  ),
+
+	
+	
+
 ];

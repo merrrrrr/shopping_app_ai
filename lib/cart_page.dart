@@ -34,16 +34,21 @@ class _CartPageState extends State<CartPage> {
                       final product = cartItems[index];
                       return Card(
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         child: ListTile(
                           leading: Image.asset(
                             product.images.first,
-                            width: 50,
-                            height: 50,
+                            width: 60,
+                            height: 60,
                             fit: BoxFit.cover,
                           ),
                           title: Text(
                             product.name,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),

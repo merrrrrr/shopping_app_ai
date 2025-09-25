@@ -11,19 +11,24 @@ class ProductDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-				child: Column(
-					children: [
-						SizedBox(
-							height: 250,
-							child: PageView(
-								children: product.images.map((image) {
-									return Image.asset(image, fit: BoxFit.cover);
-								}).toList(),
+				child: SingleChildScrollView(
+					padding: const EdgeInsets.only(bottom: 48),
+					child: Column(
+						crossAxisAlignment: CrossAxisAlignment.start,
+						children: [
+							SizedBox(
+								height: 400,
+								child: PageView(
+									children: product.images.map((image) {
+										return Image.asset(image, fit: BoxFit.contain);
+									}).toList(),
+								),
 							),
-						),
-						Expanded(
-							child: SingleChildScrollView(
-								padding: const EdgeInsets.all(16),
+
+							const SizedBox(height: 16),
+
+							Padding(
+								padding: const EdgeInsets.symmetric(horizontal: 16),
 								child: Column(
 									crossAxisAlignment: CrossAxisAlignment.start,
 									children: [
@@ -31,20 +36,36 @@ class ProductDetailsPage extends StatelessWidget {
 											product.name,
 											style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 										),
+											
 										const SizedBox(height: 8),
+											
 										Text(
 											"RM ${product.price.toStringAsFixed(2)}",
 											style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.red),
 										),
+											
 										const SizedBox(height: 8),
+										
 										Text("Sales: ${product.sales}"),
+											
+										
+										const SizedBox(height: 32),
+											
+										Divider(color: Colors.grey),
+											
+										const Text("Product Description", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+											
 										const SizedBox(height: 16),
-										Text(product.description),
+											
+										Text(
+											style: const TextStyle(height: 1.75),
+											product.description == "" ? "No description available." : product.description,
+										),
 									],
 								),
 							),
-						),
-					],
+						],
+					),
 				),
 			),
       bottomNavigationBar: SafeArea(

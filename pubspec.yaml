@@ -18,4 +18,35 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/
+    - assets/products/ch1/
+    - assets/products/ch2/
+    - assets/products/ch3/
+    - assets/products/ch4/
+    - assets/products/ch5/
+    - assets/products/ch6/
+    - assets/products/ch7/
+    - assets/products/ch8/
+    - assets/products/ch9/
+    - assets/products/au1/
+    - assets/products/au2/
+    - assets/products/au3/
+    - assets/products/au4/
+    - assets/products/au5/
+    - assets/products/au6/
+    - assets/products/au7/
+    - assets/products/au8/
+    - assets/products/au9/
+    - assets/products/au10/
+    - assets/products/au11/
+    - assets/products/au12/
+    - assets/products/au13/
+    - assets/products/ca1/
+    - assets/products/ca2/
+    - assets/products/ca3/
+    - assets/products/ca4/
+    - assets/products/ot1/
+    - assets/products/ot2/
+    - assets/products/ot3/
+    - assets/products/ot4/
+    - assets/products/ot5/
+    - assets/products/ot6/
