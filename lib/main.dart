@@ -10,9 +10,41 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-			debugShowCheckedModeBanner: false,
-      home: BottomNavBar(),
+    return MaterialApp(
+      theme: ThemeData(
+				scaffoldBackgroundColor: Colors.white,
+				appBarTheme: const AppBarTheme(
+					backgroundColor: Colors.white,
+					shadowColor: Colors.grey,
+				),
+
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.blueGrey[700],
+          unselectedItemColor: Colors.grey,
+        ),
+
+				cardTheme: CardThemeData(
+					color: Colors.white,
+					shadowColor: Colors.grey[200],
+					elevation: 2
+				),
+
+				elevatedButtonTheme: ElevatedButtonThemeData(
+					style: ElevatedButton.styleFrom(
+						backgroundColor: Colors.blueGrey[700],
+						foregroundColor: Colors.white,
+						textStyle: TextStyle(
+							fontWeight: FontWeight.bold,
+							fontSize: 16,
+						),
+					),
+				),
+
+        useMaterial3: true,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const BottomNavBar(),
     );
   }
 }

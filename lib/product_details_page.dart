@@ -10,104 +10,122 @@ class ProductDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-				child: SingleChildScrollView(
-					padding: const EdgeInsets.only(bottom: 48),
-					child: Column(
-						crossAxisAlignment: CrossAxisAlignment.start,
-						children: [
-							SizedBox(
-								height: 400,
-								child: PageView(
-									children: product.images.map((image) {
-										return Image.asset(image, fit: BoxFit.contain);
-									}).toList(),
-								),
-							),
-
-							const SizedBox(height: 16),
-
-							Padding(
-								padding: const EdgeInsets.symmetric(horizontal: 16),
-								child: Column(
-									crossAxisAlignment: CrossAxisAlignment.start,
+      body: SizedBox.expand(
+				child: SafeArea(
+								child: Stack(
 									children: [
-										Text(
-											product.name,
-											style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-										),
-											
-										const SizedBox(height: 8),
-											
-										Text(
-											"RM ${product.price.toStringAsFixed(2)}",
-											style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.red),
-										),
-											
-										const SizedBox(height: 8),
+										SingleChildScrollView(
+											padding: const EdgeInsets.only(bottom: 80),
+											child: Column(
+												crossAxisAlignment: CrossAxisAlignment.start,
+												children: [
+													SizedBox(
+														height: 400,
+														child: PageView(
+															children: product.images.map((image) {
+																return Image.asset(image, fit: BoxFit.contain);
+															}).toList(),
+														),
+													),
 										
-										Text("Sales: ${product.sales}"),
-											
+													const SizedBox(height: 16),
 										
-										const SizedBox(height: 32),
-											
-										Divider(color: Colors.grey),
-											
-										const Text("Product Description", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-											
-										const SizedBox(height: 16),
-											
-										Text(
-											style: const TextStyle(height: 1.75),
-											product.description == "" ? "No description available." : product.description,
+													Padding(
+														padding: const EdgeInsets.symmetric(horizontal: 16),
+														child: Column(
+															crossAxisAlignment: CrossAxisAlignment.start,
+															children: [
+																Text(
+																	product.name,
+																	style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+																),
+																	
+																const SizedBox(height: 8),
+																	
+																Text(
+																	"RM ${product.price.toStringAsFixed(2)}",
+																	style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.cyan[500]),
+																),
+																	
+																const SizedBox(height: 8),
+																
+																Text("Sales: ${product.sales}"),
+																	
+																
+																const SizedBox(height: 32),
+																	
+																Divider(color: Colors.grey),
+																	
+																const Text("Product Description", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+																	
+																const SizedBox(height: 16),
+																	
+																Text(
+																	style: const TextStyle(height: 1.75),
+																	product.description == "" ? "No description available." : product.description,
+																),
+															],
+														),
+													),
+												],
+											),
 										),
-									],
+				
+										Positioned(
+											top: 16,
+											right: 16,
+											child: Container(
+												decoration: BoxDecoration(
+													color: Colors.white,
+													borderRadius: BorderRadius.circular(25),
+													boxShadow: [
+														BoxShadow(
+															color: Colors.grey.withAlpha(125),
+															blurRadius: 5,
+															offset: const Offset(0, 3),
+														),
+													],
+												),
+												child: IconButton(
+													onPressed: () {
+														
+													},
+													style: ButtonStyle(
+														splashFactory: NoSplash.splashFactory
+													),
+													icon: const Icon(Icons.favorite_border),
+												),
+											),
+										),
+				
+										Positioned(
+											bottom: 0,
+											left: 0,
+											right: 0,
+											child: Container(
+												padding: const EdgeInsets.all(12),
+												decoration: BoxDecoration(
+													color: Colors.white
+												),
+												child: ElevatedButton(
+													onPressed: () {
+														cartItems.add(product);
+													},
+													style: ElevatedButton.styleFrom(
+														padding: const EdgeInsets.symmetric(vertical: 16),
+														shape: RoundedRectangleBorder(
+															borderRadius: BorderRadius.circular(12),
+														),
+													),
+													child: const Text("Add to Cart"),
+												),
+											)
+										),
+									]
 								),
 							),
-						],
-					),
-				),
 			),
-      bottomNavigationBar: SafeArea(
-				child: Container(
-					padding: const EdgeInsets.all(12),
-					decoration: BoxDecoration(
-						color: Colors.white,
-						boxShadow: [
-							BoxShadow(color: Colors.black12, blurRadius: 5, offset: Offset(0, -2)),
-						],
-					),
-					child: Row(
-						children: [
-							Expanded(
-								child: ElevatedButton(
-									onPressed: () {
-										cartItems.add(product); // 🛒 Add to global cart
-										ScaffoldMessenger.of(context).showSnackBar(
-											const SnackBar(content: Text("Added to Cart")),
-										);
-													
-									},
-									child: const Text("Add to Cart"),
-								),
-							),
-							const SizedBox(width: 12),
-							Expanded(
-								child: ElevatedButton(
-									onPressed: () {
-										// Later: direct checkout logic
-										ScaffoldMessenger.of(context).showSnackBar(
-											const SnackBar(content: Text("Proceed to Buy Now")),
-										);
-									},
-									style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-									child: const Text("Buy Now"),
-								),
-							),
-						],
-					),
-				),
-			),
+    
     );
   }
 }

@@ -9,27 +9,28 @@ final List<Product> products = [
     price: 75.90,
     sales: 500,
     description: "Name: Baseus Qpow2 Dual-Cable Digital Display Fast Charge PowerBank 22.5W\n"
-			"Color: Nebula Purple\n"
-			"Weight: About 370g\n"
-			"Battery: Polymer lithium battery\n"
-			"Capacity: 10000mAh / 20000mAh\n"
-			"Rated Capacity: 12000mAh(5V/2.4A)\n"
-			"Energy Conversion: >=75%\n"
-			"Type-C Input: 5V/3A, 9V/2A, 12V/1.5A\n"
-			"Type-C Output: 5V/2.4A, 9V/2.22A, 12V1.5A\n"
-			"Type-C Cable Output: 5V/2.4A; 9V/2A; 12V/1.5A; 10V/2.25A(SCP)\n"
-			"IP Cable Output: 5V/2.4A; 9V/2.22A\n"
-			"USB Output: 5V/2.4A\n"
-			"Total Output: 5V/2.4A",
+      "Color: Nebula Purple\n"
+      "Weight: About 370g\n"
+      "Battery: Polymer lithium battery\n"
+      "Capacity: 10000mAh / 20000mAh\n"
+      "Rated Capacity: 12000mAh(5V/2.4A)\n"
+      "Energy Conversion: >=75%\n"
+      "Type-C Input: 5V/3A, 9V/2A, 12V/1.5A\n"
+      "Type-C Output: 5V/2.4A, 9V/2.22A, 12V1.5A\n"
+      "Type-C Cable Output: 5V/2.4A; 9V/2A; 12V/1.5A; 10V/2.25A(SCP)\n"
+      "IP Cable Output: 5V/2.4A; 9V/2.22A\n"
+      "USB Output: 5V/2.4A\n"
+      "Total Output: 5V/2.4A",
     images: [
-			"assets/products/ch1/image1.webp",
-			"assets/products/ch1/image2.webp",
-			"assets/products/ch1/image3.webp",
-			"assets/products/ch1/image4.webp",
-			"assets/products/ch1/image5.webp"
-		],
+      "assets/products/ch1/image1.webp",
+      "assets/products/ch1/image2.webp",
+      "assets/products/ch1/image3.webp",
+      "assets/products/ch1/image4.webp",
+      "assets/products/ch1/image5.webp"
+    ],
     category: "Charging",
-		brand: "Baseus",
+    brand: "Baseus",
+    rating: 4.7,
   ),
 
   Product(
@@ -38,24 +39,25 @@ final List<Product> products = [
     price: 50.90,
     sales: 127,
     description: "Model No: PPBY-2W15NG\n"
-			"Battery Type: Polymer Lithium-lon Battery\n"
-			"Battery Energy: 20000mAh 3.7V/74Wh\n"
-			"Capacity Cell: 10000mAh*2pcs\n"
-			"Type-C Input: 5V=3A\n"
-			"Type-C Output: 5V=3A\n"
-			"Micro Input: 5V=2A\n"
-			"Type-C Output: 5V-3A\n"
-			"USB1&2 Output: 5V=2.4A\n"
-			"Total Output: 5V=3A\n"
-			"Product Weight: 400g",
+      "Battery Type: Polymer Lithium-lon Battery\n"
+      "Battery Energy: 20000mAh 3.7V/74Wh\n"
+      "Capacity Cell: 10000mAh*2pcs\n"
+      "Type-C Input: 5V=3A\n"
+      "Type-C Output: 5V=3A\n"
+      "Micro Input: 5V=2A\n"
+      "Type-C Output: 5V-3A\n"
+      "USB1&2 Output: 5V=2.4A\n"
+      "Total Output: 5V=3A\n"
+      "Product Weight: 400g",
     images: [
-			"assets/products/ch2/image1.webp",
-			"assets/products/ch2/image2.webp",
-			"assets/products/ch2/image3.webp",
-			"assets/products/ch2/image4.webp"
-		],
+      "assets/products/ch2/image1.webp",
+      "assets/products/ch2/image2.webp",
+      "assets/products/ch2/image3.webp",
+      "assets/products/ch2/image4.webp"
+    ],
     category: "Charging",
-		brand: "Baseus",
+    brand: "Baseus",
+    rating: 4.5,
   ),
 
   Product(
@@ -64,29 +66,30 @@ final List<Product> products = [
     price: 75.90,
     sales: 94,
     description: "Output Interface: USB-Type C\n"
-			"Input Interface: USB Type C\n"
-			"Battery Type: Lithium Battery\n"
-			"Shell Material: Silicon\n"
-			"Features: wireless charge\n"
-			"Origin: Mainland China\n"
-			"Type: Portable Power Bank\n"
-			"Certification: RoHS,CE,FCC\n"
-			"Support Quick Charge Technology: Two-way Quick Charge\n"
-			"Max Input: 20W\n"
-			"Rated Capacity: 5800mah (5V / 2.4A)\n"
-			"Energy conversion rate: >75%\n"
-			"Type-c Input: 5V/3A; 9V/2A\n"
-			"Type-c Output: 5V/2.4A; 9V/2.22A; 12V/1.5A\n"
-			"Wireless Charge output: 5W/7.5W/10W/15W\n"
-			"Total Output: 5V/2.4A",
+      "Input Interface: USB Type C\n"
+      "Battery Type: Lithium Battery\n"
+      "Shell Material: Silicon\n"
+      "Features: wireless charge\n"
+      "Origin: Mainland China\n"
+      "Type: Portable Power Bank\n"
+      "Certification: RoHS,CE,FCC\n"
+      "Support Quick Charge Technology: Two-way Quick Charge\n"
+      "Max Input: 20W\n"
+      "Rated Capacity: 5800mah (5V / 2.4A)\n"
+      "Energy conversion rate: >75%\n"
+      "Type-c Input: 5V/3A; 9V/2A\n"
+      "Type-c Output: 5V/2.4A; 9V/2.22A; 12V/1.5A\n"
+      "Wireless Charge output: 5W/7.5W/10W/15W\n"
+      "Total Output: 5V/2.4A",
     images: [
-			"assets/products/ch3/image1.webp",
-			"assets/products/ch3/image2.webp",
-			"assets/products/ch3/image3.webp",
-			"assets/products/ch3/image4.webp"
-		],
+      "assets/products/ch3/image1.webp",
+      "assets/products/ch3/image2.webp",
+      "assets/products/ch3/image3.webp",
+      "assets/products/ch3/image4.webp"
+    ],
     category: "Charging",
-		brand: "Baseus",
+    brand: "Baseus",
+    rating: 4.6,
   ),
 
   Product(
@@ -96,13 +99,14 @@ final List<Product> products = [
     sales: 122,
     description: "",
     images: [
-			"assets/products/ch4/image1.webp",
-			"assets/products/ch4/image2.webp",
-			"assets/products/ch4/image3.webp",
-			"assets/products/ch4/image4.webp"
-		],
+      "assets/products/ch4/image1.webp",
+      "assets/products/ch4/image2.webp",
+      "assets/products/ch4/image3.webp",
+      "assets/products/ch4/image4.webp"
+    ],
     category: "Charging",
-		brand: "Xiaomi",
+    brand: "Xiaomi",
+    rating: 4.3,
   ),
 
   Product(
@@ -111,25 +115,26 @@ final List<Product> products = [
     price: 84.90,
     sales: 588,
     description: "Brand: Xiaomi\n"
-			"Powerbank Capacity Size: 10001 - 20000mAh\n"
-			"Powerbank Features: Built-in Cable\n"
-			"Input Interface: Type-C\n"
-			"Output Interface: Type-C, Lightning, USB-A\n"
-			"Battery Type: Lithium Polymer Battery\n"
-			"Warranty Type: Manufacturer Warranty\n"
-			"Warranty Duration: 6 Months\n"
-			"Mobile Cable Type: Type C,\n",
+      "Powerbank Capacity Size: 10001 - 20000mAh\n"
+      "Powerbank Features: Built-in Cable\n"
+      "Input Interface: Type-C\n"
+      "Output Interface: Type-C, Lightning, USB-A\n"
+      "Battery Type: Lithium Polymer Battery\n"
+      "Warranty Type: Manufacturer Warranty\n"
+      "Warranty Duration: 6 Months\n"
+      "Mobile Cable Type: Type C,\n",
     images: [
-			"assets/products/ch5/image1.webp",
-			"assets/products/ch5/image2.webp",
-			"assets/products/ch5/image3.webp",
-			"assets/products/ch5/image4.webp",
-			"assets/products/ch5/image5.webp",
-			"assets/products/ch5/image6.webp",
-			"assets/products/ch5/image7.webp"
-		],
+      "assets/products/ch5/image1.webp",
+      "assets/products/ch5/image2.webp",
+      "assets/products/ch5/image3.webp",
+      "assets/products/ch5/image4.webp",
+      "assets/products/ch5/image5.webp",
+      "assets/products/ch5/image6.webp",
+      "assets/products/ch5/image7.webp"
+    ],
     category: "Charging",
-		brand: "Xiaomi",
+    brand: "Xiaomi",
+    rating: 4.4,
   ),
 
   Product(
@@ -138,20 +143,21 @@ final List<Product> products = [
     price: 89.90,
     sales: 1755,
     description: "Brand: Xiaomi\n"
-		"Powerbank Capacity Size: 5000 - 10000mAh\n"
-		"Number of Ports: 3\n"
-		"Powerbank Features: Built-in Cable, Multiple Device Charging\n"
-		"Input Type: Type C\n"
-		"Warranty Type: Manufacturer Warranty\n"
-		"Warranty Duration: 6 Months\n"
-		"Mobile Cable Type: Type C\n",
+    "Powerbank Capacity Size: 5000 - 10000mAh\n"
+    "Number of Ports: 3\n"
+    "Powerbank Features: Built-in Cable, Multiple Device Charging\n"
+    "Input Type: Type C\n"
+    "Warranty Type: Manufacturer Warranty\n"
+    "Warranty Duration: 6 Months\n"
+    "Mobile Cable Type: Type C\n",
     images: [
-			"assets/products/ch6/image1.webp",
-			"assets/products/ch6/image2.webp",
-			"assets/products/ch6/image3.webp",
-		],
+      "assets/products/ch6/image1.webp",
+      "assets/products/ch6/image2.webp",
+      "assets/products/ch6/image3.webp",
+    ],
     category: "Charging",
-		brand: "Xiaomi",
+    brand: "Xiaomi",
+    rating: 4.8,
   ),
 	
   Product(
@@ -160,20 +166,21 @@ final List<Product> products = [
     price: 11.90,
     sales: 796,
     description: "Item Name: Baseus 3 in 1 USB Cable\n"
-		"Cable Material: Aluminum Alloy+Nylon Braided Wire\n"
-		"Cable Length: 1.2m\n"
-		"Line Output Current A: 3 Ports 3.5A (Max)\n"
-		"Line Output Current B: Single Port 2A Max\n"
-		"Cable Suitable: For 8 Pins/USB Type C / Micro USB Interface Mobile Phones",
+    "Cable Material: Aluminum Alloy+Nylon Braided Wire\n"
+    "Cable Length: 1.2m\n"
+    "Line Output Current A: 3 Ports 3.5A (Max)\n"
+    "Line Output Current B: Single Port 2A Max\n"
+    "Cable Suitable: For 8 Pins/USB Type C / Micro USB Interface Mobile Phones",
     images: [
-			"assets/products/ch7/image1.webp",
-			"assets/products/ch7/image2.webp",
-			"assets/products/ch7/image3.webp",
-			"assets/products/ch7/image4.webp",
-			"assets/products/ch7/image5.webp",
-		],
+      "assets/products/ch7/image1.webp",
+      "assets/products/ch7/image2.webp",
+      "assets/products/ch7/image3.webp",
+      "assets/products/ch7/image4.webp",
+      "assets/products/ch7/image5.webp",
+    ],
     category: "Charging",
-		brand: "Baseus",
+    brand: "Baseus",
+    rating: 4.2,
   ),
 	
   Product(
@@ -182,20 +189,21 @@ final List<Product> products = [
     price: 8.90,
     sales: 1795,
     description: "Material: Soft TPE\n"
-		"Color: Nebula Purple\n"
-		"Length: 1.2m\n"
-		"Power: 20W/27W\n"
-		"Transmission Rate: 480Mbps\n"
-		"Input: Type-C\n"
-		"Output: Lightning",
+    "Color: Nebula Purple\n"
+    "Length: 1.2m\n"
+    "Power: 20W/27W\n"
+    "Transmission Rate: 480Mbps\n"
+    "Input: Type-C\n"
+    "Output: Lightning",
     images: [
-			"assets/products/ch8/image1.webp",
-			"assets/products/ch8/image2.webp",
-			"assets/products/ch8/image3.webp",
-			"assets/products/ch8/image4.webp",
-		],
+      "assets/products/ch8/image1.webp",
+      "assets/products/ch8/image2.webp",
+      "assets/products/ch8/image3.webp",
+      "assets/products/ch8/image4.webp",
+    ],
     category: "Charging",
-		brand: "Baseus",
+    brand: "Baseus",
+    rating: 4.1,
   ),
 	
   Product(
@@ -204,20 +212,21 @@ final List<Product> products = [
     price: 11.90,
     sales: 627,
     description: "Material: Soft TPE\n"
-		"Color: Nebula Purple\n"
-		"Length: 1.2m\n"
-		"Power: 100W\n"
-		"Transmission Rate: 480Mbps\n"
-		"Input: USB\n"
-		"Output: Type-C",
+    "Color: Nebula Purple\n"
+    "Length: 1.2m\n"
+    "Power: 100W\n"
+    "Transmission Rate: 480Mbps\n"
+    "Input: USB\n"
+    "Output: Type-C",
     images: [
-			"assets/products/ch9/image1.webp",
-			"assets/products/ch9/image2.webp",
-			"assets/products/ch9/image3.webp",
-			"assets/products/ch9/image4.webp",
-		],
+      "assets/products/ch9/image1.webp",
+      "assets/products/ch9/image2.webp",
+      "assets/products/ch9/image3.webp",
+      "assets/products/ch9/image4.webp",
+    ],
     category: "Charging",
-		brand: "Baseus",
+    brand: "Baseus",
+    rating: 4.0,
   ),
 	
   // Audio Products
@@ -230,6 +239,7 @@ final List<Product> products = [
     images: ["assets/products/au1/image1.webp", "assets/products/au1/image2.webp", "assets/products/au1/image3.webp", "assets/products/au1/image4.webp", "assets/products/au1/image5.webp"],
     category: "Audio",
     brand: "Baseus",
+    rating: 4.6,
   ),
   Product(
     id: "au2",
@@ -240,6 +250,7 @@ final List<Product> products = [
     images: ["assets/products/au2/image1.webp", "assets/products/au2/image2.webp", "assets/products/au2/image3.webp", "assets/products/au2/image4.webp"],
     category: "Audio",
     brand: "Baseus",
+    rating: 4.4,
   ),
   Product(
     id: "au3",
@@ -250,6 +261,7 @@ final List<Product> products = [
     images: ["assets/products/au3/image1.webp", "assets/products/au3/image2.webp", "assets/products/au3/image3.webp", "assets/products/au3/image4.webp", "assets/products/au3/image5.webp"],
     category: "Audio",
     brand: "Baseus",
+    rating: 4.3,
   ),
   Product(
     id: "au4",
@@ -260,6 +272,7 @@ final List<Product> products = [
     images: ["assets/products/au4/image1.webp", "assets/products/au4/image2.webp", "assets/products/au4/image3.webp", "assets/products/au4/image4.webp", "assets/products/au4/image5.webp"],
     category: "Audio",
     brand: "Baseus",
+    rating: 4.2,
   ),
   Product(
     id: "au5",
@@ -270,6 +283,7 @@ final List<Product> products = [
     images: ["assets/products/au5/image1.webp", "assets/products/au5/image2.webp", "assets/products/au5/image3.webp"],
     category: "Audio",
     brand: "Oppo",
+    rating: 4.5,
   ),
   Product(
     id: "au6",
@@ -280,6 +294,7 @@ final List<Product> products = [
     images: ["assets/products/au6/image1.webp", "assets/products/au6/image2.webp", "assets/products/au6/image3.webp"],
     category: "Audio",
     brand: "Oppo",
+    rating: 4.7,
   ),
   Product(
     id: "au7",
@@ -290,6 +305,7 @@ final List<Product> products = [
     images: ["assets/products/au7/image1.webp", "assets/products/au7/image2.webp", "assets/products/au7/image3.webp"],
     category: "Audio",
     brand: "Oppo",
+    rating: 4.8,
   ),
   Product(
     id: "au8",
@@ -300,6 +316,7 @@ final List<Product> products = [
     images: ["assets/products/au8/image1.webp", "assets/products/au8/image2.webp", "assets/products/au8/image3.webp", "assets/products/au8/image4.webp"],
     category: "Audio",
     brand: "Redmi",
+    rating: 4.2,
   ),
   Product(
     id: "au9",
@@ -310,6 +327,7 @@ final List<Product> products = [
     images: ["assets/products/au9/image1.webp", "assets/products/au9/image2.webp", "assets/products/au9/image3.webp", "assets/products/au9/image4.webp", "assets/products/au9/image5.webp"],
     category: "Audio",
     brand: "Redmi",
+    rating: 4.3,
   ),
   Product(
     id: "au10",
@@ -320,6 +338,7 @@ final List<Product> products = [
     images: ["assets/products/au10/image1.webp", "assets/products/au10/image2.webp", "assets/products/au10/image3.webp", "assets/products/au10/image4.webp", "assets/products/au10/image5.webp"],
     category: "Audio",
     brand: "Samsung",
+    rating: 4.9,
   ),
   Product(
     id: "au11",
@@ -330,6 +349,7 @@ final List<Product> products = [
     images: ["assets/products/au11/image1.webp", "assets/products/au11/image2.webp", "assets/products/au11/image3.webp"],
     category: "Audio",
     brand: "Samsung",
+    rating: 5.0,
   ),
   Product(
     id: "au12",
@@ -340,6 +360,7 @@ final List<Product> products = [
     images: ["assets/products/au12/image1.webp", "assets/products/au12/image2.webp", "assets/products/au12/image3.webp"],
     category: "Audio",
     brand: "Xiaomi",
+    rating: 4.4,
   ),
   Product(
     id: "au13",
@@ -350,6 +371,7 @@ final List<Product> products = [
     images: ["assets/products/au13/image1.webp", "assets/products/au13/image2.webp"],
     category: "Audio",
     brand: "Xiaomi",
+    rating: 4.7,
   ),
 
   // Car Accessories
@@ -362,6 +384,7 @@ final List<Product> products = [
     images: ["assets/products/ca1/image1.webp", "assets/products/ca1/image2.webp", "assets/products/ca1/image3.webp", "assets/products/ca1/image4.webp", "assets/products/ca1/image5.webp"],
     category: "Car Accessories",
     brand: "Baseus",
+    rating: 4.5,
   ),
   Product(
     id: "ca2",
@@ -372,6 +395,7 @@ final List<Product> products = [
     images: ["assets/products/ca2/image1.webp", "assets/products/ca2/image2.webp", "assets/products/ca2/image3.webp", "assets/products/ca2/image4.webp", "assets/products/ca2/image5.webp"],
     category: "Car Accessories",
     brand: "Baseus",
+    rating: 4.4,
   ),
   Product(
     id: "ca3",
@@ -382,6 +406,7 @@ final List<Product> products = [
     images: ["assets/products/ca3/image1.webp", "assets/products/ca3/image2.webp", "assets/products/ca3/image3.webp", "assets/products/ca3/image4.webp"],
     category: "Car Accessories",
     brand: "Baseus",
+    rating: 4.3,
   ),
   Product(
     id: "ca4",
@@ -392,6 +417,7 @@ final List<Product> products = [
     images: ["assets/products/ca4/image1.webp", "assets/products/ca4/image2.webp", "assets/products/ca4/image3.webp", "assets/products/ca4/image4.webp", "assets/products/ca4/image5.webp"],
     category: "Car Accessories",
     brand: "Baseus",
+    rating: 4.6,
   ),
 
   // Others
@@ -404,6 +430,7 @@ final List<Product> products = [
     images: ["assets/products/ot1/image1.webp", "assets/products/ot1/image2.webp", "assets/products/ot1/image3.webp"],
     category: "Others",
     brand: "Xiaomi",
+    rating: 4.5,
   ),
   Product(
     id: "ot2",
@@ -414,6 +441,7 @@ final List<Product> products = [
     images: ["assets/products/ot2/image1.webp", "assets/products/ot2/image2.webp", "assets/products/ot2/image3.webp"],
     category: "Others",
     brand: "Xiaomi",
+    rating: 4.4,
   ),
   Product(
     id: "ot3",
@@ -424,6 +452,7 @@ final List<Product> products = [
     images: ["assets/products/ot3/image1.webp", "assets/products/ot3/image2.webp"],
     category: "Others",
     brand: "Xiaomi",
+    rating: 4.3,
   ),
   Product(
     id: "ot4",
@@ -434,6 +463,7 @@ final List<Product> products = [
     images: ["assets/products/ot4/image1.webp", "assets/products/ot4/image2.webp", "assets/products/ot4/image3.webp"],
     category: "Others",
     brand: "Xiaomi",
+    rating: 4.2,
   ),
   Product(
     id: "ot5",
@@ -444,6 +474,7 @@ final List<Product> products = [
     images: ["assets/products/ot5/image1.webp", "assets/products/ot5/image2.webp", "assets/products/ot5/image3.webp"],
     category: "Others",
     brand: "Xiaomi",
+    rating: 4.1,
   ),
   Product(
     id: "ot6",
@@ -454,6 +485,7 @@ final List<Product> products = [
     images: ["assets/products/ot6/image1.webp", "assets/products/ot6/image2.webp", "assets/products/ot6/image3.webp"],
     category: "Others",
     brand: "Xiaomi",
+    rating: 4.0,
   ),
 
 	

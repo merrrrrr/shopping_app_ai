@@ -9,9 +9,24 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  // Calculate total price
+  // Track quantity for each cart item
+  final Map<int, int> quantities = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize quantities to 1 for each item
+    for (int i = 0; i < cartItems.length; i++) {
+      quantities[i] = 1;
+    }
+  }
+
   double get totalPrice {
-    return cartItems.fold(0, (sum, item) => sum + item.price);
+    double total = 0;
+    for (int i = 0; i < cartItems.length; i++) {
+      total += cartItems[i].price * (quantities[i] ?? 1);
+    }
+    return total;
   }
 
   @override
@@ -32,40 +47,85 @@ class _CartPageState extends State<CartPage> {
                     itemCount: cartItems.length,
                     itemBuilder: (context, index) {
                       final product = cartItems[index];
+                      final quantity = quantities[index] ?? 1;
                       return Card(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 8,
                           vertical: 4,
                         ),
-                        child: ListTile(
-                          leading: Image.asset(
-                            product.images.first,
-                            width: 60,
-                            height: 60,
-                            fit: BoxFit.cover,
-                          ),
-                          title: Text(
-                            product.name,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          subtitle: Text(
-                            "RM ${product.price.toStringAsFixed(2)}",
-                            style: const TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () {
-                              setState(() {
-                                cartItems.removeAt(index);
-                              });
-                            },
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.asset(
+                                  product.images.first,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Row(
+																			mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "RM ${product.price.toStringAsFixed(2)}",
+                                          style: const TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+
+																				Row(
+																					children: [
+																						IconButton(
+																							icon: const Icon(Icons.remove_circle_outline),
+																							onPressed: quantity > 1
+																									? () {
+																											setState(() {
+																												quantities[index] = quantity - 1;
+																											});
+																										}
+																									: null,
+																						),
+																						Text(
+																							quantity.toString(),
+																							style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+																						),
+																						IconButton(
+																							icon: const Icon(Icons.add_circle_outline),
+																							onPressed: () {
+																								setState(() {
+																									quantities[index] = quantity + 1;
+																								});
+																							},
+																						),
+																					],
+																				),
+                                      ],
+                                    ),
+                                    
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );
