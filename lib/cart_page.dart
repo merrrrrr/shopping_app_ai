@@ -2,31 +2,28 @@ import 'package:flutter/material.dart';
 import 'data/cart.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  const CartPage({super.key});
 
   @override
   State<CartPage> createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
-  // Track quantity for each cart item
-  final Map<int, int> quantities = {};
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize quantities to 1 for each item
-    for (int i = 0; i < cartItems.length; i++) {
-      quantities[i] = 1;
-    }
-  }
 
   double get totalPrice {
     double total = 0;
-    for (int i = 0; i < cartItems.length; i++) {
-      total += cartItems[i].price * (quantities[i] ?? 1);
+    for (final cartItem in cartItems) {
+      final product = cartItem.keys.first;
+      final quantity = cartItem.values.first;
+      total += product.price * quantity;
     }
     return total;
+  }
+
+  void removeItem(int index) {
+    setState(() {
+      cartItems.removeAt(index);
+    });
   }
 
   @override
@@ -46,8 +43,10 @@ class _CartPageState extends State<CartPage> {
                   child: ListView.builder(
                     itemCount: cartItems.length,
                     itemBuilder: (context, index) {
-                      final product = cartItems[index];
-                      final quantity = quantities[index] ?? 1;
+                      final cartItem = cartItems[index];
+                      final product = cartItem.keys.first;
+                      final quantity = cartItem.values.first;
+
                       return Card(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 8,
@@ -100,7 +99,7 @@ class _CartPageState extends State<CartPage> {
 																							onPressed: quantity > 1
 																									? () {
 																											setState(() {
-																												quantities[index] = quantity - 1;
+																												cartItems[index] = { product: quantity - 1 };
 																											});
 																										}
 																									: null,
@@ -113,7 +112,7 @@ class _CartPageState extends State<CartPage> {
 																							icon: const Icon(Icons.add_circle_outline),
 																							onPressed: () {
 																								setState(() {
-																									quantities[index] = quantity + 1;
+																									cartItems[index] = { product: quantity + 1 };
 																								});
 																							},
 																						),

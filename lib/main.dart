@@ -12,11 +12,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-				scaffoldBackgroundColor: Colors.white,
-				appBarTheme: const AppBarTheme(
-					backgroundColor: Colors.white,
-					shadowColor: Colors.grey,
-				),
+		scaffoldBackgroundColor: Colors.white,
+		appBarTheme: const AppBarTheme(
+			backgroundColor: Colors.white,
+			shadowColor: Colors.grey,
+		),
 
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Colors.white,
