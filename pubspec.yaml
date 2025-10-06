@@ -4,11 +4,12 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.9.4
+  sdk: ^3.8.1
 
 dependencies:
   flutter:
     sdk: flutter
+  carousel_slider: ^5.1.1
 
 dev_dependencies:
   flutter_test:
@@ -50,3 +51,5 @@ flutter:
     - assets/products/ot4/
     - assets/products/ot5/
     - assets/products/ot6/
+    - assets/banners/
+    - assets/categories/

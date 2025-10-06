@@ -104,6 +104,33 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 									),
 								),
 							),
+
+							Positioned(
+								top: 16,
+								left: 16,
+								child: Container(
+									decoration: BoxDecoration(
+										color: Colors.white,
+										borderRadius: BorderRadius.circular(25),
+										boxShadow: [
+											BoxShadow(
+												color: Colors.grey.withAlpha(125),
+												blurRadius: 5,
+												offset: const Offset(0, 3),
+											),
+										],
+									),
+									child: IconButton(
+										onPressed: () {
+											
+										},
+										style: ButtonStyle(
+											splashFactory: NoSplash.splashFactory
+										),
+										icon: const Icon(Icons.arrow_back),
+									),
+								),
+							),
 	
 							Positioned(
 								bottom: 0,
