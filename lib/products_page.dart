@@ -19,7 +19,7 @@ class _ProductsPageState extends State<ProductsPage> {
   String selectedSort = "Default";
 
   // Example brands and sort options
-	final List<String> categories = ["All", "Audio", "Charging", "Car Accessories", "Others"];
+	final List<String> categories = ["All", "Car Accessories", "Audio", "Charging", "Others"];
   final List<String> brands = ["All", "Baseus", "Oppo", "Redmi", "Samsung", "Xiaomi"];
 	final List<String> priceRanges = [
 		"All",
@@ -109,12 +109,6 @@ class _ProductsPageState extends State<ProductsPage> {
 							    	    	decoration: InputDecoration(
 							    	    		hintText: "Search products...",
 							    	    		prefixIcon: Icon(Icons.search, color: Colors.grey),
-							    	    		suffixIcon: IconButton(
-							    	    			onPressed: () {
-							    	    				
-							    	    			},
-							    	    			icon: Icon(Icons.filter_list, color: Colors.grey),
-							    	    		),
 							    	    		border: InputBorder.none,
 							    	    		contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
 							    	    	),
@@ -244,69 +238,78 @@ class _ProductsPageState extends State<ProductsPage> {
 							    	    					builder: (context) {
 							    	    						return SafeArea(
 							    	    							child: Padding(
-							    	    								padding: const EdgeInsets.all(16),
+							    	    								padding: const EdgeInsets.all(32),
 							    	    								child: Column(
 							    	    									mainAxisSize: MainAxisSize.min,
+																					crossAxisAlignment: CrossAxisAlignment.start,
 							    	    									children: [
 							    	    										Text(
-							    	    										"Filter Products",
-							    	    										style: TextStyle(
-							    	    											fontSize: 18,
-							    	    											fontWeight: FontWeight.bold
+							    	    											"Filter Products",
+							    	    											style: TextStyle(
+							    	    												fontSize: 18,
+							    	    												fontWeight: FontWeight.bold
+							    	    											),
 							    	    										),
-							    	    									),
 							    	    
 							    	    										const SizedBox(height: 16),
 							    	    
 							    	    										Text(
-							    	    										"Category",
-							    	    										style: TextStyle(
-							    	    											fontSize: 16,
-							    	    											fontWeight: FontWeight.bold
+							    	    											"Category",
+							    	    											style: TextStyle(
+							    	    												fontSize: 16,
+							    	    												fontWeight: FontWeight.bold
+							    	    											),
 							    	    										),
-							    	    									),
 							    	    
 							    	    										SizedBox(height: 8),
 							    	    
-							    	    										Wrap(
-							    	    										spacing: 8,
-							    	    										children: categories.map((category) {
-							    	    											return FilterChip(
-							    	    												label: Text(category),
-							    	    												selected: selectedCategory == category,
-							    	    												onSelected: (selected) {
-							    	    													setState(() => selectedCategory = category);
-							    	    													Navigator.pop(context);
-							    	    												},
-							    	    											);
-							    	    										}).toList(),
-							    	    									),
+							    	    										SizedBox(
+																							width: double.infinity,
+																							child: Wrap(
+																								spacing: 8,
+																								alignment: WrapAlignment.center,
+																								children: categories.map((category) {
+																									return FilterChip(
+																										label: Text(category),
+																										selected: selectedCategory == category,
+																										onSelected: (selected) {
+																											setState(() => selectedCategory = category);
+																											Navigator.pop(context);
+																										},
+																									);
+																								}).toList(),
+																							),
+																						),
 							    	    
 							    	    										const SizedBox(height: 16),
 							    	    
 							    	    										Text(
-							    	    										"Price Range",
-							    	    										style: TextStyle(
-							    	    											fontSize: 16,
-							    	    											fontWeight: FontWeight.bold
+							    	    											"Price Range",
+							    	    											style: TextStyle(
+							    	    												fontSize: 16,
+							    	    												fontWeight: FontWeight.bold
+							    	    											),
 							    	    										),
-							    	    									),
 							    	    
 							    	    										SizedBox(height: 8),
 							    	    
-							    	    										Wrap(
-							    	    										spacing: 8,
-							    	    										children: priceRanges.map((range) {
-							    	    											return FilterChip(
-							    	    												label: Text(range),
-							    	    												selected: selectedPriceRange == range,
-							    	    												onSelected: (selected) {
-							    	    													setState(() => selectedPriceRange = selected ? range : "All");
-							    	    													Navigator.pop(context);
-							    	    												},
-							    	    											);
-							    	    										}).toList(),
-							    	    									),
+							    	    										SizedBox(
+																							width: double.infinity,
+																																													child: Wrap(
+																																														spacing: 8,
+																																														alignment: WrapAlignment.center,
+																																														children: priceRanges.map((range) {
+																																															return FilterChip(
+																																																label: Text(range),
+																																																selected: selectedPriceRange == range,
+																																																onSelected: (selected) {
+																																																	setState(() => selectedPriceRange = selected ? range : "All");
+																																																	Navigator.pop(context);
+																																																},
+																																															);
+																																														}).toList(),
+																																													),
+																																												),
 							    	    
 							    	    										SizedBox(height: 16),
 							    	    
@@ -314,19 +317,23 @@ class _ProductsPageState extends State<ProductsPage> {
 							    	    
 							    	    										const SizedBox(height: 8),
 							    	    
-							    	    										Wrap(
-							    	    										spacing: 8,
-							    	    										children: brands.map((brand) {
-							    	    											return FilterChip(
-							    	    												label: Text(brand),
-							    	    												selected: selectedBrand == brand,
-							    	    												onSelected: (selected) {
-							    	    													setState(() => selectedBrand = brand);
-							    	    													Navigator.pop(context);
-							    	    												},
-							    	    											);
-							    	    										}).toList(),
-							    	    									),
+							    	    										SizedBox(
+																							width: double.infinity,
+																																													child: Wrap(
+																																														spacing: 8,
+																																														alignment: WrapAlignment.center,
+																																														children: brands.map((brand) {
+																																															return FilterChip(
+																																																label: Text(brand),
+																																																selected: selectedBrand == brand,
+																																																onSelected: (selected) {
+																																																	setState(() => selectedBrand = brand);
+																																																	Navigator.pop(context);
+																																																},
+																																															);
+																																														}).toList(),
+																																													),
+																																												),
 							    	    
 							    	    										const SizedBox(height: 16),
 							    	    
@@ -334,52 +341,35 @@ class _ProductsPageState extends State<ProductsPage> {
 							    	    
 							    	    										const SizedBox(height: 8),
 							    	    
-							    	    										Wrap(
-							    	    										spacing: 8,
-							    	    										children: ratings.map((rating) {
-							    	    											if (rating == "Any") {
-							    	    												return FilterChip(
-							    	    													label: Text("Any"),
-							    	    													selected: selectedRating == 0,
-							    	    													onSelected: (selected) {
-							    	    														setState(() => selectedRating = 0);
-							    	    														Navigator.pop(context);
-							    	    													},
-							    	    												);
-							    	    											} else {
-							    	    												return FilterChip(
-							    	    													label: Text("$rating ★"),
-							    	    													selected: selectedRating == double.parse(rating),
-							    	    													onSelected: (selected) {
-							    	    														setState(() => selectedRating = double.parse(rating));
-							    	    														Navigator.pop(context);
-							    	    													},
-							    	    												);
-							    	    											}
-							    	    										}).toList(),
-							    	    									),
-							    	    
-							    	    										const SizedBox(height: 16),
-							    	    
-							    	    										// Sort Options
-							    	    										Text("Sort By", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-							    	    
-							    	    										const SizedBox(height: 8),
-							    	    
-							    	    										DropdownButton<String>(
-							    	    											value: selectedSort,
-							    	    											isExpanded: true,
-							    	    											items: sortOptions.map((option) {
-							    	    												return DropdownMenuItem(
-							    	    													value: option,
-							    	    													child: Text(option),
-							    	    												);
-							    	    											}).toList(),
-							    	    											onChanged: (value) {
-							    	    												setState(() => selectedSort = value ?? "Default");
-							    	    												Navigator.pop(context);
-							    	    											},
-							    	    										),
+							    	    										SizedBox(
+																							width: double.infinity,
+																																													child: Wrap(
+																																														spacing: 8,
+																																														alignment: WrapAlignment.center,
+																																														children: ratings.map((rating) {
+																																															if (rating == "Any") {
+																																																return FilterChip(
+																																																	label: Text("Any"),
+																																																	selected: selectedRating == 0,
+																																																	onSelected: (selected) {
+																																																		setState(() => selectedRating = 0);
+																																																		Navigator.pop(context);
+																																																	},
+																																																);
+																																															} else {
+																																																return FilterChip(
+																																																	label: Text("$rating ★"),
+																																																	selected: selectedRating == double.parse(rating),
+																																																	onSelected: (selected) {
+																																																		setState(() => selectedRating = double.parse(rating));
+																																																		Navigator.pop(context);
+																																																	},
+																																																);
+																																															}
+																																														}).toList(),
+																																													),
+																																												),
+							    	  
 							    	    
 							    	    										const SizedBox(height: 24),
 							    	    

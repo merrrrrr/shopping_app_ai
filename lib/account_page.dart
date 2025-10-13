@@ -63,12 +63,6 @@ class AccountPage extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.edit, color: Colors.grey),
-            onPressed: () {
-              _showSnackBar(context, 'Edit Profile Tapped');
-            },
-          ),
         ],
       ),
     );
@@ -78,6 +72,12 @@ class AccountPage extends StatelessWidget {
   Widget _buildMenuList(BuildContext context) {
     return Column(
       children: [
+				_buildMenuListItem(
+					context,
+					icon: Icons.person_outline,
+					title: 'Profile Information',
+					onTap: () => _showSnackBar(context, 'Navigate to Profile Information'),
+				),
         _buildMenuListItem(
           context,
           icon: Icons.history,

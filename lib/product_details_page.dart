@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
-import '../data/cart.dart'; // import global cartItems
+import '../data/cart.dart';
+import '../data/favourite.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final Product product;
@@ -95,12 +96,25 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 									),
 									child: IconButton(
 										onPressed: () {
-											
+											setState(() {
+												if (favouriteProductIds.contains(widget.product.id)) {
+													favouriteProductIds.remove(widget.product.id);
+												} else {
+													favouriteProductIds.add(widget.product.id);
+												}
+											});
 										},
 										style: ButtonStyle(
 											splashFactory: NoSplash.splashFactory
 										),
-										icon: const Icon(Icons.favorite_border),
+										icon: Icon(
+											favouriteProductIds.contains(widget.product.id)
+												? Icons.favorite
+												: Icons.favorite_border,
+											color: favouriteProductIds.contains(widget.product.id)
+												? Colors.red
+												: Colors.grey,
+										),
 									),
 								),
 							),
@@ -122,7 +136,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 									),
 									child: IconButton(
 										onPressed: () {
-											
+											Navigator.pop(context);
 										},
 										style: ButtonStyle(
 											splashFactory: NoSplash.splashFactory
