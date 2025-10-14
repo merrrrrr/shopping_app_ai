@@ -3,8 +3,8 @@ import 'package:shopping_app_ai/account_page.dart';
 import 'package:shopping_app_ai/home_page.dart';
 
 // Import your pages
-import 'products_page.dart';
-import 'cart_page.dart';
+import '../products_page.dart';
+import '../cart_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);

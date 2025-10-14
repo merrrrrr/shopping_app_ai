@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage> {
 
   bool _isLoading = false;
   String _searchText = "";
-  String _selectedCategory = "All";
 
   Future<void> _refreshContent() async {
     setState(() => _isLoading = true);
@@ -44,22 +43,15 @@ class _HomePageState extends State<HomePage> {
     setState(() => _isLoading = false);
   }
 
-  List<Product> _filteredRecommendedProducts() {
+  List<Product> _randomRecommendation() {
     final List<Product> base = products.toList();
-    final filtered = base.where((p) {
-      final matchesSearch =
-          _searchText.isEmpty ||
-          p.name.toLowerCase().contains(_searchText.toLowerCase());
-      final matchesCategory =
-          _selectedCategory == "All" || p.category == _selectedCategory;
-      return matchesSearch && matchesCategory;
-    }).toList();
-    return filtered;
+        base.shuffle();
+    return base;
   }
 
   @override
   Widget build(BuildContext context) {
-    final recommended = _filteredRecommendedProducts();
+    final recommended = _randomRecommendation();
 
     return Scaffold(
       appBar: AppBar(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/bottom_nav_bar.dart';
+import 'package:shopping_app_ai/widgets/bottom_nav_bar.dart';
 
 void main() {
   runApp(const MainApp());
