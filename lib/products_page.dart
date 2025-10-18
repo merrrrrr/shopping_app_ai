@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app_ai/providers/category_filter_notifier.dart';
+import 'package:shopping_app_ai/providers/search_query_notifier.dart';
 import '../models/product.dart';
 import '../data/products_data.dart';
 import 'widgets/product_card.dart';
 
 class ProductsPage extends StatefulWidget {
-  const ProductsPage({super.key});
+  final String? initialSearchQuery;
+  
+  const ProductsPage({super.key, this.initialSearchQuery});
 
   @override
   State<ProductsPage> createState() => _ProductsPageState();
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  String searchQuery = "";
-  String selectedCategory = "All";
+  String selectedCategory = categoryFilterNotifier.value;
   String selectedPriceRange = "All";
   String selectedBrand = "All";
   double selectedRating = 0;
@@ -55,7 +58,7 @@ class _ProductsPageState extends State<ProductsPage> {
     // Filter products by search, category, price, brand, and rating
     List<Product> filteredProducts = products.where((p) {
       bool matchesSearch = p.name.toLowerCase().contains(
-        searchQuery.toLowerCase(),
+        searchQueryNotifier.value.toLowerCase(),
       );
       bool matchesCategory =
           selectedCategory == "All" || p.category == selectedCategory;
@@ -133,6 +136,9 @@ class _ProductsPageState extends State<ProductsPage> {
                     child: Column(
                       children: [
                         TextField(
+                          controller: TextEditingController(
+                            text: searchQueryNotifier.value
+                          ),
                           decoration: InputDecoration(
                             hintText: "Search products...",
                             prefixIcon: Icon(Icons.search, color: Colors.grey),
@@ -144,7 +150,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           ),
                           onChanged: (value) {
                             setState(() {
-                              searchQuery = value;
+                              searchQueryNotifier.value = value;
                             });
                           },
                         ),

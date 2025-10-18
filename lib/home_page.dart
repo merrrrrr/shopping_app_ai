@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_app_ai/providers/category_filter_notifier.dart';
+import 'package:shopping_app_ai/providers/search_query_notifier.dart';
+import 'package:shopping_app_ai/providers/selected_index_notifier.dart';
 import 'package:shopping_app_ai/widgets/product_card.dart';
 import '../models/product.dart'; // Import your product model
 import '../data/products_data.dart'; // Import your dummy product data
@@ -30,12 +33,11 @@ class _HomePageState extends State<HomePage> {
   final List<String> _categoryLabels = [
     'Charging',
     'Audio',
-    'Accessories',
-    'Other',
+    'Car Acc.',
+    'Others',
   ];
 
   bool _isLoading = false;
-  String _searchText = "";
 
   Future<void> _refreshContent() async {
     setState(() => _isLoading = true);
@@ -87,7 +89,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 onSubmitted: (value) {
                   setState(() {
-                    _searchText = value;
+                    selectedIndexNotifier.value = 1;
+                    searchQueryNotifier.value = value;
                   });
                 },
               ),
@@ -154,41 +157,45 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: List.generate(_categoryLabels.length, (index) {
                       return GestureDetector(
-                        onTap: () {},
-                        child: GestureDetector(
-                          onTap: () {
-														
-													},
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 84,
-                                height: 84,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black12,
-                                      blurRadius: 4,
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Image.asset(
-                                    _categories[index],
-                                    fit: BoxFit.contain,
+                        onTap: () {
+                          setState(() {
+                            selectedIndexNotifier.value = 1;
+                            if (index == 2) {
+                              categoryFilterNotifier.value = 'Car Accessories';
+                            } else {
+                              categoryFilterNotifier.value = _categoryLabels[index];
+                            }
+                          });
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 84,
+                              height: 84,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 4,
                                   ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Image.asset(
+                                  _categories[index],
+                                  fit: BoxFit.contain,
                                 ),
                               ),
-                              const SizedBox(height: 6),
-                              Text(
-                                _categoryLabels[index],
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              _categoryLabels[index],
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
                         ),
                       );
                     }),
@@ -213,7 +220,6 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 8),
 
                     if (_isLoading) ...[
-                      // simple skeleton loaders
                       SizedBox(
                         height: 240,
                         child: GridView.builder(

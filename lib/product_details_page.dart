@@ -160,7 +160,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 									    Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-                            cartItems.add({widget.product: quantity});
+														final existingIndex = cartItems.indexWhere((item) => item.keys.first.id == widget.product.id);
+    
+														if (existingIndex != -1) {
+															final existingProduct = cartItems[existingIndex].keys.first;
+															final currentQuantity = cartItems[existingIndex].values.first;
+															cartItems[existingIndex] = {existingProduct: currentQuantity + quantity};
+														} else {
+															// Product doesn't exist, add new entry
+															cartItems.add({widget.product: quantity});
+														}
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),

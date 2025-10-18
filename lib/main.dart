@@ -44,7 +44,7 @@ class MainApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const BottomNavBar(),
+      home: BottomNavBar(),
     );
   }
 }
