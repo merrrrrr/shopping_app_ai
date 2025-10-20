@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'models/user.dart';
 
 class AccountPage extends StatelessWidget {
-  const AccountPage({super.key});
+  AccountPage({super.key});
+
+	final User user = User(
+		id: '1',
+		name: 'Mervin',
+		email: 'mervinooi@example.com',
+		avatarUrl: 'https://i.pravatar.cc/150?u=taylorswift',
+	);
 
   @override
   Widget build(BuildContext context) {
-    // Dummy user data
-    const String userName = "Taylor Swift";
-    const String userEmail = "taylor.swift@example.com";
-    const String avatarUrl = "https://i.pravatar.cc/150?u=taylorswift"; // Placeholder avatar
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Account"),
@@ -17,7 +20,7 @@ class AccountPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           // SECTION: USER PROFILE INFO
-          _buildProfileHeader(context, userName, userEmail, avatarUrl),
+          _buildProfileHeader(context, user.name, user.email, user.avatarUrl ?? 'https://i.pravatar.cc/150?u=taylorswift'),
 
           const SizedBox(height: 10),
 
@@ -42,7 +45,7 @@ class AccountPage extends StatelessWidget {
           CircleAvatar(
             radius: 40,
             backgroundImage: NetworkImage(avatarUrl),
-            backgroundColor: Colors.grey,
+            backgroundColor: Theme.of(context).colorScheme.surface,
           ),
           const SizedBox(width: 20),
           Expanded(
@@ -51,13 +54,20 @@ class AccountPage extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
                   email,
-                  style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).colorScheme.onSurface.withAlpha(153), // 0.6 * 255
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
@@ -116,9 +126,9 @@ class AccountPage extends StatelessWidget {
   // WIDGET: Individual Menu Item
   Widget _buildMenuListItem(BuildContext context, {required IconData icon, required String title, required VoidCallback onTap}) {
     return ListTile(
-      leading: Icon(icon, color: Theme.of(context).primaryColor),
-      title: Text(title),
-      trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+      leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
+      title: Text(title, style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+      trailing: Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.onSurface.withAlpha(153)),
       onTap: onTap,
     );
   }
@@ -128,13 +138,13 @@ class AccountPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: OutlinedButton.icon(
-        icon: const Icon(Icons.logout, color: Colors.red),
-        label: const Text(
+        icon: Icon(Icons.logout, color: Colors.red),
+        label: Text(
           'Logout',
           style: TextStyle(color: Colors.red),
         ),
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Colors.red),
+          side: BorderSide(color: Colors.red),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

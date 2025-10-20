@@ -54,6 +54,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final recommended = _randomRecommendation();
+  final colorScheme = Theme.of(context).colorScheme;
+  final shadowColor = Theme.of(context).shadowColor;
 
     return Scaffold(
       appBar: AppBar(
@@ -67,11 +69,11 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
+                    color: shadowColor.withAlpha(30),
                     blurRadius: 8,
                     offset: Offset(0, 2),
                   ),
@@ -108,7 +110,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16.0),
-                color: Colors.blueGrey[700],
+                color: colorScheme.primary,
                 child: const Text(
                   "Welcome to ShopEasy!",
                   style: TextStyle(
@@ -252,7 +254,7 @@ class _HomePageState extends State<HomePage> {
                               Icon(
                                 Icons.search_off,
                                 size: 48,
-                                color: Colors.grey.shade400,
+                                color: colorScheme.secondary,
                               ),
                               const SizedBox(height: 8),
                               const Text(

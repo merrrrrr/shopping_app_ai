@@ -5,9 +5,8 @@
 4. Enhance bottom navigation. (DONE)
 5. Implement fast category navigation. (DONE)
 6. Solve duplicated products in Cart Page. (DONE)
-7. Enhance product details page UI.
-8. Standardize UI colour.
-9. Implement details in Account Page.
+7. Enhance product details page UI. (DONE)
+8. Standardize UI colour. (DONE)
 
 
 ### Firebase Implementation (Deadline: 26/10/2025) (Workshop: 24/11/2025)
@@ -16,6 +15,7 @@
 3. Implement products collection.
 4. Implement orders collection.
 5. Implement checkout functionality.
+6. Implement notification.
 
 
 ### State Management Implementation (Deadline: 9/11/2025) (Workshop: 8/12/2025)

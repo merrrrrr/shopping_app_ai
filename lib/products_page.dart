@@ -55,6 +55,8 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
+  final colorScheme = Theme.of(context).colorScheme;
+  final elevatedButtonStyle = Theme.of(context).elevatedButtonTheme.style;
     // Filter products by search, category, price, brand, and rating
     List<Product> filteredProducts = products.where((p) {
       bool matchesSearch = p.name.toLowerCase().contains(
@@ -75,7 +77,7 @@ class _ProductsPageState extends State<ProductsPage> {
       bool matchesBrand = selectedBrand == "All" || p.brand == selectedBrand;
       bool matchesRating =
           selectedRating == 0 ||
-          (p.rating != null && p.rating! >= selectedRating);
+          (p.rating >= selectedRating);
       return matchesSearch &&
           matchesCategory &&
           matchesPrice &&
@@ -91,13 +93,18 @@ class _ProductsPageState extends State<ProductsPage> {
     } else if (selectedSort == "Best Selling") {
       filteredProducts.sort((a, b) => b.sales.compareTo(a.sales));
     } else if (selectedSort == "Rating: High to Low") {
-      // filteredProducts.sort((a, b) => (b.rating ?? 0).compareTo(a.rating ?? 0));
+      filteredProducts.sort((a, b) => b.rating.compareTo(a.rating));
     }
 
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
+						if (filteredProducts.isEmpty)
+              Center(
+                child: Text("No products found"),
+              )
+            else
             Padding(
               padding: const EdgeInsets.only(top: 116),
               child: GridView.builder(
@@ -123,13 +130,13 @@ class _ProductsPageState extends State<ProductsPage> {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: colorScheme.surface,
                       borderRadius: BorderRadius.circular(25),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black12,
+                          color: colorScheme.shadow.withAlpha(20),
                           blurRadius: 8,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
@@ -141,9 +148,9 @@ class _ProductsPageState extends State<ProductsPage> {
                           ),
                           decoration: InputDecoration(
                             hintText: "Search products...",
-                            prefixIcon: Icon(Icons.search, color: Colors.grey),
+                            prefixIcon: Icon(Icons.search, color: colorScheme.secondary),
                             border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                               horizontal: 20,
                               vertical: 15,
                             ),
@@ -168,137 +175,120 @@ class _ProductsPageState extends State<ProductsPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          TextButton.icon(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(24),
-                                  ),
-                                ),
-                                builder: (context) {
-                                  // Temp variable declared once when modal opens
-                                  String tempSelectedSort = selectedSort;
+                          // TextButton.icon(
+                          //   onPressed: () {
+                          //     showModalBottomSheet(
+                          //       context: context,
+                          //       isScrollControlled: true,
+                          //       shape: const RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.vertical(
+                          //           top: Radius.circular(24),
+                          //         ),
+                          //       ),
+                          //       builder: (context) {
+                          //         // Temp variable declared once when modal opens
+                          //         String tempSelectedSort = selectedSort;
 
-                                  return StatefulBuilder(
-                                    builder: (BuildContext context,
-                                        StateSetter setModalState) {
-                                      return SafeArea(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(32),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Sort by",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 16),
-                                              Column(
-                                                children:
-                                                    sortOptions.map((option) {
-                                                  return RadioListTile<String>(
-                                                    title: Text(option),
-                                                    value: option,
-                                                    groupValue:
-                                                        tempSelectedSort,
-                                                    onChanged: (value) {
-                                                      setModalState(() {
-                                                        tempSelectedSort =
-                                                            value ?? "Default";
-                                                      });
-                                                    },
-                                                  );
-                                                }).toList(),
-                                              ),
-                                              const SizedBox(height: 24),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor: Colors
-                                                            .blueGrey[700],
-                                                        foregroundColor:
-                                                            Colors.white,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            16,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          selectedSort =
-                                                              tempSelectedSort;
-                                                        });
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Text(
-                                                          "Apply Sorting"),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 8),
-                                                  Expanded(
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          selectedSort =
-                                                              "Default";
-                                                        });
-                                                        Navigator.pop(context);
-                                                      },
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            Colors.grey[500],
-                                                        foregroundColor:
-                                                            Colors.white,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            16,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child:
-                                                          Text("Reset Sorting"),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.grey[700],
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            icon: Icon(Icons.sort),
-                            label: Text("Sort"),
-                          ),
+                          //         return StatefulBuilder(
+                          //           builder: (BuildContext context,
+                          //               StateSetter setModalState) {
+                          //             return SafeArea(
+                          //               child: Padding(
+                          //                 padding: const EdgeInsets.all(32),
+                          //                 child: Column(
+                          //                   mainAxisSize: MainAxisSize.min,
+                          //                   crossAxisAlignment:
+                          //                       CrossAxisAlignment.start,
+                          //                   children: [
+                          //                     Text(
+                          //                       "Sort by",
+                          //                       style: const TextStyle(
+                          //                         fontSize: 18,
+                          //                         fontWeight: FontWeight.bold,
+                          //                       ),
+                          //                     ),
+                          //                     const SizedBox(height: 16),
+                          //                     Column(
+                          //                       children:
+                          //                           sortOptions.map((option) {
+                          //                         return RadioListTile<String>(
+                          //                           title: Text(option),
+                          //                           value: option,
+                          //                           groupValue:
+                          //                               tempSelectedSort,
+                          //                           onChanged: (value) {
+                          //                             setModalState(() {
+                          //                               tempSelectedSort =
+                          //                                   value ?? "Default";
+                          //                             });
+                          //                           },
+                          //                         );
+                          //                       }).toList(),
+                          //                     ),
+                          //                     const SizedBox(height: 24),
+                          //                     Row(
+                          //                       children: [
+                          //                         Expanded(
+                          //                           child: ElevatedButton(
+                          //                             style: elevatedButtonStyle?.copyWith(
+                          //                               shape: WidgetStatePropertyAll(
+                          //                                 RoundedRectangleBorder(
+                          //                                   borderRadius: BorderRadius.circular(16),
+                          //                                 ),
+                          //                               ),
+                          //                             ),
+                          //                             onPressed: () {
+                          //                               setState(() {
+                          //                                 selectedSort =
+                          //                                     tempSelectedSort;
+                          //                               });
+                          //                               Navigator.pop(context);
+                          //                             },
+                          //                             child: const Text(
+                          //                                 "Apply Sorting"),
+                          //                           ),
+                          //                         ),
+                          //                         const SizedBox(width: 8),
+                          //                         Expanded(
+                          //                           child: ElevatedButton(
+                          //                             onPressed: () {
+                          //                               setState(() {
+                          //                                 selectedSort =
+                          //                                     "Default";
+                          //                               });
+                          //                               Navigator.pop(context);
+                          //                             },
+                          //                             style: ElevatedButton.styleFrom(
+                          //                               backgroundColor: colorScheme.secondary,
+                          //                               foregroundColor: colorScheme.onPrimary,
+                          //                               shape: RoundedRectangleBorder(
+                          //                                 borderRadius: BorderRadius.circular(16),
+                          //                               ),
+                          //                             ),
+                          //                             child: const Text("Reset Sorting"),
+                          //                           ),
+                          //                         ),
+                          //                       ],
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //             );
+                          //           },
+                          //         );
+                          //       },
+                          //     );
+                          //   },
+                          //   style: TextButton.styleFrom(
+                          //     foregroundColor: colorScheme.onSurface,
+                          //     padding: const EdgeInsets.symmetric(horizontal: 8),
+                          //     shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(8),
+                          //     ),
+                          //   ),
+                          //   icon: const Icon(Icons.sort),
+                          //   label: const Text("Sort"),
+                          // ),
                           const SizedBox(width: 8),
                           TextButton.icon(
                             onPressed: () {
@@ -357,31 +347,24 @@ class _ProductsPageState extends State<ProductsPage> {
                                                       tempSelectedCategory ==
                                                           category;
                                                   return OutlinedButton(
-                                                    style: OutlinedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          isSelected
-                                                              ? Colors
-                                                                  .blueGrey[700]
-                                                              : Colors
-                                                                  .grey[200],
-                                                      foregroundColor:
-                                                          isSelected
-                                                              ? Colors.white
-                                                              : Colors.black87,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          12,
-                                                        ),
+                                                    style: OutlinedButton.styleFrom(
+                                                      backgroundColor: isSelected
+                                                          ? colorScheme.primary
+                                                          : colorScheme.surface.withAlpha(125),
+                                                      foregroundColor: isSelected
+                                                          ? colorScheme.onPrimary
+                                                          : colorScheme.onSurface,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(12),
+                                                      ),
+                                                      side: BorderSide(
+                                                        color: isSelected
+                                                            ? colorScheme.primary
+                                                            : colorScheme.secondary.withAlpha(125),
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      setModalState(() =>
-                                                          tempSelectedCategory =
-                                                              category);
+                                                      setModalState(() => tempSelectedCategory = category);
                                                     },
                                                     child: Text(category),
                                                   );
@@ -408,31 +391,24 @@ class _ProductsPageState extends State<ProductsPage> {
                                                       tempSelectedPriceRange ==
                                                           range;
                                                   return OutlinedButton(
-                                                    style: OutlinedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          isSelected
-                                                              ? Colors
-                                                                  .blueGrey[700]
-                                                              : Colors
-                                                                  .grey[200],
-                                                      foregroundColor:
-                                                          isSelected
-                                                              ? Colors.white
-                                                              : Colors.black87,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          12,
-                                                        ),
+                                                    style: OutlinedButton.styleFrom(
+                                                      backgroundColor: isSelected
+                                                          ? colorScheme.primary
+                                                          : colorScheme.surface.withAlpha(125),
+                                                      foregroundColor: isSelected
+                                                          ? colorScheme.onPrimary
+                                                          : colorScheme.onSurface,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(12),
+                                                      ),
+                                                      side: BorderSide(
+                                                        color: isSelected
+                                                            ? colorScheme.primary
+                                                            : colorScheme.secondary.withAlpha(125),
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      setModalState(() =>
-                                                          tempSelectedPriceRange =
-                                                              range);
+                                                      setModalState(() => tempSelectedPriceRange = range);
                                                     },
                                                     child: Text(range),
                                                   );
@@ -458,31 +434,24 @@ class _ProductsPageState extends State<ProductsPage> {
                                                       tempSelectedBrand ==
                                                           brand;
                                                   return OutlinedButton(
-                                                    style: OutlinedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          isSelected
-                                                              ? Colors
-                                                                  .blueGrey[700]
-                                                              : Colors
-                                                                  .grey[200],
-                                                      foregroundColor:
-                                                          isSelected
-                                                              ? Colors.white
-                                                              : Colors.black87,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                          12,
-                                                        ),
+                                                    style: OutlinedButton.styleFrom(
+                                                      backgroundColor: isSelected
+                                                          ? colorScheme.primary
+                                                          : colorScheme.surface.withAlpha(125),
+                                                      foregroundColor: isSelected
+                                                          ? colorScheme.onPrimary
+                                                          : colorScheme.onSurface,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(12),
+                                                      ),
+                                                      side: BorderSide(
+                                                        color: isSelected
+                                                            ? colorScheme.primary
+                                                            : colorScheme.secondary.withAlpha(125),
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      setModalState(() =>
-                                                          tempSelectedBrand =
-                                                              brand);
+                                                      setModalState(() => tempSelectedBrand = brand);
                                                     },
                                                     child: Text(brand),
                                                   );
@@ -506,73 +475,50 @@ class _ProductsPageState extends State<ProductsPage> {
                                                 children:
                                                     ratings.map((rating) {
                                                   if (rating == "Any") {
-                                                    final isSelected =
-                                                        tempSelectedRating == 0;
+                                                    final isSelected = tempSelectedRating == 0;
                                                     return OutlinedButton(
-                                                      style: OutlinedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            isSelected
-                                                                ? Colors
-                                                                    .blueGrey[
-                                                                        700]
-                                                                : Colors
-                                                                    .grey[200],
-                                                        foregroundColor:
-                                                            isSelected
-                                                                ? Colors.white
-                                                                : Colors
-                                                                    .black87,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            12,
-                                                          ),
+                                                      style: OutlinedButton.styleFrom(
+                                                        backgroundColor: isSelected
+                                                            ? colorScheme.primary
+                                                            : colorScheme.surface.withAlpha(125),
+                                                        foregroundColor: isSelected
+                                                            ? colorScheme.onPrimary
+                                                            : colorScheme.onSurface,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(12),
+                                                        ),
+                                                        side: BorderSide(
+                                                          color: isSelected
+                                                              ? colorScheme.primary
+                                                              : colorScheme.secondary.withAlpha(125),
                                                         ),
                                                       ),
                                                       onPressed: () {
-                                                        setModalState(() =>
-                                                            tempSelectedRating =
-                                                                0);
+                                                        setModalState(() => tempSelectedRating = 0);
                                                       },
-                                                      child: Text("Any"),
+                                                      child: const Text("Any"),
                                                     );
                                                   } else {
-                                                    final isSelected =
-                                                        tempSelectedRating ==
-                                                            double.parse(
-                                                                rating);
+                                                    final isSelected = tempSelectedRating == double.parse(rating);
                                                     return OutlinedButton(
-                                                      style: OutlinedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            isSelected
-                                                                ? Colors
-                                                                    .blueGrey[
-                                                                        700]
-                                                                : Colors
-                                                                    .grey[200],
-                                                        foregroundColor:
-                                                            isSelected
-                                                                ? Colors.white
-                                                                : Colors
-                                                                    .black87,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                            12,
-                                                          ),
+                                                      style: OutlinedButton.styleFrom(
+                                                        backgroundColor: isSelected
+                                                            ? colorScheme.primary
+                                                            : colorScheme.surface.withAlpha(125),
+                                                        foregroundColor: isSelected
+                                                            ? colorScheme.onPrimary
+                                                            : colorScheme.onSurface,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(12),
+                                                        ),
+                                                        side: BorderSide(
+                                                          color: isSelected
+                                                              ? colorScheme.primary
+                                                              : colorScheme.secondary.withAlpha(125),
                                                         ),
                                                       ),
                                                       onPressed: () {
-                                                        setModalState(() =>
-                                                            tempSelectedRating =
-                                                                double.parse(
-                                                                    rating));
+                                                        setModalState(() => tempSelectedRating = double.parse(rating));
                                                       },
                                                       child: Text("$rating ★"),
                                                     );
@@ -587,10 +533,8 @@ class _ProductsPageState extends State<ProductsPage> {
                                                   child: ElevatedButton(
                                                     style: ElevatedButton
                                                         .styleFrom(
-                                                      backgroundColor: Colors
-                                                          .blueGrey[700],
-                                                      foregroundColor:
-                                                          Colors.white,
+                                                      backgroundColor: colorScheme.primary,
+                                                      foregroundColor: colorScheme.onPrimary,
                                                       shape:
                                                           RoundedRectangleBorder(
                                                         borderRadius:
@@ -633,10 +577,8 @@ class _ProductsPageState extends State<ProductsPage> {
                                                     },
                                                     style: ElevatedButton
                                                         .styleFrom(
-                                                      backgroundColor:
-                                                          Colors.grey[500],
-                                                      foregroundColor:
-                                                          Colors.white,
+                                                      backgroundColor: colorScheme.secondary,
+																											foregroundColor: colorScheme.onPrimary,
                                                       shape:
                                                           RoundedRectangleBorder(
                                                         borderRadius:
@@ -682,4 +624,22 @@ class _ProductsPageState extends State<ProductsPage> {
       ),
     );
   }
+}
+
+
+Widget _buildFilterBottomSheet(BuildContext context) {
+	return Container();
+}
+
+
+
+Widget _buildSortBottomSheet(BuildContext context) {
+	return Container();
+}
+
+
+Widget _buildAppBar(BuildContext context) {
+	return AppBar(
+		title: const Text("Products"),
+	);
 }
