@@ -7,15 +7,19 @@
 6. Solve duplicated products in Cart Page. (DONE)
 7. Enhance product details page UI. (DONE)
 8. Standardize UI colour. (DONE)
+9. Break down full build function. (DONE)
+10. Reset filter after refresh. (DONE)
 
 
 ### Firebase Implementation (Deadline: 26/10/2025) (Workshop: 24/11/2025)
 1. Implement Firebase Auth.
 2. Implement users collection.
-3. Implement products collection.
-4. Implement orders collection.
-5. Implement checkout functionality.
-6. Implement notification.
+3. Implement profile information.
+4. Implement products collection.
+5. Implement orders collection.
+6. Implement order history.
+7. Implement checkout functionality.
+8. Implement notification.
 
 
 ### State Management Implementation (Deadline: 9/11/2025) (Workshop: 8/12/2025)

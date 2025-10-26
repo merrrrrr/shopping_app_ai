@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/account_page.dart';
-import 'package:shopping_app_ai/home_page.dart';
+import 'package:shopping_app_ai/pages/account_page.dart';
+import 'package:shopping_app_ai/pages/home_page.dart';
 import 'package:shopping_app_ai/providers/category_filter_notifier.dart';
 import 'package:shopping_app_ai/providers/search_query_notifier.dart';
 import 'package:shopping_app_ai/providers/selected_index_notifier.dart';
-import '../products_page.dart';
-import '../cart_page.dart';
+import '../pages/products_page.dart';
+import '../pages/cart_page.dart';
 
 // Pages for bottom navigation
 final List<Widget> _pages = [

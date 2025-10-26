@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../models/product.dart';
-import '../data/cart.dart';
-import '../data/favourite.dart';
+import '../../models/product.dart';
+import '../../data/cart.dart';
+import '../../data/favourite.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final Product product;
@@ -26,50 +26,54 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       body: SafeArea(
         child: Stack(
           children: [
-							SingleChildScrollView(
-								physics: const ClampingScrollPhysics(),
-								padding: const EdgeInsets.only(bottom: 80),
-								child: Column(
-									crossAxisAlignment: CrossAxisAlignment.start,
-									children: [
-										SizedBox(
-											height: 400,
-											child: Stack(
-												alignment: Alignment.bottomCenter,
-												children: [
-													PageView(
-														controller: _pageController,
-														children: widget.product.images.map((image) {
-															return Image.asset(image, fit: BoxFit.contain);
-														}).toList(),
-													),
+						SingleChildScrollView(
+							physics: const ClampingScrollPhysics(),
+							padding: const EdgeInsets.only(bottom: 80),
+							child: Column(
+								crossAxisAlignment: CrossAxisAlignment.start,
+								children: [
+									SizedBox(
+										height: 400,
+										child: Stack(
+											alignment: Alignment.bottomCenter,
+											children: [
 
-													Padding(
-														padding: const EdgeInsets.only(bottom: 16.0),
-														child: SmoothPageIndicator(
-															controller: _pageController,
-															count: widget.product.images.length,
-															effect: WormEffect(
-																dotHeight: 10,
-																dotWidth: 10,
-																activeDotColor: Theme.of(context).colorScheme.primary,
-																dotColor: Colors.grey.shade300,
-															),
+												// ========= IMAGE SECTION ==========
+												PageView(
+													controller: _pageController,
+													children: widget.product.images.map((image) {
+														return Image.asset(image, fit: BoxFit.contain);
+													}).toList(),
+												),
+
+												// ========= IMAGE INDICATOR SECTION ==========
+												Padding(
+													padding: const EdgeInsets.only(bottom: 16.0),
+													child: SmoothPageIndicator(
+														controller: _pageController,
+														count: widget.product.images.length,
+														effect: WormEffect(
+															dotHeight: 10,
+															dotWidth: 10,
+															activeDotColor: Theme.of(context).colorScheme.primary,
+															dotColor: Colors.grey.shade300,
 														),
 													),
-												],
-											),
+												),
+											],
 										),
+									),
 
                   const SizedBox(height: 16),
 
-                  // --- PRODUCT INFO SECTION (IMPROVED) ---
+                  // ========== PRODUCT INFO SECTION ==========
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Product Name
+
+												// Product Name
                         Text(
                           widget.product.name,
                           style: Theme.of(context).textTheme.titleMedium,
@@ -77,7 +81,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           
                         const SizedBox(height: 12),
                           
-                        // Price
+												// Price
                         Text(
                           "RM ${widget.product.price.toStringAsFixed(2)}",
                           style: TextStyle(
@@ -89,16 +93,38 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           
                         const SizedBox(height: 16),
                         
-                        // Rating and Sales Info (NEW WIDGET)
-                        _buildRatingAndSalesInfo(context),
+												// Sales & Rating Row
+                        Row(
+													children: [
+														Text(
+															"${widget.product.sales} sold",
+															style: Theme.of(context).textTheme.bodyMedium,
+														),
+
+														const SizedBox(width: 8),
+														const Text("|"),
+														const SizedBox(width: 8),
+
+														Text(
+															"${widget.product.rating}",
+															style: Theme.of(context).textTheme.bodyMedium
+														),
+
+														const Icon(
+															Icons.star,
+															color: Colors.amber,
+															size: 20
+														),
+													],
+												),
                           
-                        const SizedBox(height: 24), // Corrected spacing
+                        const SizedBox(height: 24),
                           
                         const Divider(),
                         
-                        const SizedBox(height: 16), // Corrected spacing
+                        const SizedBox(height: 16),
                           
-                        // Description Title
+                        // ========== DESCRIPTION SECTION ==========
                         Text(
                           "Product Description", 
                           style: Theme.of(context).textTheme.titleMedium
@@ -106,12 +132,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           
                         const SizedBox(height: 8),
                           
-                        // Description Body
                         Text(
-                          widget.product.description.isEmpty 
-                              ? "No description available." 
-                              : widget.product.description,
-                          style: const TextStyle(height: 1.75), // Good line spacing for readability
+                          widget.product.description.isEmpty
+														? "No description available."
+														: widget.product.description,
+                          style: const TextStyle(height: 1.75),
                         ),
                       ],
                     ),
@@ -127,31 +152,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       ),
     );
   }
-
-  // HELPER WIDGET: For Rating and Sales (NEW)
-  Widget _buildRatingAndSalesInfo(BuildContext context) {
-    return Row(
-      children: [
-				Text(
-          "${widget.product.sales} sold",
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-
-        const SizedBox(width: 8),
-
-				const Text("|"),
-
-				const SizedBox(width: 8),
-
-				Text(
-          "${widget.product.rating}",
-          style: Theme.of(context).textTheme.bodyMedium
-        ),
-
-        const Icon(Icons.star, color: Colors.amber, size: 20),
-      ],
-    );
-  }
   
   Widget _buildAppBarButtons(BuildContext context) {
     return Positioned(
@@ -161,29 +161,23 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // --- Back Button Implementation ---
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: IconButton.styleFrom(splashFactory: NoSplash.splashFactory),
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
-                ),
-              ),
+          // ========== BACK BUTTON ==========
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withAlpha(50),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              onPressed: () => Navigator.pop(context),
+              style: IconButton.styleFrom(splashFactory: NoSplash.splashFactory),
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
             ),
           ),
 
-          // --- Favorite Button Implementation ---
+          // ========== FAVORITE BUTTON ==========
           Container(
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withAlpha(50),
               shape: BoxShape.circle,
             ),
             child: IconButton(
@@ -212,7 +206,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
   
-  // HELPER WIDGET: For the bottom "Add to Cart" bar
 	Widget _buildAddToCartBar(BuildContext context) {
 		return Container(
 			padding: const EdgeInsets.all(12),
@@ -221,6 +214,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 			),
 			child: Row(
 				children: [
+
+					// ========== ADD TO CART BUTTON ==========
 					Expanded(
 						child: ElevatedButton(
 							onPressed: () {
@@ -233,6 +228,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 								} else {
 									cartItems.add({widget.product: quantity});
 								}
+
+								ScaffoldMessenger.of(context).showSnackBar(
+									SnackBar(
+										content: Text('Product added to cart successfully!'),
+										duration: const Duration(milliseconds: 700),
+									),
+								);
 							},
 							style: ElevatedButton.styleFrom(
 								padding: const EdgeInsets.symmetric(vertical: 16),
@@ -243,17 +245,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 							child: const Text("Add to Cart"),
 						),
 					),
+
+					// ========== QUANTITY SELECTOR ==========
 					Row(
 						children: [
 							IconButton(
 								icon: const Icon(Icons.remove_circle_outline),
 								onPressed: quantity > 1
-										? () {
-												setState(() {
-													quantity -= 1;
-												});
-											}
-										: null,
+								? () => setState(() {quantity -= 1;})
+								: null,
 							),
 							Text(
 								quantity.toString(),

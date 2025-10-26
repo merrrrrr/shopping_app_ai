@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'models/user.dart';
+import '../models/user.dart';
 
 class AccountPage extends StatelessWidget {
   AccountPage({super.key});
@@ -109,8 +109,8 @@ class AccountPage extends StatelessWidget {
         _buildMenuListItem(
           context,
           icon: Icons.favorite_border,
-          title: 'Wishlist',
-          onTap: () => _showSnackBar(context, 'Navigate to Wishlist'),
+          title: 'Favourites',
+          onTap: () => _showSnackBar(context, 'Navigate to Favourites'),
         ),
         const Divider(),
         _buildMenuListItem(

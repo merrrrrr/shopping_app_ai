@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'data/cart.dart';
+import '../data/cart.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -151,44 +151,51 @@ class _CartPageState extends State<CartPage> {
                     },
                   ),
                 ),
-                // Bottom total price and checkout button
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                        offset: Offset(0, -2),
-                      )
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Total: RM ${totalPrice.toStringAsFixed(2)}",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Checkout feature coming soon!"),
-                            ),
-                          );
-                        },
-                        child: const Text("Checkout"),
-                      ),
-                    ],
-                  ),
-                )
+
+								_buildCheckoutBar(context),
+
               ],
             ),
     );
   }
+
+
+	Widget _buildCheckoutBar(BuildContext context) {
+		return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 4,
+            offset: Offset(0, -2),
+          )
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Total: RM ${totalPrice.toStringAsFixed(2)}",
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Checkout Successful!"),
+                ),
+              );
+            },
+            child: const Text("Checkout"),
+          ),
+        ],
+      ),
+    );
+	}
 }
+
