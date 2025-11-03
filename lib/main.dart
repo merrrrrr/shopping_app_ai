@@ -1,7 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_app_ai/firebase_options.dart';
+import 'package:shopping_app_ai/pages/login_page.dart';
 import 'package:shopping_app_ai/widgets/bottom_nav_bar.dart';
 
-void main() {
+void main() async{
+	WidgetsFlutterBinding.ensureInitialized();
+	await Firebase.initializeApp(
+		options: DefaultFirebaseOptions.currentPlatform
+	);
   runApp(const MainApp());
 }
 
@@ -76,7 +84,23 @@ class MainApp extends StatelessWidget {
       
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: const BottomNavBar(),
-    );
+      // home: const BottomNavBar(),
+			home: StreamBuilder(
+				stream: FirebaseAuth.instance.authStateChanges(),
+				builder:(context, snapshot) {
+				  if (snapshot.connectionState == ConnectionState.waiting) {
+						return Center(
+							child: CircularProgressIndicator()
+						);
+				  }
+
+				  if (snapshot.hasData) {
+						return const BottomNavBar();
+				  }
+				  	
+					return const LoginPage();
+				},
+			)
+		);
   }
 }

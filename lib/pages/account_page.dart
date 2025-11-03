@@ -1,15 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../models/user.dart';
 
 class AccountPage extends StatelessWidget {
-  AccountPage({super.key});
-
-	final User user = User(
-		id: '1',
-		name: 'Mervin',
-		email: 'mervinooi@example.com',
-		avatarUrl: 'https://i.pravatar.cc/150?u=taylorswift',
-	);
+  const AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +13,7 @@ class AccountPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           // SECTION: USER PROFILE INFO
-          _buildProfileHeader(context, user.name, user.email, user.avatarUrl ?? 'https://i.pravatar.cc/150?u=taylorswift'),
+          _buildProfileHeader(context, 'Mervin', 'mervinooi@example.com', 'https://i.pravatar.cc/150?u=taylorswift'),
 
           const SizedBox(height: 10),
 
@@ -150,8 +143,7 @@ class AccountPage extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          // Add your logout logic here
-          _showSnackBar(context, 'Logout Tapped');
+          FirebaseAuth.instance.signOut();
         },
       ),
     );

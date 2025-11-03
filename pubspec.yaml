@@ -13,6 +13,9 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   flutter_slidable: ^4.0.3
   skeletonizer: ^2.1.0+1
+  firebase_auth: ^6.1.1
+  firebase_core: ^4.2.0
+  cloud_firestore: ^6.0.3
 
 dev_dependencies:
   flutter_test:
