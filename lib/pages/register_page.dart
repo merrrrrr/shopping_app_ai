@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_app_ai/pages/address_form_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -48,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
 				'email': emailController.text.trim(),
 				'phoneNumber': phoneNumberController.text.trim(),
 				'photoUrl': '',
-				'defaultAddressID': '',
+				'address': '',
 				'createdAt': FieldValue.serverTimestamp(),
 			});
 
@@ -61,7 +62,10 @@ class _RegisterPageState extends State<RegisterPage> {
 						TextButton(
 							onPressed: () {
 								Navigator.of(context).pop();
-								Navigator.of(context).pop(); // Go back to login
+								Navigator.of(context).pop();
+								Navigator.push(context, MaterialPageRoute(
+									builder: (context) => AddressFormPage()
+								));
 							},
 							child: Text("OK"),
 						),
@@ -157,7 +161,9 @@ class _RegisterPageState extends State<RegisterPage> {
 							obscureText: true,
 						),
 
-						SizedBox(height: 16),							TextField(
+						SizedBox(height: 16),
+						
+						TextField(
 								controller: confirmPasswordController,
 								decoration: InputDecoration(
 									labelText: "Confirm Password",

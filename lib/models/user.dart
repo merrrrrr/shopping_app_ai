@@ -4,7 +4,7 @@ class User {
 	final String email;
 	final String phoneNumber;
 	final String photoUrl;
-	final String defaultAddressID;
+	final String address;
 	final DateTime createdAt;
 
 	User({
@@ -13,7 +13,7 @@ class User {
 		required this.email,
 		required this.phoneNumber,
 		this.photoUrl = '',
-		this.defaultAddressID = '',
+		this.address = '',
 		required this.createdAt,
 	});
 }

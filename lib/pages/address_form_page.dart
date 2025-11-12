@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app_ai/models/address.dart';
-import 'package:shopping_app_ai/services/address_service.dart';
 
 class AddressFormPage extends StatefulWidget {
   final Address? address;
@@ -13,8 +13,8 @@ class AddressFormPage extends StatefulWidget {
 }
 
 class _AddressFormPageState extends State<AddressFormPage> {
-	AddressService addressService = AddressService();
-	DocumentReference docRef = FirebaseFirestore.instance.collection('addresses').doc();
+	final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
 
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _recipientNameController;
@@ -25,7 +25,6 @@ class _AddressFormPageState extends State<AddressFormPage> {
   late TextEditingController _postcodeController;
 
   String _selectedState = 'Selangor';
-  bool _isDefault = false;
 
   final List<String> _malaysianStates = [
     'Johor',
@@ -56,7 +55,6 @@ class _AddressFormPageState extends State<AddressFormPage> {
     _cityController = TextEditingController(text: widget.address?.city ?? '');
     _postcodeController = TextEditingController(text: widget.address?.postcode ?? '');
     _selectedState = widget.address?.state ?? 'Selangor';
-    _isDefault = widget.address?.isDefault ?? false;
   }
 
   @override
@@ -72,6 +70,26 @@ class _AddressFormPageState extends State<AddressFormPage> {
 
   @override
   Widget build(BuildContext context) {
+		Future<void> saveAddress() async {
+			final newAddress = Address(
+				recipientName: _recipientNameController.text,
+				phoneNumber: _phoneNumberController.text,
+				addressLine1: _addressLine1Controller.text,
+				addressLine2: _addressLine2Controller.text,
+				city: _cityController.text,
+				state: _selectedState,
+				postcode: _postcodeController.text,
+			).fullAddress;
+
+			final user = _auth.currentUser;
+			if (user == null) {
+				throw Exception('User not found.');
+			}
+			final userId = user.uid;
+			DocumentReference doc = _firestore.collection('users').doc(userId);
+			doc.update({'address': newAddress});
+		}
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.address == null ? "Add Address" : "Edit Address"),
@@ -203,33 +221,11 @@ class _AddressFormPageState extends State<AddressFormPage> {
                 return null;
               },
             ),
-            const SizedBox(height: 16),
-            CheckboxListTile(
-              title: const Text("Set as default address"),
-              value: _isDefault,
-              onChanged: (value) {
-                setState(() {
-                  _isDefault = value ?? false;
-                });
-              },
-              controlAffinity: ListTileControlAffinity.leading,
-            ),
+
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                addressService.addAddress(
-                  Address(
-										id: docRef.id,
-                    recipientName: _recipientNameController.text,
-                    phoneNumber: _phoneNumberController.text,
-                    addressLine1: _addressLine1Controller.text,
-                    addressLine2: _addressLine2Controller.text,
-                    city: _cityController.text,
-                    state: _selectedState,
-                    postcode: _postcodeController.text,
-                    isDefault: _isDefault,
-                  ),
-                );
+								saveAddress();
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 48),
@@ -237,7 +233,7 @@ class _AddressFormPageState extends State<AddressFormPage> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: Text(widget.address == null ? "Add Address" : "Update Address"),
+              child: Text('Register'),
             ),
           ],
         ),

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/pages/address_management_page.dart';
 import 'package:shopping_app_ai/pages/order_history_page.dart';
 import 'package:shopping_app_ai/pages/profile_information_page.dart';
 
@@ -114,15 +113,6 @@ class AccountPage extends StatelessWidget {
           onTap: () => Navigator.push(context, MaterialPageRoute(
 						builder: (context) => OrderHistoryPage()
 					)),
-        ),
-        _buildMenuListItem(
-          context,
-          icon: Icons.location_on_outlined,
-          title: 'Address Management',
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddressManagementPage())
-          ),
         ),
         _buildMenuListItem(
           context,
