@@ -1,43 +1,67 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_app_ai/pages/address_management_page.dart';
+import 'package:shopping_app_ai/pages/order_history_page.dart';
+import 'package:shopping_app_ai/pages/profile_information_page.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Account"),
       ),
-      body: ListView(
-        children: <Widget>[
-          // SECTION: USER PROFILE INFO
-          _buildProfileHeader(context, 'Mervin', 'mervinooi@example.com', 'https://i.pravatar.cc/150?u=taylorswift'),
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+          .collection("users")
+          .doc(user?.uid)
+          .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-          const SizedBox(height: 10),
+          if (!snapshot.hasData || !snapshot.data!.exists) {
+            return const Center(child: Text("User data not found"));
+          }
 
-          // SECTION: MAIN MENU
-          _buildMenuList(context),
+          final userData = snapshot.data!.data() as Map<String, dynamic>;
+          final userName = userData['name'] ?? 'User';
+          final userEmail = userData['email'] ?? user?.email ?? '';
+          final photoUrl = userData['photoUrl'] == "" ? './assets/default_avatar.png' : userData['photoUrl'];
 
-          const SizedBox(height: 20),
-
-          // SECTION: LOGOUT BUTTON
-          _buildLogoutButton(context),
-        ],
+          return ListView(
+            children: <Widget>[
+              _buildProfileHeader(context, userName, userEmail, photoUrl),
+          
+              const SizedBox(height: 10),
+          
+              _buildMenuList(context),
+          
+              const SizedBox(height: 20),
+          
+              _buildLogoutButton(context),
+            ],
+          );
+        }
       ),
     );
   }
 
   // WIDGET: Profile Header
-  Widget _buildProfileHeader(BuildContext context, String name, String email, String avatarUrl) {
+  Widget _buildProfileHeader(BuildContext context, String userName, String userEmail, String photoUrl) {
     return Container(
       padding: const EdgeInsets.all(20.0),
       child: Row(
         children: [
           CircleAvatar(
             radius: 40,
-            backgroundImage: NetworkImage(avatarUrl),
+            backgroundImage: Image.asset(photoUrl).image,
             backgroundColor: Theme.of(context).colorScheme.surface,
           ),
           const SizedBox(width: 20),
@@ -46,7 +70,7 @@ class AccountPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  userName,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -56,7 +80,7 @@ class AccountPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  email,
+                  FirebaseAuth.instance.currentUser?.email ?? "",
                   style: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context).colorScheme.onSurface.withAlpha(153), // 0.6 * 255
@@ -79,19 +103,26 @@ class AccountPage extends StatelessWidget {
 					context,
 					icon: Icons.person_outline,
 					title: 'Profile Information',
-					onTap: () => _showSnackBar(context, 'Navigate to Profile Information'),
+					onTap: () => Navigator.push(context, MaterialPageRoute(
+						builder: (context) => ProfileInformationPage()
+					)),
 				),
         _buildMenuListItem(
           context,
           icon: Icons.history,
           title: 'Order History',
-          onTap: () => _showSnackBar(context, 'Navigate to Order History'),
+          onTap: () => Navigator.push(context, MaterialPageRoute(
+						builder: (context) => OrderHistoryPage()
+					)),
         ),
         _buildMenuListItem(
           context,
           icon: Icons.location_on_outlined,
           title: 'Address Management',
-          onTap: () => _showSnackBar(context, 'Navigate to Address Management'),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddressManagementPage())
+          ),
         ),
         _buildMenuListItem(
           context,

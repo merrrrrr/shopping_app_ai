@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -9,7 +10,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+	TextEditingController nameController = TextEditingController();
 	TextEditingController emailController = TextEditingController();
+	TextEditingController phoneNumberController = TextEditingController();
 	TextEditingController passwordController = TextEditingController();
 	TextEditingController confirmPasswordController = TextEditingController();
 
@@ -33,10 +36,21 @@ class _RegisterPageState extends State<RegisterPage> {
 				return;
 			}
 
-			await FirebaseAuth.instance.createUserWithEmailAndPassword(
+			// Create user with Firebase Auth
+			UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
 				email: emailController.text.trim(),
 				password: passwordController.text.trim(),
 			);
+
+			// Create user document in Firestore
+			await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+				'name': nameController.text.trim(),
+				'email': emailController.text.trim(),
+				'phoneNumber': phoneNumberController.text.trim(),
+				'photoUrl': '',
+				'defaultAddressID': '',
+				'createdAt': FieldValue.serverTimestamp(),
+			});
 
 			if (!mounted) return;
 			showDialog(context: context, builder: (context) {
@@ -47,6 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
 						TextButton(
 							onPressed: () {
 								Navigator.of(context).pop();
+								Navigator.of(context).pop(); // Go back to login
 							},
 							child: Text("OK"),
 						),
@@ -91,34 +106,58 @@ class _RegisterPageState extends State<RegisterPage> {
 								),
 							),
 
-							SizedBox(height: 24),
+						SizedBox(height: 24),
 
-							TextField(
-								controller: emailController,
-								decoration: InputDecoration(
-									labelText: "Email",
-									border: OutlineInputBorder(
-										borderRadius: BorderRadius.circular(8),
-									),
+						TextField(
+							controller: nameController,
+							decoration: InputDecoration(
+								labelText: "Name",
+								border: OutlineInputBorder(
+									borderRadius: BorderRadius.circular(8),
 								),
 							),
+						),
 
-							SizedBox(height: 16),
-				
-							TextField(
-								controller: passwordController,
-								decoration: InputDecoration(
-									labelText: "Password",
-									border: OutlineInputBorder(
-										borderRadius: BorderRadius.circular(8),
-									)
+						SizedBox(height: 16),
+
+						TextField(
+							controller: emailController,
+							decoration: InputDecoration(
+								labelText: "Email",
+								border: OutlineInputBorder(
+									borderRadius: BorderRadius.circular(8),
 								),
-								obscureText: true,
 							),
+							keyboardType: TextInputType.emailAddress,
+						),
 
-							SizedBox(height: 16),
+						SizedBox(height: 16),
 
-							TextField(
+						TextField(
+							controller: phoneNumberController,
+							decoration: InputDecoration(
+								labelText: "Phone Number",
+								border: OutlineInputBorder(
+									borderRadius: BorderRadius.circular(8),
+								),
+							),
+							keyboardType: TextInputType.phone,
+						),
+
+						SizedBox(height: 16),
+			
+						TextField(
+							controller: passwordController,
+							decoration: InputDecoration(
+								labelText: "Password",
+								border: OutlineInputBorder(
+									borderRadius: BorderRadius.circular(8),
+								)
+							),
+							obscureText: true,
+						),
+
+						SizedBox(height: 16),							TextField(
 								controller: confirmPasswordController,
 								decoration: InputDecoration(
 									labelText: "Confirm Password",

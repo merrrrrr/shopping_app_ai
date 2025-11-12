@@ -31,6 +31,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Baseus",
     rating: 4.7,
+    quantity: 45,
   ),
 
   Product(
@@ -58,6 +59,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Baseus",
     rating: 4.5,
+    quantity: 23,
   ),
 
   Product(
@@ -90,6 +92,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Baseus",
     rating: 4.6,
+    quantity: 67,
   ),
 
   Product(
@@ -107,6 +110,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Xiaomi",
     rating: 4.3,
+    quantity: 12,
   ),
 
   Product(
@@ -135,6 +139,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Xiaomi",
     rating: 4.4,
+    quantity: 89,
   ),
 
   Product(
@@ -158,6 +163,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Xiaomi",
     rating: 4.8,
+    quantity: 34,
   ),
 	
   Product(
@@ -181,6 +187,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Baseus",
     rating: 4.2,
+    quantity: 78,
   ),
 	
   Product(
@@ -204,6 +211,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Baseus",
     rating: 4.1,
+    quantity: 91,
   ),
 	
   Product(
@@ -227,6 +235,7 @@ final List<Product> products = [
     category: "Charging",
     brand: "Baseus",
     rating: 4.0,
+    quantity: 56,
   ),
 	
   // Audio Products
@@ -240,6 +249,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Baseus",
     rating: 4.6,
+    quantity: 28,
   ),
   Product(
     id: "au2",
@@ -251,6 +261,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Baseus",
     rating: 4.4,
+    quantity: 52,
   ),
   Product(
     id: "au3",
@@ -262,6 +273,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Baseus",
     rating: 4.3,
+    quantity: 95,
   ),
   Product(
     id: "au4",
@@ -273,6 +285,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Baseus",
     rating: 4.2,
+    quantity: 73,
   ),
   Product(
     id: "au5",
@@ -284,6 +297,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Oppo",
     rating: 4.5,
+    quantity: 41,
   ),
   Product(
     id: "au6",
@@ -295,6 +309,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Oppo",
     rating: 4.7,
+    quantity: 19,
   ),
   Product(
     id: "au7",
@@ -306,6 +321,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Oppo",
     rating: 4.8,
+    quantity: 36,
   ),
   Product(
     id: "au8",
@@ -317,6 +333,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Redmi",
     rating: 4.2,
+    quantity: 84,
   ),
   Product(
     id: "au9",
@@ -328,6 +345,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Redmi",
     rating: 4.3,
+    quantity: 61,
   ),
   Product(
     id: "au10",
@@ -339,6 +357,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Samsung",
     rating: 4.9,
+    quantity: 15,
   ),
   Product(
     id: "au11",
@@ -350,6 +369,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Samsung",
     rating: 5.0,
+    quantity: 8,
   ),
   Product(
     id: "au12",
@@ -361,6 +381,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Xiaomi",
     rating: 4.4,
+    quantity: 47,
   ),
   Product(
     id: "au13",
@@ -372,6 +393,7 @@ final List<Product> products = [
     category: "Audio",
     brand: "Xiaomi",
     rating: 4.7,
+    quantity: 25,
   ),
 
   // Car Accessories
@@ -385,6 +407,7 @@ final List<Product> products = [
     category: "Car Accessories",
     brand: "Baseus",
     rating: 4.5,
+    quantity: 63,
   ),
   Product(
     id: "ca2",
@@ -396,6 +419,7 @@ final List<Product> products = [
     category: "Car Accessories",
     brand: "Baseus",
     rating: 4.4,
+    quantity: 77,
   ),
   Product(
     id: "ca3",
@@ -407,6 +431,7 @@ final List<Product> products = [
     category: "Car Accessories",
     brand: "Baseus",
     rating: 4.3,
+    quantity: 54,
   ),
   Product(
     id: "ca4",
@@ -418,6 +443,7 @@ final List<Product> products = [
     category: "Car Accessories",
     brand: "Baseus",
     rating: 4.6,
+    quantity: 31,
   ),
 
   // Others
@@ -431,6 +457,7 @@ final List<Product> products = [
     category: "Others",
     brand: "Xiaomi",
     rating: 4.5,
+    quantity: 42,
   ),
   Product(
     id: "ot2",
@@ -442,6 +469,7 @@ final List<Product> products = [
     category: "Others",
     brand: "Xiaomi",
     rating: 4.4,
+    quantity: 37,
   ),
   Product(
     id: "ot3",
@@ -453,6 +481,7 @@ final List<Product> products = [
     category: "Others",
     brand: "Xiaomi",
     rating: 4.3,
+    quantity: 18,
   ),
   Product(
     id: "ot4",
@@ -464,6 +493,7 @@ final List<Product> products = [
     category: "Others",
     brand: "Xiaomi",
     rating: 4.2,
+    quantity: 9,
   ),
   Product(
     id: "ot5",
@@ -475,6 +505,7 @@ final List<Product> products = [
     category: "Others",
     brand: "Xiaomi",
     rating: 4.1,
+    quantity: 68,
   ),
   Product(
     id: "ot6",
@@ -486,6 +517,7 @@ final List<Product> products = [
     category: "Others",
     brand: "Xiaomi",
     rating: 4.0,
+    quantity: 50,
   ),
 
 	

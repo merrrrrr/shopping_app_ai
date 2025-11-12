@@ -111,8 +111,7 @@ class _HomePageState extends State<HomePage> {
 					child: SingleChildScrollView(
 						physics: const AlwaysScrollableScrollPhysics(),
 						child: Column(
-							children: [
-								
+							children: [								
 								// ========== WELCOME BANNER ==========
 								Container(
 									width: double.infinity,
