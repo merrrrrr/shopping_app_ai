@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shopping_app_ai/models/order_item.dart';
-import 'package:shopping_app_ai/models/purchase_order.dart';
 import 'package:shopping_app_ai/services/order_service.dart';
 import '../data/cart.dart';
 

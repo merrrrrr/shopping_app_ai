@@ -65,7 +65,6 @@ class OrderService {
         shippingFee: shippingFee,
         totalAmount: totalAmount,
         shippingAddress: address,
-        status: 'Pending',
         createdAt: DateTime.now(),
       );
 
@@ -80,13 +79,22 @@ class OrderService {
 
 	Future<List<PurchaseOrder>> getAllOrders() async {
 		try {
-			QuerySnapshot snapshot = await _ordersCollection.get();
+			QuerySnapshot snapshot = await _ordersCollection
+          .where('userId', isEqualTo: currentUserId)
+          .get();
 			List<PurchaseOrder> orders = snapshot.docs.map((doc) {
-				return PurchaseOrder.fromMap(doc.data() as Map<String, dynamic>);
-			}).where((order) => order.userId == currentUserId).toList();
+				return PurchaseOrder.fromMap(
+					doc.data() as Map<String, dynamic>,
+					docId: doc.id
+				);
+			}).toList();
+
+			debugPrint('Retrieved ${orders.length} orders for user $currentUserId');
 			return orders;
 		} catch(e) {
 			debugPrint('Error retrieving orders: $e');
+      debugPrint('Error type: ${e.runtimeType}');
+      debugPrint('Stack trace: ${StackTrace.current}');
 			throw Exception('Failed to get orders');
 		}
 	}
@@ -95,7 +103,10 @@ class OrderService {
 		try {
 			DocumentSnapshot doc = await _ordersCollection.doc(orderId).get();
 			debugPrint('Retrieved order: ${doc.data()}');
-			final order = PurchaseOrder.fromMap(doc.data() as Map<String, dynamic>);
+			final order = PurchaseOrder.fromMap(
+				doc.data() as Map<String, dynamic>,
+				docId: doc.id
+			);
 			if (order.userId != currentUserId) {
 				return null;
 			}

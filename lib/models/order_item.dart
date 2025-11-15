@@ -32,12 +32,4 @@ class OrderItem {
       quantity: map['quantity'],
     );
   }
-
-	// static int subQuantity() {
-
-	// }
-
-	// static int addQuantity() {
-
-	// }
 }

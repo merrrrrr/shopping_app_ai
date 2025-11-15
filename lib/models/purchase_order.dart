@@ -9,7 +9,6 @@ class PurchaseOrder {
   final double shippingFee;
   final double totalAmount;
   final String shippingAddress;
-  final String status;
   final DateTime createdAt;
 
   PurchaseOrder({
@@ -20,7 +19,6 @@ class PurchaseOrder {
     required this.shippingFee,
     required this.totalAmount,
     required this.shippingAddress,
-    required this.status,
     required this.createdAt,
   });
 
@@ -32,7 +30,6 @@ class PurchaseOrder {
       'shippingFee': shippingFee,
       'totalAmount': totalAmount,
       'shippingAddress': shippingAddress,
-      'status': status,
       'createdAt': Timestamp.fromDate(createdAt),
     };
   }
@@ -46,7 +43,6 @@ class PurchaseOrder {
       shippingFee: (map['shippingFee'] as num).toDouble(),
       totalAmount: (map['totalAmount'] as num).toDouble(),
       shippingAddress: map['shippingAddress'],
-      status: map['status'],
       createdAt: (map['createdAt'] as Timestamp).toDate(),
     );
   }
