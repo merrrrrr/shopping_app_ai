@@ -3,7 +3,6 @@ class Product {
   final String name;
   final int sales;
   final double price;
-  final double? discountedPrice;
   final String description;
   final List<String> images;
   final String category;
@@ -15,7 +14,6 @@ class Product {
     required this.id,
     required this.name,
     required this.price,
-		this.discountedPrice,
     required this.sales,
     required this.description,
     required this.images,
@@ -31,7 +29,6 @@ class Product {
       'id': id,
       'name': name,
       'price': price,
-      'discountedPrice': discountedPrice,
       'sales': sales,
       'description': description,
       'images': images,

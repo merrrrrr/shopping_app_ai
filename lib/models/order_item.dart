@@ -2,14 +2,14 @@ class OrderItem {
   final String productId;
   final String productName;
   final String imageUrl;
-  final double priceAtPurchase;
+  final double price;
   final int quantity;
 
   OrderItem({
     required this.productId,
     required this.productName,
     required this.imageUrl,
-    required this.priceAtPurchase,
+    required this.price,
     required this.quantity,
   });
 
@@ -18,7 +18,7 @@ class OrderItem {
       'productId': productId,
       'productName': productName,
       'imageUrl': imageUrl,
-      'priceAtPurchase': priceAtPurchase,
+      'price': price,
       'quantity': quantity,
     };
   }
@@ -28,8 +28,16 @@ class OrderItem {
       productId: map['productId'],
       productName: map['productName'],
       imageUrl: map['imageUrl'],
-      priceAtPurchase: (map['priceAtPurchase'] as num).toDouble(),
+      price: (map['price'] as num).toDouble(),
       quantity: map['quantity'],
     );
   }
+
+	// static int subQuantity() {
+
+	// }
+
+	// static int addQuantity() {
+
+	// }
 }

@@ -1,5 +1,5 @@
-import '../models/product.dart';
+import 'package:shopping_app_ai/models/order_item.dart';
 
-List<Map<Product, int>> cartItems = [
+List<OrderItem> cartItems = [
 	
 ];

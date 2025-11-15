@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:shopping_app_ai/models/order_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/product.dart';
 import '../../data/cart.dart';
@@ -219,14 +220,25 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 					Expanded(
 						child: ElevatedButton(
 							onPressed: () {
-								final existingIndex = cartItems.indexWhere((item) => item.keys.first.id == widget.product.id);
+								final existingIndex = cartItems.indexWhere((item) => item.productId == widget.product.id);
 
 								if (existingIndex != -1) {
-									final existingProduct = cartItems[existingIndex].keys.first;
-									final currentQuantity = cartItems[existingIndex].values.first;
-									cartItems[existingIndex] = {existingProduct: currentQuantity + quantity};
+									OrderItem existingProduct = cartItems[existingIndex];
+									cartItems[existingIndex] = OrderItem(
+										productId: existingProduct.productId,
+										productName: existingProduct.productName,
+										imageUrl: existingProduct.imageUrl,
+										price: existingProduct.price,
+										quantity: existingProduct.quantity + quantity,
+									);
 								} else {
-									cartItems.add({widget.product: quantity});
+									cartItems.add(OrderItem(
+										productId: widget.product.id,
+										productName: widget.product.name,
+										imageUrl: widget.product.images.first,
+										price: widget.product.price,
+										quantity: quantity,
+									));
 								}
 
 								ScaffoldMessenger.of(context).showSnackBar(

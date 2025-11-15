@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:shopping_app_ai/models/order_item.dart';
+import 'package:shopping_app_ai/models/purchase_order.dart';
 import 'package:shopping_app_ai/services/order_service.dart';
 import '../data/cart.dart';
 
@@ -13,19 +15,27 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
 	final OrderService orderService = OrderService();
 
-  double get totalPrice {
-    double total = 0;
-    for (final cartItem in cartItems) {
-      final product = cartItem.keys.first;
-      final quantity = cartItem.values.first;
-      total += product.price * quantity;
-    }
-    return total;
-  }
-
   void removeItem(int index) {
     setState(() {
       cartItems.removeAt(index);
+    });
+	}
+
+	void updateQuantity(int index, int newQuantity) {
+    setState(() {
+      if (newQuantity <= 0) {
+        removeItem(index);
+        return;
+      }
+      
+      final item = cartItems[index];
+      cartItems[index] = OrderItem(
+        productId: item.productId,
+        productName: item.productName,
+        imageUrl: item.imageUrl,
+        price: item.price,
+        quantity: newQuantity,
+      );
     });
   }
 
@@ -45,9 +55,7 @@ class _CartPageState extends State<CartPage> {
             child: ListView.builder(
               itemCount: cartItems.length,
               itemBuilder: (context, index) {
-                final cartItem = cartItems[index];
-                final product = cartItem.keys.first;
-                final quantity = cartItem.values.first;
+                OrderItem cartItem = cartItems[index];
 
                 return Card(
 									clipBehavior: Clip.hardEdge,
@@ -80,7 +88,7 @@ class _CartPageState extends State<CartPage> {
 													ClipRRect(
 														borderRadius: BorderRadius.circular(12),
 														child: Image.asset(
-															product.images.first,
+															cartItem.imageUrl,
 															width: 100,
 															height: 100,
 															fit: BoxFit.cover,
@@ -92,7 +100,7 @@ class _CartPageState extends State<CartPage> {
 															crossAxisAlignment: CrossAxisAlignment.start,
 															children: [
 																Text(
-																	product.name,
+																	cartItem.productName,
 																	style: TextStyle(
 																		fontSize: 14,
 																		fontWeight: FontWeight.bold,
@@ -105,7 +113,7 @@ class _CartPageState extends State<CartPage> {
 																	mainAxisAlignment: MainAxisAlignment.spaceBetween,
 																	children: [
 																		Text(
-																			"RM ${product.price.toStringAsFixed(2)}",
+																			"RM ${cartItem.price.toStringAsFixed(2)}",
 																			style: TextStyle(
 																				color: Theme.of(context).colorScheme.primary,
 																				fontWeight: FontWeight.bold,
@@ -117,22 +125,18 @@ class _CartPageState extends State<CartPage> {
 																			children: [
 																				IconButton(
 																					icon: const Icon(Icons.remove_circle_outline),
-																					onPressed: quantity > 1 ? () {
-																						setState(() {
-																							cartItems[index] = { product: quantity - 1 };
-																						});
+																					onPressed: cartItems[index].quantity > 1 ? () {
+																						updateQuantity(index, cartItems[index].quantity - 1);
 																					} : null,
 																				),
 																				Text(
-																					quantity.toString(),
+																					cartItems[index].quantity.toString(),
 																					style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
 																				),
 																				IconButton(
 																					icon: const Icon(Icons.add_circle_outline),
 																					onPressed: () {
-																						setState(() {
-																							cartItems[index] = { product: quantity + 1 };
-																						});
+																						updateQuantity(index, cartItems[index].quantity + 1);
 																					},
 																				),
 																			],
@@ -160,6 +164,9 @@ class _CartPageState extends State<CartPage> {
 
 
 	Widget _buildCheckoutBar(BuildContext context) {
+		double subtotal = orderService.calculateSubtotal(cartItems);
+		double totalPrice = orderService.calculateTotal(subtotal);
+		
 		return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -184,8 +191,8 @@ class _CartPageState extends State<CartPage> {
           ),
           ElevatedButton(
             onPressed: cartItems.isEmpty ? null : () async {
-							cartItems.clear();
 							final orderId = await orderService.createOrderFromCart(cartItems);
+							cartItems.clear();
               showDialog(context: context, builder: (context) {
 								return AlertDialog(
 									title: Text('Checkout Successful'),
