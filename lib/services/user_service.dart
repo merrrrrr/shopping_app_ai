@@ -76,4 +76,47 @@ class UserService {
 			throw Exception('Failed to delete user.');
 		}
 	}
+
+	Future<void> changePassword(String currentPassword, String newPassword) async {
+		try {
+			final user = _auth.currentUser;
+			if (user == null || user.email == null) {
+				throw Exception('No authenticated user found.');
+			}
+
+			// Re-authenticate user with current password
+			final credential = EmailAuthProvider.credential(
+				email: user.email!,
+				password: currentPassword,
+			);
+
+			await user.reauthenticateWithCredential(credential);
+
+			// Update to new password
+			await user.updatePassword(newPassword);
+
+			debugPrint('Password changed successfully');
+		} on FirebaseAuthException catch (e) {
+			debugPrint('Error changing password: ${e.code}');
+			
+			if (e.code == 'wrong-password') {
+				throw Exception('Current password is incorrect.');
+			} else if (e.code == 'weak-password') {
+				throw Exception('New password is too weak.');
+			} else {
+				throw Exception('Failed to change password: ${e.message}');
+			}
+		} catch (e) {
+			debugPrint('Error changing password: $e');
+			throw Exception('Failed to change password.');
+		}
+	}
+
+	Future<void> resetPassword(String email) async {
+		try {
+			await _auth.sendPasswordResetEmail(email: email);
+		} catch(e) {
+			throw Exception('Failed to reset password.');
+		}
+	}
 }

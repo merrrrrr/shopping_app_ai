@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shopping_app_ai/pages/change_password_page.dart';
 import 'package:shopping_app_ai/services/user_service.dart';
 
 class ProfileInformationPage extends StatefulWidget {
@@ -173,6 +174,12 @@ class _ProfileInformationPageState extends State<ProfileInformationPage> {
 
 							OutlinedButton(
 								onPressed: () {
+									Navigator.push(
+										context,
+										MaterialPageRoute(
+											builder: (context) => ChangePasswordPage(),
+										),
+									);
 								},
 								style: OutlinedButton.styleFrom(
 									side: BorderSide(color: colorScheme.primary),
@@ -181,7 +188,7 @@ class _ProfileInformationPageState extends State<ProfileInformationPage> {
 									),
 									minimumSize: const Size(double.infinity, 48),
 								),
-								child: const Text('Reset Password')
+								child: const Text('Change Password')
 							),
 
 							const SizedBox(height: 20),
