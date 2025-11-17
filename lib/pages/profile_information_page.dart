@@ -1,10 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shopping_app_ai/services/user_service.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
 
 class ProfileInformationPage extends StatefulWidget {
   const ProfileInformationPage({super.key});
@@ -44,176 +41,6 @@ class _ProfileInformationPageState extends State<ProfileInformationPage> {
 			});
 		}
 	}
-
-Future<void> _updateAvatar() async {
-  final ImagePicker picker = ImagePicker();
-  
-  showModalBottomSheet(
-    context: context,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    builder: (context) {
-      return SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 40,
-                height: 4,
-                margin: const EdgeInsets.only(bottom: 16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const Text(
-                'Change Profile Picture',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                leading: const Icon(Icons.camera_alt),
-                title: const Text('Take Photo'),
-                onTap: () async {
-                  Navigator.of(context).pop();
-                  final XFile? image = await picker.pickImage(
-                    source: ImageSource.camera,
-                    maxWidth: 512,
-                    maxHeight: 512,
-                    imageQuality: 85,
-                  );
-                  if (image != null && mounted) {
-                    final String? savedPath = await _saveImageLocally(image);
-                    if (savedPath != null) {
-                      setState(() {
-                        _avatarUrl = savedPath;
-                      });
-                    }
-                  }
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: const Text('Choose from Gallery'),
-                onTap: () async {
-                  Navigator.of(context).pop();
-                  final XFile? image = await picker.pickImage(
-                    source: ImageSource.gallery,
-                    maxWidth: 512,
-                    maxHeight: 512,
-                    imageQuality: 85,
-                  );
-                  if (image != null && mounted) {
-                    // Save to local storage
-                    final String? savedPath = await _saveImageLocally(image);
-                    if (savedPath != null) {
-                      setState(() {
-                        _avatarUrl = savedPath;
-                      });
-                    }
-                  }
-                },
-              ),
-              if (_avatarUrl != _defaultAvatar)
-                ListTile(
-                  leading: const Icon(Icons.delete_outline, color: Colors.red),
-                  title: const Text(
-                    'Remove Photo',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  onTap: () async {
-                    Navigator.of(context).pop();
-                    await _deleteLocalImage(_avatarUrl);
-                    setState(() {
-                      _avatarUrl = _defaultAvatar;
-                    });
-                  },
-                ),
-            ],
-          ),
-        ),
-      );
-    },
-  );
-}
-
-Future<String?> _saveImageLocally(XFile image) async {
-  try {
-    // Get the app's document directory
-    final Directory appDir = await getApplicationDocumentsDirectory();
-    
-    // Create a subfolder for profile images
-    final Directory profileDir = Directory('${appDir.path}/profile_images');
-    if (!await profileDir.exists()) {
-      await profileDir.create(recursive: true);
-    }
-
-    // Delete old image if it exists and is not the default
-    if (_avatarUrl != _defaultAvatar && _avatarUrl.isNotEmpty && !_avatarUrl.startsWith('assets/')) {
-      await _deleteLocalImage(_avatarUrl);
-    }
-    
-    // Generate a unique filename using timestamp and user ID
-    final String fileName = 'profile_${FirebaseAuth.instance.currentUser?.uid}_${DateTime.now().millisecondsSinceEpoch}${path.extension(image.path)}';
-    final String filePath = '${profileDir.path}/$fileName';
-    
-    // Copy the file to the new location
-    final File sourceFile = File(image.path);
-    await sourceFile.copy(filePath);
-    
-    debugPrint('Image saved locally: $filePath');
-    
-    // ← ADD: Save to Firestore immediately after saving locally
-    await UserService().updateUserData(
-      _nameController.text.trim(),
-      _phoneController.text.trim(),
-      filePath, // Save the local file path
-      _addressController.text.trim(),
-    );
-    
-    debugPrint('Image path saved to Firestore: $filePath');
-    
-    return filePath;
-  } catch (e) {
-    debugPrint('Error saving image locally: $e');
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to save image')),
-      );
-    }
-    return null;
-  }
-}
-
-Future<void> _deleteLocalImage(String imagePath) async {
-  try {
-    if (imagePath.isEmpty || imagePath.startsWith('assets/')) {
-      return; // Don't delete asset images
-    }
-    
-    final File imageFile = File(imagePath);
-    if (await imageFile.exists()) {
-      await imageFile.delete();
-      debugPrint('Deleted local image: $imagePath');
-      
-      // ← ADD: Update Firestore to reset to default avatar
-      await UserService().updateUserData(
-        _nameController.text.trim(),
-        _phoneController.text.trim(),
-        _defaultAvatar,
-        _addressController.text.trim(),
-      );
-    }
-  } catch (e) {
-    debugPrint('Error deleting local image: $e');
-  }
-}
 
   @override
   void initState() {
@@ -434,7 +261,6 @@ Future<void> _deleteLocalImage(String imagePath) async {
             child: IconButton(
               icon: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
               onPressed: () {
-								_updateAvatar();
               },
             ),
           ),
