@@ -117,27 +117,6 @@ class OrderService {
 		}
 	}
 
-	Future<void> updateOrderStatus(String orderId, String newStatus) async {
-    try {
-      await _ordersCollection.doc(orderId).update({
-        'status': newStatus,
-      });
-      debugPrint('Order status updated to: $newStatus');
-    } catch (e) {
-      debugPrint('Error updating order status: $e');
-      throw Exception('Failed to update order status');
-    }
-  }
-
-	Future<void> cancelOrder(String orderId) async {
-    try {
-      await updateOrderStatus(orderId, 'Cancelled');
-    } catch (e) {
-      debugPrint('Error cancelling order: $e');
-      throw Exception('Failed to cancel order');
-    }
-  }
-
 	Future<void> deleteOrder(String orderId) async {
 		try {
 			await _ordersCollection.doc(orderId).delete();

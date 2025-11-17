@@ -1,6 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shopping_app_ai/services/user_service.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class ProfileInformationPage extends StatefulWidget {
   const ProfileInformationPage({super.key});
@@ -12,12 +16,204 @@ class ProfileInformationPage extends StatefulWidget {
 class _ProfileInformationPageState extends State<ProfileInformationPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+	final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+	final _defaultAvatar = 'assets/default_avatar.png';
   
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool _isSaving = false;
-  String _avatarUrl = 'https://i.pravatar.cc/150?u=default';
+	String _avatarUrl = '';
+
+	Future<void> _loadUserData() async {
+		setState(() {
+			_isLoading = true;
+		});
+		try {
+			final userData = await UserService().getUserData();
+			if (userData != null) {
+				_nameController.text = userData['name'] ?? '';
+				_phoneController.text = userData['phoneNumber'] ?? '';
+				_addressController.text = userData['address'] ?? '';
+				_avatarUrl = userData['photoUrl'] == "" ? _defaultAvatar : userData['photoUrl'];
+			}
+		} catch (e) {
+			debugPrint('Error loading user data: $e');
+		} finally {
+			setState(() {
+				_isLoading = false;
+			});
+		}
+	}
+
+Future<void> _updateAvatar() async {
+  final ImagePicker picker = ImagePicker();
+  
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const Text(
+                'Change Profile Picture',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Take Photo'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  final XFile? image = await picker.pickImage(
+                    source: ImageSource.camera,
+                    maxWidth: 512,
+                    maxHeight: 512,
+                    imageQuality: 85,
+                  );
+                  if (image != null && mounted) {
+                    final String? savedPath = await _saveImageLocally(image);
+                    if (savedPath != null) {
+                      setState(() {
+                        _avatarUrl = savedPath;
+                      });
+                    }
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Choose from Gallery'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  final XFile? image = await picker.pickImage(
+                    source: ImageSource.gallery,
+                    maxWidth: 512,
+                    maxHeight: 512,
+                    imageQuality: 85,
+                  );
+                  if (image != null && mounted) {
+                    // Save to local storage
+                    final String? savedPath = await _saveImageLocally(image);
+                    if (savedPath != null) {
+                      setState(() {
+                        _avatarUrl = savedPath;
+                      });
+                    }
+                  }
+                },
+              ),
+              if (_avatarUrl != _defaultAvatar)
+                ListTile(
+                  leading: const Icon(Icons.delete_outline, color: Colors.red),
+                  title: const Text(
+                    'Remove Photo',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  onTap: () async {
+                    Navigator.of(context).pop();
+                    await _deleteLocalImage(_avatarUrl);
+                    setState(() {
+                      _avatarUrl = _defaultAvatar;
+                    });
+                  },
+                ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Future<String?> _saveImageLocally(XFile image) async {
+  try {
+    // Get the app's document directory
+    final Directory appDir = await getApplicationDocumentsDirectory();
+    
+    // Create a subfolder for profile images
+    final Directory profileDir = Directory('${appDir.path}/profile_images');
+    if (!await profileDir.exists()) {
+      await profileDir.create(recursive: true);
+    }
+
+    // Delete old image if it exists and is not the default
+    if (_avatarUrl != _defaultAvatar && _avatarUrl.isNotEmpty && !_avatarUrl.startsWith('assets/')) {
+      await _deleteLocalImage(_avatarUrl);
+    }
+    
+    // Generate a unique filename using timestamp and user ID
+    final String fileName = 'profile_${FirebaseAuth.instance.currentUser?.uid}_${DateTime.now().millisecondsSinceEpoch}${path.extension(image.path)}';
+    final String filePath = '${profileDir.path}/$fileName';
+    
+    // Copy the file to the new location
+    final File sourceFile = File(image.path);
+    await sourceFile.copy(filePath);
+    
+    debugPrint('Image saved locally: $filePath');
+    
+    // ← ADD: Save to Firestore immediately after saving locally
+    await UserService().updateUserData(
+      _nameController.text.trim(),
+      _phoneController.text.trim(),
+      filePath, // Save the local file path
+      _addressController.text.trim(),
+    );
+    
+    debugPrint('Image path saved to Firestore: $filePath');
+    
+    return filePath;
+  } catch (e) {
+    debugPrint('Error saving image locally: $e');
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to save image')),
+      );
+    }
+    return null;
+  }
+}
+
+Future<void> _deleteLocalImage(String imagePath) async {
+  try {
+    if (imagePath.isEmpty || imagePath.startsWith('assets/')) {
+      return; // Don't delete asset images
+    }
+    
+    final File imageFile = File(imagePath);
+    if (await imageFile.exists()) {
+      await imageFile.delete();
+      debugPrint('Deleted local image: $imagePath');
+      
+      // ← ADD: Update Firestore to reset to default avatar
+      await UserService().updateUserData(
+        _nameController.text.trim(),
+        _phoneController.text.trim(),
+        _defaultAvatar,
+        _addressController.text.trim(),
+      );
+    }
+  } catch (e) {
+    debugPrint('Error deleting local image: $e');
+  }
+}
 
   @override
   void initState() {
@@ -28,75 +224,9 @@ class _ProfileInformationPageState extends State<ProfileInformationPage> {
   @override
   void dispose() {
     _nameController.dispose();
-    _phoneController.dispose();
+		_phoneController.dispose();
     _addressController.dispose();
     super.dispose();
-  }
-
-  // Load user data from Firestore
-  Future<void> _loadUserData() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
-
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
-
-      if (userDoc.exists) {
-        final data = userDoc.data();
-        setState(() {
-          _nameController.text = data?['name'] ?? '';
-          _phoneController.text = data?['phone'] ?? '';
-          _addressController.text = data?['address'] ?? '';
-          _avatarUrl = data?['avatarUrl'] ?? 'https://i.pravatar.cc/150?u=default';
-          _isLoading = false;
-        });
-      } else {
-        setState(() => _isLoading = false);
-      }
-    } catch (e) {
-      setState(() => _isLoading = false);
-      _showSnackBar('Error loading profile: $e');
-    }
-  }
-
-  // Save user data to Firestore
-  Future<void> _saveUserData() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _isSaving = true);
-
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
-
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .set({
-        'name': _nameController.text.trim(),
-        'phone': _phoneController.text.trim(),
-        'address': _addressController.text.trim(),
-        'email': user.email,
-        'avatarUrl': _avatarUrl,
-        'updatedAt': FieldValue.serverTimestamp(),
-      }, SetOptions(merge: true));
-
-      _showSnackBar('Profile updated successfully!');
-      Navigator.pop(context);
-    } catch (e) {
-      _showSnackBar('Error saving profile: $e');
-    } finally {
-      setState(() => _isSaving = false);
-    }
-  }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
   }
 
   @override
@@ -109,137 +239,209 @@ class _ProfileInformationPageState extends State<ProfileInformationPage> {
         title: const Text('Profile Information'),
         actions: [
           if (!_isLoading)
-            TextButton(
-              onPressed: _isSaving ? null : _saveUserData,
-              child: _isSaving
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Text('Save'),
-            ),
+          TextButton(
+            onPressed: _isSaving ? null : () async {
+							_isSaving = true;
+							UserService().updateUserData(
+								_nameController.text.trim(),
+								_phoneController.text.trim(),
+								_avatarUrl,
+								_addressController.text.trim(),
+							);
+							_isSaving = false;
+							showDialog(
+								context: context,
+								builder: (context) => AlertDialog(
+									title: const Text('Success'),
+									content: const Text('Profile updated successfully.'),
+									actions: [
+										TextButton(
+											onPressed: () {
+												Navigator.of(context).pop();
+												Navigator.of(context).pop();
+											},
+											child: const Text('OK'),
+										),
+									],
+								)
+							);
+						},
+            child: const Text('Save'),
+          ),
         ],
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Avatar Section
-                    Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 60,
-                          backgroundImage: NetworkImage(_avatarUrl),
-                          backgroundColor: colorScheme.surface,
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary,
-                              shape: BoxShape.circle,
-                            ),
-                            child: IconButton(
-                              icon: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
-                              onPressed: () {
-                                _showSnackBar('Avatar upload coming soon!');
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
 
-                    const SizedBox(height: 30),
+      body: _isLoading || _isSaving
+			? const Center(child: CircularProgressIndicator())
+			: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildAvatar(context),
 
-                    // Email (Read-only)
-                    _buildReadOnlyField(
-                      label: 'Email',
-                      value: user?.email ?? 'No email',
-                      icon: Icons.email_outlined,
-                    ),
+              const SizedBox(height: 30),
 
-                    const SizedBox(height: 16),
+              // Email (Read-only)
+              _buildReadOnlyField(
+                label: 'Email',
+                value: user?.email ?? 'No email',
+                icon: Icons.email_outlined,
+              ),
 
-                    // Name Field
-                    _buildTextField(
-                      controller: _nameController,
-                      label: 'Full Name',
-                      icon: Icons.person_outline,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      },
-                    ),
+              const SizedBox(height: 16),
 
-                    const SizedBox(height: 16),
+              // Name Field
+              _buildTextField(
+                controller: _nameController,
+                label: 'Full Name',
+                icon: Icons.person_outline,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
 
-                    // Phone Field
-                    _buildTextField(
-                      controller: _phoneController,
-                      label: 'Phone Number',
-                      icon: Icons.phone_outlined,
-                      keyboardType: TextInputType.phone,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Please enter your phone number';
-                        }
-                        if (!RegExp(r'^\+?[0-9]{10,15}$').hasMatch(value.trim())) {
-                          return 'Please enter a valid phone number';
-                        }
-                        return null;
-                      },
-                    ),
+										
+              const SizedBox(height: 16),
 
-                    const SizedBox(height: 16),
+              // Phone Field
+              _buildTextField(
+                controller: _phoneController,
+                label: 'Phone Number',
+                icon: Icons.phone_outlined,
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter your phone number';
+                  }
+                  if (!RegExp(r'^\+?[0-9]{10,15}$').hasMatch(value.trim())) {
+                    return 'Please enter a valid phone number';
+                  }
+                  return null;
+                },
+              ),
 
-                    // Address Field
-                    _buildTextField(
-                      controller: _addressController,
-                      label: 'Address',
-                      icon: Icons.location_on_outlined,
-                      maxLines: 3,
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Please enter your address';
-                        }
-                        return null;
-                      },
-                    ),
+              const SizedBox(height: 16),
+										
+              // Address Field
+              _buildTextField(
+                controller: _addressController,
+                label: 'Address',
+                icon: Icons.location_on_outlined,
+                maxLines: 3,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter your address';
+                  }
+                  return null;
+                },
+              ),
 
-                    const SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-                    // Delete Account Button
-                    OutlinedButton.icon(
-                      onPressed: () => _showDeleteAccountDialog(),
-                      icon: const Icon(Icons.delete_outline, color: Colors.red),
-                      label: const Text(
-                        'Delete Account',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.red),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        minimumSize: const Size(double.infinity, 48),
-                      ),
-                    ),
-                  ],
+							OutlinedButton(
+								onPressed: () {
+								},
+								style: OutlinedButton.styleFrom(
+									side: BorderSide(color: colorScheme.primary),
+									shape: RoundedRectangleBorder(
+										borderRadius: BorderRadius.circular(12),
+									),
+									minimumSize: const Size(double.infinity, 48),
+								),
+								child: const Text('Reset Password')
+							),
+
+							const SizedBox(height: 20),
+
+              // Delete Account Button
+              OutlinedButton.icon(
+                onPressed: () {
+									showDialog(
+										context: context,
+										builder:(context) {
+										  return AlertDialog(
+												title: const Text('Confirm Account Deletion'),
+												content: const Text('Are you sure you want to delete your account? This action cannot be undone.'),
+												actions: [
+													TextButton(
+														onPressed: () {
+															Navigator.of(context).pop();
+														},
+														child: const Text('Cancel'),
+													),
+													TextButton(
+														onPressed: () {
+															UserService().deleteUser();
+															Navigator.of(context).pop();
+														},
+														child: const Text('Delete', style: TextStyle(color: Colors.red)),
+													),
+												],
+											);
+										},
+									);
+												
+								},
+                icon: const Icon(Icons.delete_outline, color: Colors.red),
+                label: const Text(
+                  'Delete Account',
+                  style: TextStyle(color: Colors.red),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.red),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  minimumSize: const Size(double.infinity, 48),
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
     );
   }
+
+  Widget _buildAvatar(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+		final isAssetImage = _avatarUrl.startsWith('assets/');
+		
+    return Stack(
+      children: [
+        CircleAvatar(
+          radius: 60,
+          backgroundImage: isAssetImage 
+						? AssetImage(_avatarUrl) as ImageProvider
+						: (_avatarUrl.isEmpty 
+							? const AssetImage('assets/default_avatar.png')
+							: FileImage(File(_avatarUrl))),
+          backgroundColor: colorScheme.surface,
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
+              onPressed: () {
+								_updateAvatar();
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+	}
 
   // Read-only field widget
   Widget _buildReadOnlyField({
@@ -296,57 +498,5 @@ class _ProfileInformationPageState extends State<ProfileInformationPage> {
         ),
       ),
     );
-  }
-
-  // Show delete account confirmation dialog
-  void _showDeleteAccountDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete Account'),
-        content: const Text(
-          'Are you sure you want to delete your account? This action cannot be undone.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context);
-              await _deleteAccount();
-            },
-            child: const Text(
-              'Delete',
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Delete user account
-  Future<void> _deleteAccount() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
-
-      // Delete user document from Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .delete();
-
-      // Delete Firebase Auth account
-      await user.delete();
-
-      if (!mounted) return;
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      _showSnackBar('Account deleted successfully');
-    } catch (e) {
-      _showSnackBar('Error deleting account: $e');
-    }
   }
 }

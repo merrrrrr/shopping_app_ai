@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app_ai/pages/address_form_page.dart';
+import 'package:shopping_app_ai/services/user_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -37,21 +37,12 @@ class _RegisterPageState extends State<RegisterPage> {
 				return;
 			}
 
-			// Create user with Firebase Auth
-			UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-				email: emailController.text.trim(),
-				password: passwordController.text.trim(),
+			await UserService().createUser(
+				nameController.text.trim(),
+				emailController.text.trim(),
+				phoneNumberController.text.trim(),
+				passwordController.text.trim()
 			);
-
-			// Create user document in Firestore
-			await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
-				'name': nameController.text.trim(),
-				'email': emailController.text.trim(),
-				'phoneNumber': phoneNumberController.text.trim(),
-				'photoUrl': '',
-				'address': '',
-				'createdAt': FieldValue.serverTimestamp(),
-			});
 
 			if (!mounted) return;
 			showDialog(context: context, builder: (context) {

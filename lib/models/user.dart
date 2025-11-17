@@ -16,4 +16,28 @@ class User {
 		this.address = '',
 		required this.createdAt,
 	});
+
+	Map<String, dynamic> toMap() {
+		return {
+			'id': id,
+			'name': name,
+			'email': email,
+			'phoneNumber': phoneNumber,
+			'photoUrl': photoUrl,
+			'address': address,
+			'createdAt': createdAt.toIso8601String(),
+		};
+	}
+
+	factory User.fromMap(Map<String, dynamic> map) {
+		return User(
+			id: map['id'],
+			name: map['name'],
+			email: map['email'],
+			phoneNumber: map['phoneNumber'],
+			photoUrl: map['photoUrl'] ?? '',
+			address: map['address'] ?? '',
+			createdAt: DateTime.parse(map['createdAt']),
+		);
+	}
 }

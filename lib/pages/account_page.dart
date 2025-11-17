@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app_ai/pages/order_history_page.dart';
 import 'package:shopping_app_ai/pages/profile_information_page.dart';
+import 'dart:io';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -32,7 +33,7 @@ class AccountPage extends StatelessWidget {
           final userData = snapshot.data!.data() as Map<String, dynamic>;
           final userName = userData['name'] ?? 'User';
           final userEmail = userData['email'] ?? user?.email ?? '';
-          final photoUrl = userData['photoUrl'] == "" ? './assets/default_avatar.png' : userData['photoUrl'];
+          final photoUrl = userData['photoUrl'] == "" ? 'assets/default_avatar.png' : userData['photoUrl'];
 
           return ListView(
             children: <Widget>[
@@ -53,46 +54,52 @@ class AccountPage extends StatelessWidget {
   }
 
   // WIDGET: Profile Header
-  Widget _buildProfileHeader(BuildContext context, String userName, String userEmail, String photoUrl) {
-    return Container(
-      padding: const EdgeInsets.all(20.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundImage: Image.asset(photoUrl).image,
-            backgroundColor: Theme.of(context).colorScheme.surface,
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  userName,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  FirebaseAuth.instance.currentUser?.email ?? "",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context).colorScheme.onSurface.withAlpha(153), // 0.6 * 255
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+	Widget _buildProfileHeader(BuildContext context, String userName, String userEmail, String photoUrl) {
+		final isAssetImage = photoUrl.startsWith('assets/');
+		
+		return Container(
+			padding: const EdgeInsets.all(20.0),
+			child: Row(
+				children: [
+					CircleAvatar(
+						radius: 40,
+						backgroundImage: isAssetImage
+							? AssetImage(photoUrl) as ImageProvider
+							: (photoUrl.isEmpty
+								? const AssetImage('assets/default_avatar.png')
+								: FileImage(File(photoUrl))),
+						backgroundColor: Theme.of(context).colorScheme.surface,
+					),
+					const SizedBox(width: 20),
+					Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: [
+								Text(
+									userName,
+									style: TextStyle(
+										fontSize: 20,
+										fontWeight: FontWeight.bold,
+										color: Theme.of(context).colorScheme.onSurface,
+									),
+									overflow: TextOverflow.ellipsis,
+								),
+								const SizedBox(height: 4),
+								Text(
+									FirebaseAuth.instance.currentUser?.email ?? "",
+									style: TextStyle(
+										fontSize: 14,
+										color: Theme.of(context).colorScheme.onSurface.withAlpha(153),
+									),
+									overflow: TextOverflow.ellipsis,
+								),
+							],
+						),
+					),
+				],
+			),
+		);
+	}
 
   // WIDGET: Menu List
   Widget _buildMenuList(BuildContext context) {
@@ -118,20 +125,20 @@ class AccountPage extends StatelessWidget {
           context,
           icon: Icons.payment,
           title: 'Payment Methods',
-          onTap: () => _showSnackBar(context, 'Navigate to Payment Methods'),
+          onTap: () {},
         ),
         _buildMenuListItem(
           context,
           icon: Icons.favorite_border,
           title: 'Favourites',
-          onTap: () => _showSnackBar(context, 'Navigate to Favourites'),
+          onTap: () {},
         ),
         const Divider(),
         _buildMenuListItem(
           context,
           icon: Icons.settings_outlined,
           title: 'Settings',
-          onTap: () => _showSnackBar(context, 'Navigate to Settings'),
+          onTap: () {},
         ),
       ],
     );
@@ -170,13 +177,4 @@ class AccountPage extends StatelessWidget {
     );
   }
 
-  // HELPER: Show a SnackBar
-  void _showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 1),
-      ),
-    );
-  }
 }
