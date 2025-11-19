@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:shopping_app_ai/models/order_item.dart';
+import 'package:shopping_app_ai/models/item.dart';
 import 'package:shopping_app_ai/services/order_service.dart';
 import '../data/cart.dart';
 
@@ -27,14 +27,10 @@ class _CartPageState extends State<CartPage> {
         return;
       }
       
-      final item = cartItems[index];
-      cartItems[index] = OrderItem(
-        productId: item.productId,
-        productName: item.productName,
-        imageUrl: item.imageUrl,
-        price: item.price,
-        quantity: newQuantity,
-      );
+      cartItems[index] = Item.fromMap({
+				...cartItems[index].toMap(),
+        'quantity': newQuantity,
+			});
     });
   }
 
@@ -54,7 +50,7 @@ class _CartPageState extends State<CartPage> {
             child: ListView.builder(
               itemCount: cartItems.length,
               itemBuilder: (context, index) {
-                OrderItem cartItem = cartItems[index];
+                Item cartItem = cartItems[index];
 
                 return Card(
 									clipBehavior: Clip.hardEdge,
@@ -192,6 +188,7 @@ class _CartPageState extends State<CartPage> {
             onPressed: cartItems.isEmpty ? null : () async {
 							final orderId = await orderService.createOrderFromCart(cartItems);
 							cartItems.clear();
+							setState(() {});
               showDialog(context: context, builder: (context) {
 								return AlertDialog(
 									title: Text('Checkout Successful'),

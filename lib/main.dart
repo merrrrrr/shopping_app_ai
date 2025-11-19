@@ -79,7 +79,6 @@ class MainApp extends StatelessWidget {
           titleMedium: TextStyle(color: _lightTextPrimary, fontWeight: FontWeight.bold),
           titleSmall: TextStyle(color: _lightTextSecondary),
         ),
-
       ),
       
       themeMode: ThemeMode.light,

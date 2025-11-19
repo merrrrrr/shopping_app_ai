@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_app_ai/pages/order_history_page.dart';
 import 'package:shopping_app_ai/pages/profile_information_page.dart';
-import 'dart:io';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -33,7 +32,7 @@ class AccountPage extends StatelessWidget {
           final userData = snapshot.data!.data() as Map<String, dynamic>;
           final userName = userData['name'] ?? 'User';
           final userEmail = userData['email'] ?? user?.email ?? '';
-          final photoUrl = userData['photoUrl'] == "" ? 'assets/default_avatar.png' : userData['photoUrl'];
+          final photoUrl = 'assets/default_avatar.png';
 
           return ListView(
             children: <Widget>[
@@ -54,20 +53,14 @@ class AccountPage extends StatelessWidget {
   }
 
   // WIDGET: Profile Header
-	Widget _buildProfileHeader(BuildContext context, String userName, String userEmail, String photoUrl) {
-		final isAssetImage = photoUrl.startsWith('assets/');
-		
+	Widget _buildProfileHeader(BuildContext context, String userName, String userEmail, String photoUrl) {		
 		return Container(
 			padding: const EdgeInsets.all(20.0),
 			child: Row(
 				children: [
 					CircleAvatar(
 						radius: 40,
-						backgroundImage: isAssetImage
-							? AssetImage(photoUrl) as ImageProvider
-							: (photoUrl.isEmpty
-								? const AssetImage('assets/default_avatar.png')
-								: FileImage(File(photoUrl))),
+						backgroundImage: AssetImage(photoUrl),
 						backgroundColor: Theme.of(context).colorScheme.surface,
 					),
 					const SizedBox(width: 20),

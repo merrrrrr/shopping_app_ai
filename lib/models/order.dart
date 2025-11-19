@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shopping_app_ai/models/order_item.dart';
+import 'package:shopping_app_ai/models/item.dart';
 
-class PurchaseOrder {
+class Order {
   final String? id;
   final String userId;
-	final List<OrderItem> items;
+	final List<Item> items;
   final double subtotal;
   final double shippingFee;
   final double totalAmount;
   final String shippingAddress;
   final DateTime createdAt;
 
-  PurchaseOrder({
+  Order({
     this.id,
     required this.userId,
 		required this.items,
@@ -34,11 +34,11 @@ class PurchaseOrder {
     };
   }
 
-  factory PurchaseOrder.fromMap(Map<String, dynamic> map, {String? docId}) {
-    return PurchaseOrder(
+  factory Order.fromMap(Map<String, dynamic> map, {String? docId}) {
+    return Order(
       id: docId,
       userId: map['userId'],
-			items: (map['items'] as List).map((item) => OrderItem.fromMap(item)).toList(),
+			items: (map['items'] as List).map((item) => Item.fromMap(item)).toList(),
       subtotal: (map['subtotal'] as num).toDouble(),
       shippingFee: (map['shippingFee'] as num).toDouble(),
       totalAmount: (map['totalAmount'] as num).toDouble(),

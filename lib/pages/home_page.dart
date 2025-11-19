@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_app_ai/providers/category_filter_notifier.dart';
 import 'package:shopping_app_ai/providers/search_query_notifier.dart';
 import 'package:shopping_app_ai/providers/selected_index_notifier.dart';
+import 'package:shopping_app_ai/services/product_migration_service.dart';
 import 'package:shopping_app_ai/widgets/product_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../models/product.dart';
@@ -62,7 +63,17 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Home"),
         actions: [
-          IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
+          IconButton(
+						icon: const Icon(Icons.notifications),
+						onPressed: () {
+							
+						}
+					),
+
+					// IconButton(
+					// 	icon: const Icon(Icons.add),
+					// 	onPressed:() => ProductMigrationService().migrateProductsToFirestore(),
+					// )
         ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),

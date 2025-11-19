@@ -45,6 +45,26 @@ class _AddressFormPageState extends State<AddressFormPage> {
     'Putrajaya',
   ];
 
+	Future<void> saveAddress() async {
+			final newAddress = Address(
+				recipientName: _recipientNameController.text,
+				phoneNumber: _phoneNumberController.text,
+				addressLine1: _addressLine1Controller.text,
+				addressLine2: _addressLine2Controller.text,
+				city: _cityController.text,
+				state: _selectedState,
+				postcode: _postcodeController.text,
+			).fullAddress;
+
+			final user = _auth.currentUser;
+			if (user == null) {
+				throw Exception('User not found.');
+			}
+			final userId = user.uid;
+			DocumentReference doc = _firestore.collection('users').doc(userId);
+			doc.update({'address': newAddress});
+		}
+
   @override
   void initState() {
     super.initState();
@@ -70,26 +90,6 @@ class _AddressFormPageState extends State<AddressFormPage> {
 
   @override
   Widget build(BuildContext context) {
-		Future<void> saveAddress() async {
-			final newAddress = Address(
-				recipientName: _recipientNameController.text,
-				phoneNumber: _phoneNumberController.text,
-				addressLine1: _addressLine1Controller.text,
-				addressLine2: _addressLine2Controller.text,
-				city: _cityController.text,
-				state: _selectedState,
-				postcode: _postcodeController.text,
-			).fullAddress;
-
-			final user = _auth.currentUser;
-			if (user == null) {
-				throw Exception('User not found.');
-			}
-			final userId = user.uid;
-			DocumentReference doc = _firestore.collection('users').doc(userId);
-			doc.update({'address': newAddress});
-		}
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.address == null ? "Add Address" : "Edit Address"),

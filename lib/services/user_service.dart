@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shopping_app_ai/models/user.dart';
 
 class UserService {
 	final _auth = FirebaseAuth.instance;
@@ -21,41 +22,46 @@ class UserService {
 	Future<void> createUser(String name, String email, String phoneNumber, String password) async {
 		try {
 			await _auth.createUserWithEmailAndPassword(email: email, password: password);
-			await _usersCollection.add({
-				'name': name,
-				'email': email,
-				'phoneNumber': phoneNumber,
-				'photoUrl': '',
-				'address': '',
-				'createdAt': FieldValue.serverTimestamp(),
-			});
+
+			final user = User(
+				name: name,
+				email: email,
+				phoneNumber: phoneNumber,
+				photoUrl: '',
+				address: '',
+				createdAt: DateTime.now(),
+			);
+	
+			final userMap = user.toMap();
+			userMap['createdAt'] = FieldValue.serverTimestamp();
+			await _usersCollection.add(userMap);
 		} catch(e) {
 			debugPrint('Error creating new user: $e');
 			throw Exception('Failed to create new user.');
 		}
 	}
 
-	Future<Map<String, dynamic>?> getUserData() async {
+	Future<User> getUser() async {
 		try {
 			DocumentSnapshot doc = await _usersCollection.doc(currentUserId).get();
 			if (!doc.exists) {
 				throw Exception('User data not found.');
 			}
-			return doc.data() as Map<String, dynamic>?;
+			return User.fromMap(doc.data() as Map<String, dynamic>);
 		} catch(e) {
 			debugPrint('Error fetching user data: $e');
 			throw Exception('Failed to fetch user data.');
 		}
 	}
 
-	Future<void> updateUserData(String? name, String? phoneNumber, String photoUrl, String? address) async {
+	Future<void> updateUser(String name, String phoneNumber, String photoUrl, String address) async {
 		try {
 			DocumentSnapshot snapshot = await _usersCollection.doc(currentUserId).get();
-			final data = snapshot.data() as Map<String, dynamic>?;
-			final createdAt = data?['createdAt'] ?? FieldValue.serverTimestamp();
-			await _usersCollection.doc(currentUserId).set({
+			final data = snapshot.data() as Map<String, dynamic>;
+			
+			await _usersCollection.doc(currentUserId).update({
 				'email': _auth.currentUser?.email,
-				'createdAt': createdAt,
+				'createdAt': data['createdAt'],
 				'name': name,
 				'phoneNumber': phoneNumber,
 				'photoUrl': photoUrl,

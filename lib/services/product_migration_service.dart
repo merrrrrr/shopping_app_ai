@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import '../data/products_data.dart';
 
 class ProductMigrationService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// Upload all products from products_data.dart to Firestore
-  /// This should be called once to migrate data
   Future<void> migrateProductsToFirestore() async {
     try {
       final batch = _firestore.batch();
@@ -27,9 +26,9 @@ class ProductMigrationService {
       }
       
       await batch.commit();
-      print('Successfully migrated ${products.length} products to Firestore');
+      debugPrint('Successfully migrated ${products.length} products to Firestore');
     } catch (e) {
-      print('Error migrating products: $e');
+      debugPrint('Error migrating products: $e');
       rethrow;
     }
   }

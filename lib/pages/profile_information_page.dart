@@ -16,24 +16,23 @@ class _ProfileInformationPageState extends State<ProfileInformationPage> {
   final TextEditingController _nameController = TextEditingController();
 	final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-	final _defaultAvatar = 'assets/default_avatar.png';
   
   bool _isLoading = false;
   bool _isSaving = false;
-	String _avatarUrl = '';
+	final String _avatarUrl = 'assets/default_avatar.png';
 
 	Future<void> _loadUserData() async {
 		setState(() {
 			_isLoading = true;
 		});
 		try {
-			final userData = await UserService().getUserData();
-			if (userData != null) {
-				_nameController.text = userData['name'] ?? '';
-				_phoneController.text = userData['phoneNumber'] ?? '';
-				_addressController.text = userData['address'] ?? '';
-				_avatarUrl = userData['photoUrl'] == "" ? _defaultAvatar : userData['photoUrl'];
-			}
+			final user = await UserService().getUser();
+			setState(() {
+				_nameController.text = user.name;
+				_phoneController.text = user.phoneNumber;
+				_addressController.text = user.address;
+			});
+			
 		} catch (e) {
 			debugPrint('Error loading user data: $e');
 		} finally {
@@ -70,7 +69,7 @@ class _ProfileInformationPageState extends State<ProfileInformationPage> {
           TextButton(
             onPressed: _isSaving ? null : () async {
 							_isSaving = true;
-							UserService().updateUserData(
+							await UserService().updateUser(
 								_nameController.text.trim(),
 								_phoneController.text.trim(),
 								_avatarUrl,

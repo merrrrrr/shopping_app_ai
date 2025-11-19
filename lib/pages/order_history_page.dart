@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/models/purchase_order.dart';
+import 'package:shopping_app_ai/models/order.dart';
 import 'package:shopping_app_ai/services/order_service.dart';
 
 class OrderHistoryPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         title: const Text('Order History'),
         elevation: 0,
       ),
-      body: FutureBuilder<List<PurchaseOrder>>(
+      body: FutureBuilder<List<Order>>(
         future: orderService.getAllOrders(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

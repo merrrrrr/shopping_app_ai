@@ -1,11 +1,11 @@
-class OrderItem {
+class Item {
   final String productId;
   final String productName;
   final String imageUrl;
   final double price;
   final int quantity;
 
-  OrderItem({
+  Item({
     required this.productId,
     required this.productName,
     required this.imageUrl,
@@ -23,8 +23,8 @@ class OrderItem {
     };
   }
 
-  factory OrderItem.fromMap(Map<String, dynamic> map) {
-    return OrderItem(
+  factory Item.fromMap(Map<String, dynamic> map) {
+    return Item(
       productId: map['productId'],
       productName: map['productName'],
       imageUrl: map['imageUrl'],

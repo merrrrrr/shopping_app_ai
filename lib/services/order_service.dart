@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart' hide Order;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shopping_app_ai/models/order_item.dart';
-import 'package:shopping_app_ai/models/purchase_order.dart';
+import 'package:shopping_app_ai/models/item.dart';
+import 'package:shopping_app_ai/models/order.dart';
 
 class OrderService {
   final _firestore = FirebaseFirestore.instance;
@@ -30,17 +30,14 @@ class OrderService {
 		return _firestore.collection('orders');
 	}
 
-	double calculateSubtotal(List<OrderItem> cartItems) {
+	double calculateSubtotal(List<Item> cartItems) {
 		if (cartItems.isEmpty) {
       throw Exception('Cart is empty');
     }
 
 		double subtotal = 0.0;
 		for (var item in cartItems) {
-			Map<String, dynamic> itemMap = item.toMap();
-			double price = itemMap['price'];
-			int quantity = itemMap['quantity'];
-			subtotal += price * quantity;
+			subtotal += item.price * item.quantity;
 		}
 
 		return double.parse(subtotal.toStringAsFixed(2));
@@ -51,14 +48,14 @@ class OrderService {
 		return double.parse(totalPrice.toStringAsFixed(2));
 	}
 
-	Future<String> createOrderFromCart(List<OrderItem> cartItems, {double shippingFee = 5.0}) async {
+	Future<String> createOrderFromCart(List<Item> cartItems, {double shippingFee = 5.0}) async {
 		try {
 			final address = await currentUserAddress;
 
 			final subtotal = calculateSubtotal(cartItems);
     	final totalAmount = calculateTotal(subtotal, shippingFee: shippingFee);
 
-			final order = PurchaseOrder(
+			final order = Order(
         userId: currentUserId,
 				items: cartItems,
         subtotal: subtotal,
@@ -68,7 +65,10 @@ class OrderService {
         createdAt: DateTime.now(),
       );
 
+			await _updateProductInventory(cartItems);
+
 			DocumentReference doc = await _ordersCollection.add(order.toMap());
+
 			debugPrint('Order created successfully');
 			return doc.id;
 		} catch(e) {
@@ -77,13 +77,34 @@ class OrderService {
 		}
 	}
 
-	Future<List<PurchaseOrder>> getAllOrders() async {
+	Future<void> _updateProductInventory(List<Item> cartItems) async {
+		try {
+			WriteBatch batch = _firestore.batch();
+
+			for (var item in cartItems) {
+        DocumentReference productRef = _firestore.collection('products').doc(item.productId);
+
+        batch.update(productRef, {
+          'salesCount': FieldValue.increment(item.quantity),
+          'stockCount': FieldValue.increment(-item.quantity),
+        });
+      }
+
+			await batch.commit();
+			debugPrint('Product inventory updated successfully.');
+		} catch(e) {
+			debugPrint('Error updating product inventory: $e');
+			throw Exception('Failed to update product inventory.');
+		}
+	}
+
+	Future<List<Order>> getAllOrders() async {
 		try {
 			QuerySnapshot snapshot = await _ordersCollection
           .where('userId', isEqualTo: currentUserId)
           .get();
-			List<PurchaseOrder> orders = snapshot.docs.map((doc) {
-				return PurchaseOrder.fromMap(
+			List<Order> orders = snapshot.docs.map((doc) {
+				return Order.fromMap(
 					doc.data() as Map<String, dynamic>,
 					docId: doc.id
 				);
@@ -96,34 +117,6 @@ class OrderService {
       debugPrint('Error type: ${e.runtimeType}');
       debugPrint('Stack trace: ${StackTrace.current}');
 			throw Exception('Failed to get orders');
-		}
-	}
-
-	Future<PurchaseOrder?> getOrderById(String orderId) async {
-		try {
-			DocumentSnapshot doc = await _ordersCollection.doc(orderId).get();
-			debugPrint('Retrieved order: ${doc.data()}');
-			final order = PurchaseOrder.fromMap(
-				doc.data() as Map<String, dynamic>,
-				docId: doc.id
-			);
-			if (order.userId != currentUserId) {
-				return null;
-			}
-			return order;
-		} catch(e) {
-			debugPrint('Error getting order: $e');
-			throw Exception('Failed to get order');
-		}
-	}
-
-	Future<void> deleteOrder(String orderId) async {
-		try {
-			await _ordersCollection.doc(orderId).delete();
-			debugPrint('Order deleted successfully.');
-		} catch(e) {
-			debugPrint('Error deleting order: $e');
-			throw Exception('Failed to delete order');
 		}
 	}
 }

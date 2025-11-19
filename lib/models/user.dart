@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class User {
-	final String id;
 	final String name;
 	final String email;
 	final String phoneNumber;
@@ -8,7 +9,6 @@ class User {
 	final DateTime createdAt;
 
 	User({
-		required this.id,
 		required this.name,
 		required this.email,
 		required this.phoneNumber,
@@ -19,7 +19,6 @@ class User {
 
 	Map<String, dynamic> toMap() {
 		return {
-			'id': id,
 			'name': name,
 			'email': email,
 			'phoneNumber': phoneNumber,
@@ -31,13 +30,12 @@ class User {
 
 	factory User.fromMap(Map<String, dynamic> map) {
 		return User(
-			id: map['id'],
 			name: map['name'],
 			email: map['email'],
 			phoneNumber: map['phoneNumber'],
-			photoUrl: map['photoUrl'] ?? '',
-			address: map['address'] ?? '',
-			createdAt: DateTime.parse(map['createdAt']),
+			photoUrl: map['photoUrl'],
+			address: map['address'],
+			createdAt: (map['createdAt'] as Timestamp).toDate(),
 		);
 	}
 }

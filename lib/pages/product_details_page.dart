@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/models/order_item.dart';
+import 'package:shopping_app_ai/models/item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/product.dart';
 import '../../data/cart.dart';
@@ -223,8 +223,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 								final existingIndex = cartItems.indexWhere((item) => item.productId == widget.product.id);
 
 								if (existingIndex != -1) {
-									OrderItem existingProduct = cartItems[existingIndex];
-									cartItems[existingIndex] = OrderItem(
+									Item existingProduct = cartItems[existingIndex];
+									cartItems[existingIndex] = Item(
 										productId: existingProduct.productId,
 										productName: existingProduct.productName,
 										imageUrl: existingProduct.imageUrl,
@@ -232,7 +232,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 										quantity: existingProduct.quantity + quantity,
 									);
 								} else {
-									cartItems.add(OrderItem(
+									cartItems.add(Item(
 										productId: widget.product.id,
 										productName: widget.product.name,
 										imageUrl: widget.product.images.first,
@@ -244,7 +244,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 								ScaffoldMessenger.of(context).showSnackBar(
 									SnackBar(
 										content: Text('Product added to cart successfully!'),
-										duration: const Duration(milliseconds: 700),
+										duration: const Duration(milliseconds: 500),
 									),
 								);
 							},

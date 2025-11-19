@@ -23,7 +23,6 @@ class Product {
     required this.quantity,
   });
 
-  /// Convert Product to Map for Firestore
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -38,4 +37,19 @@ class Product {
       'quantity': quantity,
     };
   }
+
+	factory Product.fromMap(Map<String, dynamic> map) {
+		return Product(
+			id: map['id'],
+			name: map['name'],
+			price: map['price'],
+			sales: map['sales'],
+			description: map['description'],
+			images: (map['images']),
+			category: map['category'],
+			brand: map['brand'],
+			rating: map['rating'],
+			quantity: map['quantity']
+		);
+	}
 }
