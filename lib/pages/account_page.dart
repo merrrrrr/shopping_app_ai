@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_app_ai/pages/favourites_page.dart';
 import 'package:shopping_app_ai/pages/order_history_page.dart';
 import 'package:shopping_app_ai/pages/profile_information_page.dart';
 
@@ -124,7 +125,9 @@ class AccountPage extends StatelessWidget {
           context,
           icon: Icons.favorite_border,
           title: 'Favourites',
-          onTap: () {},
+          onTap: () => Navigator.push(context, MaterialPageRoute(
+						builder: (context) => FavouritesPage()
+					)),
         ),
         const Divider(),
         _buildMenuListItem(

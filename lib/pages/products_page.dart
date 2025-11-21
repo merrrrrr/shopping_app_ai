@@ -79,8 +79,8 @@ class _ProductsPageState extends State<ProductsPage> {
     // Filter products by search, category, price, brand, and rating
     List<Product> filteredProducts = products.where((p) {
       bool matchesSearch = p.name.toLowerCase().contains(
-            searchQueryNotifier.value.toLowerCase(),
-          );
+        searchQueryNotifier.value.toLowerCase(),
+      );
 
       bool matchesCategory = selectedCategory == "All" || p.category == selectedCategory;
 

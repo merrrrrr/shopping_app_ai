@@ -1,10 +1,10 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_app_ai/models/item.dart';
+import 'package:shopping_app_ai/providers/cart_provider.dart';
+import 'package:shopping_app_ai/providers/favourite_provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/product.dart';
-import '../../data/cart.dart';
-import '../../data/favourite.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final Product product;
@@ -176,32 +176,27 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           ),
 
           // ========== FAVORITE BUTTON ==========
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.black.withAlpha(50),
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              onPressed: () {
-                setState(() {
-                  if (favouriteProductIds.contains(widget.product.id)) {
-                    favouriteProductIds.remove(widget.product.id);
-                  } else {
-                    favouriteProductIds.add(widget.product.id);
-                  }
-                });
-              },
-              style: IconButton.styleFrom(splashFactory: NoSplash.splashFactory),
-              icon: Icon(
-                favouriteProductIds.contains(widget.product.id)
-                    ? Icons.favorite
-                    : Icons.favorite_border,
-                color: favouriteProductIds.contains(widget.product.id)
-                    ? Colors.red
-                    : Colors.white,
-              ),
-            ),
-          ),
+          Consumer<FavouriteProvider>(
+						builder: (context, favouriteProvider, child) {
+							final isFavourite = favouriteProvider.isFavourite(widget.product.id);
+						  return Container(
+								decoration: BoxDecoration(
+									color: Colors.black.withAlpha(50),
+									shape: BoxShape.circle,
+								),
+								child: IconButton(
+									onPressed: () {
+										favouriteProvider.toggleFavourite(widget.product.id);
+									},
+									style: IconButton.styleFrom(splashFactory: NoSplash.splashFactory),
+									icon: Icon(
+										isFavourite ? Icons.favorite : Icons.favorite_border,
+										color: isFavourite ? Colors.red : Colors.white,
+									),
+								),
+							);
+						},
+					),
         ],
       ),
     );
@@ -217,46 +212,42 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 				children: [
 
 					// ========== ADD TO CART BUTTON ==========
-					Expanded(
-						child: ElevatedButton(
-							onPressed: () {
-								final existingIndex = cartItems.indexWhere((item) => item.productId == widget.product.id);
+          Expanded(
+            child: ElevatedButton(
+              onPressed: () {
+                final cartProvider = Provider.of<CartProvider>(context, listen: false);
+                
+                final newItem = Item(
+                  productId: widget.product.id,
+                  productName: widget.product.name,
+                  imageUrl: widget.product.images.first,
+                  price: widget.product.price,
+                  quantity: quantity,
+                );
+                
+                cartProvider.addItem(newItem);
 
-								if (existingIndex != -1) {
-									Item existingProduct = cartItems[existingIndex];
-									cartItems[existingIndex] = Item(
-										productId: existingProduct.productId,
-										productName: existingProduct.productName,
-										imageUrl: existingProduct.imageUrl,
-										price: existingProduct.price,
-										quantity: existingProduct.quantity + quantity,
-									);
-								} else {
-									cartItems.add(Item(
-										productId: widget.product.id,
-										productName: widget.product.name,
-										imageUrl: widget.product.images.first,
-										price: widget.product.price,
-										quantity: quantity,
-									));
-								}
-
-								ScaffoldMessenger.of(context).showSnackBar(
-									SnackBar(
-										content: Text('Product added to cart successfully!'),
-										duration: const Duration(milliseconds: 500),
-									),
-								);
-							},
-							style: ElevatedButton.styleFrom(
-								padding: const EdgeInsets.symmetric(vertical: 16),
-								shape: RoundedRectangleBorder(
-									borderRadius: BorderRadius.circular(12),
-								),
-							),
-							child: const Text("Add to Cart"),
-						),
-					),
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Product added to cart successfully!'),
+                    duration: Duration(milliseconds: 500),
+                  ),
+                );
+                
+                // Reset quantity after adding
+                setState(() {
+                  quantity = 1;
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text("Add to Cart"),
+            ),
+          ),
 
 					// ========== QUANTITY SELECTOR ==========
 					Row(
