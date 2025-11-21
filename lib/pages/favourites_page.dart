@@ -16,7 +16,7 @@ class FavouritesPage extends StatelessWidget {
       ),
       body: Consumer<FavouriteProvider>(
         builder: (context, favouriteProvider, child) {
-          if (favouriteProvider.favouriteIds.isEmpty) {
+          if (favouriteProvider.favouriteProductIds.isEmpty) {
             return _buildEmptyState(context);
           }
 

@@ -125,4 +125,30 @@ class UserService {
 			throw Exception('Failed to reset password.');
 		}
 	}
+
+	Future<List<String>> getUserFavourites() async {
+		try {
+			DocumentSnapshot doc = await _usersCollection.doc(currentUserId).get();
+			if (!doc.exists) {
+				throw Exception('User data not found.');
+			}
+			final data = doc.data() as Map<String, dynamic>;
+			final favourites = List<String>.from(data['favourites'] ?? []);
+			return favourites;
+		} catch (e) {
+			debugPrint('Error fetching user favourites: $e');
+			throw Exception('Failed to fetch user favourites.');
+		}
+	}
+
+	Future<void> updateUserFavourites(List<String> favourites) async {
+		try {
+			await _usersCollection.doc(currentUserId).update({
+				'favourites': favourites,
+			});
+		} catch (e) {
+			debugPrint('Error updating user favourites: $e');
+			throw Exception('Failed to update user favourites.');
+		}
+	}
 }
