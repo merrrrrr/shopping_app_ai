@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/providers/category_filter_notifier.dart';
-import 'package:shopping_app_ai/providers/search_query_notifier.dart';
-import 'package:shopping_app_ai/providers/selected_index_notifier.dart';
-import 'package:shopping_app_ai/widgets/product_card.dart';
+import 'package:shopping_app/providers/category_filter_notifier.dart';
+import 'package:shopping_app/providers/search_query_notifier.dart';
+import 'package:shopping_app/providers/selected_index_notifier.dart';
+import 'package:shopping_app/widgets/product_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../models/product.dart';
 import '../../data/products_data.dart';

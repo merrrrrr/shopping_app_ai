@@ -7,9 +7,28 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:234026555391:android:9364711ab5385d671079ca",
+        "android_client_info": {
+          "package_name": "com.example.shopping_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5mJF6wH17ZT2fWf-n-tB3W5RF-5-JGCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:234026555391:android:49cbee40dad865bb1079ca",
         "android_client_info": {
-          "package_name": "com.example.shopping_app_ai"
+          "package_name": "com.example.shopping_app"
         }
       },
       "oauth_client": [],

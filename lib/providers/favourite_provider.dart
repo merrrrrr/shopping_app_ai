@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/services/user_service.dart';
+import 'package:shopping_app/services/user_service.dart';
 
 class FavouriteProvider with ChangeNotifier {
   final UserService _userService = UserService();

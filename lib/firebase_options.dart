@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD5mJF6wH17ZT2fWf-n-tB3W5RF-5-JGCA',
-    appId: '1:234026555391:android:49cbee40dad865bb1079ca',
+    appId: '1:234026555391:android:9364711ab5385d671079ca',
     messagingSenderId: '234026555391',
     projectId: 'flutter-shopping-app-c6d10',
     storageBucket: 'flutter-shopping-app-c6d10.firebasestorage.app',
@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'flutter-shopping-app-c6d10.firebasestorage.app',
     iosBundleId: 'com.example.shoppingAppAi',
   );
+
 }

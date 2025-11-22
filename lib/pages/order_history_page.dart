@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/models/order.dart';
-import 'package:shopping_app_ai/services/order_service.dart';
+import 'package:shopping_app/models/order.dart';
+import 'package:shopping_app/services/order_service.dart';
 
 class OrderHistoryPage extends StatefulWidget {
   const OrderHistoryPage({super.key});

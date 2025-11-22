@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/pages/account_page.dart';
-import 'package:shopping_app_ai/pages/home_page.dart';
-import 'package:shopping_app_ai/providers/category_filter_notifier.dart';
-import 'package:shopping_app_ai/providers/search_query_notifier.dart';
-import 'package:shopping_app_ai/providers/selected_index_notifier.dart';
+import 'package:shopping_app/pages/account_page.dart';
+import 'package:shopping_app/pages/home_page.dart';
+import 'package:shopping_app/providers/category_filter_notifier.dart';
+import 'package:shopping_app/providers/search_query_notifier.dart';
+import 'package:shopping_app/providers/selected_index_notifier.dart';
 import '../pages/products_page.dart';
 import '../pages/cart_page.dart';
 

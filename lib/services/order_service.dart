@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' hide Order;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shopping_app_ai/models/item.dart';
-import 'package:shopping_app_ai/models/order.dart';
+import 'package:shopping_app/models/item.dart';
+import 'package:shopping_app/models/order.dart';
 
 class OrderService {
   final _firestore = FirebaseFirestore.instance;

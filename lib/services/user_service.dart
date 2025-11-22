@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shopping_app_ai/models/user.dart';
+import 'package:shopping_app/models/user.dart';
 
 class UserService {
 	final _auth = FirebaseAuth.instance;

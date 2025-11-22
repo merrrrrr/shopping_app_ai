@@ -1,3 +1,3 @@
-# shopping_app_ai
+# shopping_app
 
 A new Flutter project.

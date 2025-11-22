@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app_ai/models/item.dart';
-import 'package:shopping_app_ai/providers/cart_provider.dart';
-import 'package:shopping_app_ai/providers/favourite_provider.dart';
+import 'package:shopping_app/models/item.dart';
+import 'package:shopping_app/providers/cart_provider.dart';
+import 'package:shopping_app/providers/favourite_provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../models/product.dart';
 

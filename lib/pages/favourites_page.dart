@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app_ai/data/products_data.dart';
-import 'package:shopping_app_ai/providers/favourite_provider.dart';
-import 'package:shopping_app_ai/widgets/product_card.dart';
+import 'package:shopping_app/data/products_data.dart';
+import 'package:shopping_app/providers/favourite_provider.dart';
+import 'package:shopping_app/widgets/product_card.dart';
 
 class FavouritesPage extends StatelessWidget {
   const FavouritesPage({super.key});

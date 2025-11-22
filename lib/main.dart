@@ -2,12 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app_ai/firebase_options.dart';
-import 'package:shopping_app_ai/pages/login_page.dart';
-import 'package:shopping_app_ai/providers/cart_provider.dart';
-import 'package:shopping_app_ai/providers/favourite_provider.dart';
-import 'package:shopping_app_ai/widgets/bottom_nav_bar.dart';
-
+import 'package:shopping_app/firebase_options.dart';
+import 'package:shopping_app/pages/login_page.dart';
+import 'package:shopping_app/providers/cart_provider.dart';
+import 'package:shopping_app/providers/favourite_provider.dart';
+import 'package:shopping_app/widgets/bottom_nav_bar.dart';
 void main() async{
 	WidgetsFlutterBinding.ensureInitialized();
 	await Firebase.initializeApp(

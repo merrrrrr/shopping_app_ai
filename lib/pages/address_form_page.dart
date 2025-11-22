@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/models/address.dart';
+import 'package:shopping_app/models/address.dart';
 
 class AddressFormPage extends StatefulWidget {
   final Address? address;

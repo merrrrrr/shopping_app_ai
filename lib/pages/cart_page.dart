@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app_ai/models/item.dart';
+import 'package:shopping_app/models/item.dart';
 import '../providers/cart_provider.dart';
 
 class CartPage extends StatelessWidget {

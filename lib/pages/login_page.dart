@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/pages/register_page.dart';
-import 'package:shopping_app_ai/services/user_service.dart';
+import 'package:shopping_app/pages/register_page.dart';
+import 'package:shopping_app/services/user_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

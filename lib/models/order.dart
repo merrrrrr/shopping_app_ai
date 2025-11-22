@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shopping_app_ai/models/item.dart';
+import 'package:shopping_app/models/item.dart';
 
 class Order {
   final String? id;

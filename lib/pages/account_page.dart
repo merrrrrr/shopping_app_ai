@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/pages/favourites_page.dart';
-import 'package:shopping_app_ai/pages/order_history_page.dart';
-import 'package:shopping_app_ai/pages/profile_information_page.dart';
+import 'package:shopping_app/pages/favourites_page.dart';
+import 'package:shopping_app/pages/order_history_page.dart';
+import 'package:shopping_app/pages/profile_information_page.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});

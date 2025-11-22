@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_app_ai/models/item.dart';
-import 'package:shopping_app_ai/services/order_service.dart';
+import 'package:shopping_app/models/item.dart';
+import 'package:shopping_app/services/order_service.dart';
 
 class CartProvider with ChangeNotifier {
 	final List<Item> _cartItems = [];
